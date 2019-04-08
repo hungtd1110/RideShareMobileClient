@@ -1,0 +1,110 @@
+<resources>
+  <dimen name="header_height_normal">
+    266.67dp
+  </dimen>
+  <dimen name="width_huge">
+    80.0dp
+  </dimen>
+  <dimen name="height_huge">
+    80.0dp
+  </dimen>
+  <dimen name="margin_huge_giant">
+    60.0dp
+  </dimen>
+  <dimen name="margin_giant">
+    93.33dp
+  </dimen>
+  <dimen name="margin_normal">
+    13.33dp
+  </dimen>
+  <dimen name="padding_normal_large">
+    20.0dp
+  </dimen>
+  <dimen name="font_normal">
+    18.67sp
+  </dimen>
+  <dimen name="width_normal">
+    26.67dp
+  </dimen>
+  <dimen name="height_normal">
+    26.67dp
+  </dimen>
+  <dimen name="margin_normal_large">
+    20.0dp
+  </dimen>
+  <dimen name="margin_large">
+    26.67dp
+  </dimen>
+  <dimen name="padding_normal">
+    13.33dp
+  </dimen>
+  <dimen name="padding_tiny">
+    2.67dp
+  </dimen>
+  <dimen name="padding_large">
+    26.67dp
+  </dimen>
+  <dimen name="padding_small">
+    6.67dp
+  </dimen>
+  <dimen name="margin_large_huge">
+    40.0dp
+  </dimen>
+  <dimen name="font_small">
+    13.33sp
+  </dimen>
+  <dimen name="radius_huge">
+    133.33dp
+  </dimen>
+  <dimen name="font_large">
+    21.33sp
+  </dimen>
+  <dimen name="width_large">
+    40.0dp
+  </dimen>
+  <dimen name="height_large">
+    40.0dp
+  </dimen>
+  <dimen name="margin_small">
+    6.67dp
+  </dimen>
+  <dimen name="padding_medium">
+    10.67dp
+  </dimen>
+  <dimen name="margin_huge">
+    53.33dp
+  </dimen>
+  <dimen name="font_medium">
+    16.0sp
+  </dimen>
+  <dimen name="radius_normal">
+    13.33dp
+  </dimen>
+  <dimen name="border_width">
+    1.33dp
+  </dimen>
+  <dimen name="radius_normal_large">
+    40.0dp
+  </dimen>
+  <dimen name="margin_giant_large">
+    120.0dp
+  </dimen>
+  <dimen name="radius_small">
+    6.67dp
+  </dimen>
+  <dimen name="font_large_huge">
+    24.0sp
+  </dimen>
+  <dimen name="padding_small_normal">
+    10.67dp
+  </dimen>
+  <dimen name="padding_large_huge">
+    40.0dp
+  </dimen>
+  <dimen name="height_large_huge">
+    60.0dp
+  </dimen>
+  <dimen name="width_giant">
+    413.33dp
+  </dimen>
+</resources>

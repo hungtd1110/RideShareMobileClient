@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">RideShareMobileClient aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</string>
+    <string name="email">Email</string>
+    <string name="password">Mật khẩu</string>
+    <string name="login_email">Đăng nhập</string>
+    <string name="confirm">Nhập lại mật khẩu</string>
+    <string name="register">Đăng ký</string>
+    <string name="or">hoặc</string>
+    <string name="forgot_password">Quên mật khẩu?</string>
+    <string name="no_account">Bạn chưa có tài khoản?</string>
+    <string name="login_phone">Đăng nhập bằng điện thoại</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_message">Message</string>
+    <string name="menu_notification">Notification</string>
+    <string name="menu_setting">Setting</string>
+    <string name="tag_home">home</string>
+    <string name="tag_message">message</string>
+    <string name="tag_notification">notification</string>
+    <string name="tag_setting">setting</string>
+    <string name="my_driver">My Driver</string>
+    <string name="my_hitchhiker">My Hitchhiker</string>
+    <string name="title_driver">Driver</string>
+    <string name="title_hitchhiker">Hitchhiker</string>
+    <string name="key_user">key user</string>
+    <string name="username">Tên người dùng</string>
+    <string name="no_email">Bạn chưa nhập email</string>
+    <string name="no_username">Bạn chưa nhập tên người dùng</string>
+    <string name="no_password">Bạn chưa nhập mật khẩu</string>
+    <string name="no_confirm">Bạn chưa nhập xác nhận lại mật khẩu</string>
+    <string name="errors_confirm">Bạn nhập lại mật khẩu chưa chính xác</string>
+    <string name="title_information">Thông tin chuyến đi</string>
+    <string name="title_image">Ảnh minh họa</string>
+</resources>

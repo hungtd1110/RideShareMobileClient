@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.admin.ridesharemobileclient.ui.main.MainActivity">
+
+    <FrameLayout
+        android:id="@+id/frl_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/vSeparate" />
+
+    <View
+        android:id="@+id/vSeparate"
+        android:layout_above="@id/ll_navigation"
+        android:background="@color/colorBackground"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/separate_height" />
+
+    <LinearLayout
+        android:id="@+id/ll_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorWhite"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tv_home"
+            style="@style/ItemNavigationTextView"
+            android:drawableTop="@drawable/ic_menu_home_selected"
+            android:text="@string/menu_home"
+            android:textColor="@color/colorGreen" />
+
+        <TextView
+            android:id="@+id/tv_message"
+            style="@style/ItemNavigationTextView"
+            android:drawableTop="@drawable/ic_menu_message"
+            android:text="@string/menu_message" />
+
+        <TextView
+            android:id="@+id/tv_notification"
+            style="@style/ItemNavigationTextView"
+            android:drawableTop="@drawable/ic_menu_notification"
+            android:text="@string/menu_notification" />
+
+        <TextView
+            android:id="@+id/tv_setting"
+            style="@style/ItemNavigationTextView"
+            android:drawableTop="@drawable/ic_menu_setting"
+            android:text="@string/menu_setting" />
+
+    </LinearLayout>
+
+</RelativeLayout>

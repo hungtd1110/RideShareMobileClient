@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:paddingBottom="@dimen/padding_large_huge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorGreen">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_large_huge"
+                    android:layout_marginBottom="@dimen/margin_huge_giant"
+                    android:layout_marginEnd="@dimen/margin_large"
+                    android:layout_marginStart="@dimen/margin_large"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:background="@drawable/background_border_search"
+                    android:drawablePadding="@dimen/padding_normal"
+                    android:textColor="@color/colorGrayLight"
+                    android:drawableStart="@drawable/ic_menu_search"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:paddingEnd="@dimen/padding_normal_large"
+                    android:paddingStart="@dimen/padding_normal_large"
+                    tools:ignore="LabelFor" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="@dimen/margin_giant_large"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_large"
+                    android:layout_marginEnd="@dimen/margin_large"
+                    android:layout_marginStart="@dimen/margin_large"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    app:cardCornerRadius="@dimen/radius_small">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/padding_normal_large">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:drawableTop="@drawable/ic_menu_home"
+                            android:gravity="center_horizontal"
+                            android:text="@string/my_driver" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:drawableTop="@drawable/ic_menu_home"
+                            android:gravity="center_horizontal"
+                            android:text="@string/my_hitchhiker" />
+
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_marginTop="@dimen/margin_normal"
+                android:layout_marginStart="@dimen/margin_normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_driver"
+                android:textColor="@color/colorBlackLight"
+                android:textSize="@dimen/font_normal" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvDriver"
+                android:layout_marginTop="@dimen/margin_normal"
+                tools:listitem="@layout/item_trip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:scrollbars="none"
+                tools:targetApi="lollipop" />
+
+            <TextView
+                android:layout_marginTop="@dimen/margin_large_huge"
+                android:layout_marginStart="@dimen/margin_normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_hitchhiker"
+                android:textColor="@color/colorBlackLight"
+                android:textSize="@dimen/font_normal" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvHitchhiker"
+                android:layout_marginTop="@dimen/margin_normal"
+                tools:listitem="@layout/item_trip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:scrollbars="none"
+                tools:targetApi="lollipop" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>
