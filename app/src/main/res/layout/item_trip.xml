@@ -48,6 +48,7 @@
                 android:textSize="@dimen/font_normal" />
 
             <TextView
+                android:id="@+id/tvShowMore"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -68,6 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/llStartPosition"
             android:layout_marginTop="@dimen/margin_normal"
+            android:layout_marginBottom="@dimen/margin_normal"
             android:layout_toEndOf="@id/ivStartEndPosition">
 
             <TextView
@@ -101,7 +103,7 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@id/llEndPosition"
             android:layout_below="@+id/llEndPosition"
-            android:layout_marginTop="@dimen/margin_large">
+            android:layout_marginTop="@dimen/margin_small">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -174,6 +176,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/llAction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/llInformation"

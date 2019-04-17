@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">RideShareMobileClient aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</string>
+    <string name="map_token">pk.eyJ1IjoiaHVuZ3RkMTExMCIsImEiOiJjanN5OHowYWUwYTdkM3lwaXJ1YmpxeW5uIn0.2mqe0DSMBkv_gzpJUJsqfA</string>
+
     <string name="email">Email</string>
     <string name="password">Mật khẩu</string>
     <string name="login_email">Đăng nhập</string>

@@ -112,7 +112,7 @@
             android:background="@drawable/background_border_login_email"
             android:gravity="center"
             android:padding="@dimen/padding_normal"
-            android:text="@string/register"
+            android:text="@string/login_email"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/font_normal" />
 
