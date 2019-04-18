@@ -137,7 +137,7 @@
                             android:textSize="@dimen/font_medium" />
 
                         <View
-                            android:layout_width="@dimen/separate_height"
+                            android:layout_width="@dimen/separate_width"
                             android:layout_height="match_parent"
                             android:background="@color/colorBlackLight3" />
 
