@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.example.admin.ridesharemobileclient.R;
 import com.example.admin.ridesharemobileclient.entity.Driver;
-import com.example.admin.ridesharemobileclient.ui.detailtripdriver.DetailDriverActivity;
+import com.example.admin.ridesharemobileclient.ui.detailtripregister.DetailTripRegisterActivity;
 
 import java.util.ArrayList;
 
@@ -69,7 +69,7 @@ public class DriverAdapter extends RecyclerView.Adapter<DriverAdapter.ViewHolder
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.tvDetail:
-                    Intent intent = new Intent(mContext, DetailDriverActivity.class);
+                    Intent intent = new Intent(mContext, DetailTripRegisterActivity.class);
                     mContext.startActivity(intent);
                     break;
                 case R.id.tvShowMore:

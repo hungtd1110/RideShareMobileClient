@@ -29,11 +29,19 @@
     <dimen name="radius_normal">10dp</dimen>
     <dimen name="border_width">1dp</dimen>
     <dimen name="radius_normal_large">30dp</dimen>
-    <dimen name="margin_giant_large">90dp</dimen>
+    <dimen name="margin_giant_large">80dp</dimen>
     <dimen name="radius_small">5dp</dimen>
     <dimen name="font_large_huge">18sp</dimen>
     <dimen name="padding_small_normal">8dp</dimen>
     <dimen name="padding_large_huge">30dp</dimen>
     <dimen name="height_large_huge">45dp</dimen>
     <dimen name="width_giant">310dp</dimen>
+    <dimen name="margin_tiny">2dp</dimen>
+    <dimen name="height_normal2">22dp</dimen>
+    <dimen name="width_normal2">22dp</dimen>
+    <dimen name="width_normal_large">25dp</dimen>
+    <dimen name="height_normal_large">25dp</dimen>
+    <dimen name="padding_huge">40dp</dimen>
+    <dimen name="padding_huge_giant">45dp</dimen>
+    <dimen name="margin_giant2">135dp</dimen>
 </resources>

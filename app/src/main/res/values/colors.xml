@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary">#FFFFFF</color>
     <color name="colorPrimaryDark">#46b6a6</color>
     <color name="colorAccent">#FF4081</color>
 
@@ -9,6 +9,8 @@
     <!--<color name="colorGray">#aeaeae</color>-->
     <color name="colorBlack">#000000</color>
     <color name="colorBlackLight">#B3000000</color>
+    <color name="colorBlackLight2">#80000000</color>
+    <color name="colorBlackLight3">#40000000</color>
     <!--<color name="colorBlackLight">#455A64</color>-->
     <color name="colorGreenLight">#80CBC4</color>
     <!--<color name="colorBlue">#1566e0</color>-->
@@ -16,8 +18,12 @@
     <color name="colorBlue">#800A6C99</color>
     <color name="colorWhiteLight">#66FFFFFF</color>
     <color name="colorBlueLight">#c0d6f7</color>
-    <color name="colorBackground">#FAFAFA</color>
+    <color name="colorBackground2">#FAFAFA</color>
+    <color name="colorBackground">#ECEFF1</color>
     <color name="colorGrayLight">#59000000</color>
     <color name="colorGray">#66000000</color>
     <color name="colorGrayTransparent">#EEEEEE</color>
+    <color name="colorWhiteLight2">#99FFFFFF</color>
+    <color name="colorWhiteLight3">#CCFFFFFF</color>
+    <color name="colorWhiteLight4">#E6FFFFFF</color>
 </resources>

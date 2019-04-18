@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    tools:context="com.example.admin.ridesharemobileclient.ui.detailtripregister.DetailTripRegisterActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorGreen"
+                android:paddingStart="@dimen/padding_large"
+                android:paddingTop="@dimen/padding_large"
+                android:paddingEnd="@dimen/padding_large"
+                android:paddingBottom="@dimen/margin_giant_large">
+
+                <ImageView
+                    android:id="@+id/ivBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_back" />
+
+                <ImageView
+                    android:id="@+id/ivImageUser"
+                    android:layout_width="@dimen/width_huge"
+                    android:layout_height="@dimen/height_huge"
+                    android:layout_below="@+id/ivBack"
+                    android:layout_marginTop="@dimen/margin_large"
+                    android:layout_marginEnd="@dimen/margin_normal_large"
+                    android:background="@drawable/background_border" />
+
+                <TextView
+                    android:id="@+id/tvUsername"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/ivImageUser"
+                    android:layout_toEndOf="@id/ivImageUser"
+                    android:maxLines="1"
+                    android:text="name"
+                    android:textColor="@color/colorBackground2"
+                    android:textSize="@dimen/font_large_huge"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvUsername"
+                    android:layout_alignStart="@+id/tvUsername"
+                    android:text="star" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_giant2">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_large"
+                    android:padding="@dimen/padding_normal"
+                    android:background="@drawable/background_border">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_toStartOf="@+id/ivShowMap"
+                        android:layout_marginEnd="@dimen/margin_normal_large"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        >
+
+                        <LinearLayout
+                            android:gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/ivMarkerStart"
+                                app:srcCompat="@drawable/ic_marker_start"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <TextView
+                                android:layout_marginStart="@dimen/margin_normal"
+                                android:maxLines="1"
+                                android:textColor="@color/colorBlackLight2"
+                                android:textSize="@dimen/font_normal"
+                                android:text="Hai Bà Trưng - Hà Nội"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_marginStart="@dimen/margin_large_huge"
+                            android:layout_marginTop="@dimen/margin_normal"
+                            android:background="@color/colorBlackLight3"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/separate_height" />
+
+                        <LinearLayout
+                            android:layout_marginTop="@dimen/margin_normal"
+                            android:gravity="top"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/ivMarkerEnd"
+                                app:srcCompat="@drawable/ic_marker_end"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <TextView
+                                android:layout_marginStart="@dimen/margin_normal"
+                                android:maxLines="1"
+                                android:textSize="@dimen/font_normal"
+                                android:text="TT Nếnh - Bắc Giang"
+                                android:textColor="@color/colorBlackLight2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/ivShowMap"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentEnd="true"
+                        app:srcCompat="@drawable/ic_show_map"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_normal"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:text="@string/title_information"
+                android:textColor="@color/colorBlackLight"
+                android:textSize="@dimen/font_normal" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_normal"
+                android:background="@drawable/background_border">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/padding_normal_large">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Địa điểm đi"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/font_normal" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:text="Nội dung địa điểm đi"
+                        android:textColor="@color/colorGray"
+                        android:textSize="@dimen/font_large" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/separate_height"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:background="@color/colorBlackLight3" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:text="Địa điểm đến"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/font_normal" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:text="Nội dung địa điểm đến"
+                        android:textColor="@color/colorGray"
+                        android:textSize="@dimen/font_large" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/separate_height"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:background="@color/colorBlackLight3" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_normal">
+
+                        <TextView
+                            android:id="@+id/tvTitleTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="Thời gian đi"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/font_normal" />
+
+                        <TextView
+                            android:id="@+id/tvTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/margin_large"
+                            android:layout_marginTop="@dimen/margin_small"
+                            android:layout_toEndOf="@id/tvTitleTime"
+                            android:gravity="end"
+                            android:text="Giá trị thời gian"
+                            android:textColor="@color/colorGray"
+                            android:textSize="@dimen/font_large" />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/separate_height"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:background="@color/colorBlackLight3" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_normal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="Số chỗ dư"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/font_normal" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginTop="@dimen/margin_small"
+                            android:text="4/5"
+                            android:textColor="@color/colorGray"
+                            android:textSize="@dimen/font_large" />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/separate_height"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:background="@color/colorBlackLight3" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_normal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="Phương tiện"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/font_normal" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginTop="@dimen/margin_small"
+                            android:text="Xe con"
+                            android:textColor="@color/colorGray"
+                            android:textSize="@dimen/font_large" />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/separate_height"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:background="@color/colorBlackLight3" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_normal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="Giá"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="@dimen/font_normal" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginTop="@dimen/margin_small"
+                            android:text="100.000 VNĐ"
+                            android:textColor="@color/colorGray"
+                            android:textSize="@dimen/font_large" />
+
+                    </RelativeLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/separate_height"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:background="@color/colorBlackLight3" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:text="Ghi chú"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="@dimen/font_normal" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:text="Không có ghi chú"
+                        android:textColor="@color/colorGray"
+                        android:textSize="@dimen/font_large" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginTop="@dimen/margin_large"
+            android:text="@string/title_image"
+            android:textColor="@color/colorBlackLight"
+            android:textSize="@dimen/font_normal" />
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_normal"
+            android:padding="@dimen/padding_normal_large"
+            app:cardCornerRadius="@dimen/radius_small">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/width_giant"
+                android:background="@color/colorGreen" />
+
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RideShareMobileClient aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</string>
+    <string name="app_name">RideShareMobileClient</string>
     <string name="map_token">pk.eyJ1IjoiaHVuZ3RkMTExMCIsImEiOiJjanN5OHowYWUwYTdkM3lwaXJ1YmpxeW5uIn0.2mqe0DSMBkv_gzpJUJsqfA</string>
 
     <string name="email">Email</string>
@@ -19,8 +19,8 @@
     <string name="tag_message">message</string>
     <string name="tag_notification">notification</string>
     <string name="tag_setting">setting</string>
-    <string name="my_driver">My Driver</string>
-    <string name="my_hitchhiker">My Hitchhiker</string>
+    <string name="my_trip">Chuyến đi của tôi</string>
+    <string name="register_trip">Chuyến đi đăng ký</string>
     <string name="title_driver">Driver</string>
     <string name="title_hitchhiker">Hitchhiker</string>
     <string name="key_user">key user</string>

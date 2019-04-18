@@ -87,7 +87,7 @@
     40.0dp
   </dimen>
   <dimen name="margin_giant_large">
-    120.0dp
+    106.67dp
   </dimen>
   <dimen name="radius_small">
     6.67dp
@@ -106,5 +106,29 @@
   </dimen>
   <dimen name="width_giant">
     413.33dp
+  </dimen>
+  <dimen name="margin_tiny">
+    2.67dp
+  </dimen>
+  <dimen name="height_normal2">
+    29.33dp
+  </dimen>
+  <dimen name="width_normal2">
+    29.33dp
+  </dimen>
+  <dimen name="width_normal_large">
+    33.33dp
+  </dimen>
+  <dimen name="height_normal_large">
+    33.33dp
+  </dimen>
+  <dimen name="padding_huge">
+    53.33dp
+  </dimen>
+  <dimen name="padding_huge_giant">
+    60.0dp
+  </dimen>
+  <dimen name="margin_giant2">
+    180.0dp
   </dimen>
 </resources>

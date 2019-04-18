@@ -183,7 +183,7 @@
 
             <TextView
                 style="@style/ToolItemTripTextView"
-                android:text="Đăng ký"
+                android:text="Hủy"
                 android:drawableStart="@drawable/ic_register" />
 
             <TextView
