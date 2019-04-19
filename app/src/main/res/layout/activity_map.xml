@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_normal"
-        android:background="@drawable/background_border_white"
+        android:background="@drawable/background_border_white_transparent"
         android:padding="@dimen/padding_normal">
 
         <LinearLayout

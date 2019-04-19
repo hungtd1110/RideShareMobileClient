@@ -1,4 +1,4 @@
-package com.example.admin.ridesharemobileclient.ui.registertrip;
+package com.example.admin.ridesharemobileclient.ui.mytrip;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,15 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.admin.ridesharemobileclient.R;
+import com.example.admin.ridesharemobileclient.ui.registertrip.RegisterHitchhikerAdapter;
 
-public class RegisterHitchhikerFragment extends Fragment {
+public class MyHitchhikerFragment extends Fragment {
     private View view;
-    private RecyclerView rvRegisterHitchhiker;
+    private RecyclerView rvMyHitchhiker;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_register_hitchhiker, container, false);
+        view = inflater.inflate(R.layout.fragment_my_hitchhiker, container, false);
 
         initView();
         init();
@@ -28,13 +29,13 @@ public class RegisterHitchhikerFragment extends Fragment {
     }
 
     private void init() {
-        RegisterHitchhikerAdapter adapter = new RegisterHitchhikerAdapter(getContext());
+        MyHitchhikerAdapter adapter = new MyHitchhikerAdapter(getContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        rvRegisterHitchhiker.setLayoutManager(layoutManager);
-        rvRegisterHitchhiker.setAdapter(adapter);
+        rvMyHitchhiker.setLayoutManager(layoutManager);
+        rvMyHitchhiker.setAdapter(adapter);
     }
 
     private void initView() {
-        rvRegisterHitchhiker = view.findViewById(R.id.rvRegisterHitchhiker);
+        rvMyHitchhiker = view.findViewById(R.id.rvMyHitchhiker);
     }
 }

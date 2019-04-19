@@ -3,7 +3,6 @@ package com.example.admin.ridesharemobileclient.ui.map;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -12,17 +11,21 @@ import com.mapbox.api.directions.v5.models.DirectionsResponse;
 import com.mapbox.api.directions.v5.models.DirectionsRoute;
 import com.mapbox.geojson.Point;
 import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.mapboxsdk.annotations.Icon;
+import com.mapbox.mapboxsdk.annotations.IconFactory;
+import com.mapbox.mapboxsdk.annotations.MarkerOptions;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
 import com.mapbox.mapboxsdk.maps.OnMapReadyCallback;
 import com.mapbox.mapboxsdk.maps.Style;
-import com.mapbox.mapboxsdk.plugins.markerview.MarkerView;
 import com.mapbox.mapboxsdk.plugins.markerview.MarkerViewManager;
 import com.mapbox.services.android.navigation.ui.v5.NavigationLauncher;
 import com.mapbox.services.android.navigation.ui.v5.NavigationLauncherOptions;
 import com.mapbox.services.android.navigation.ui.v5.route.NavigationMapRoute;
 import com.mapbox.services.android.navigation.v5.navigation.NavigationRoute;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,6 +44,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private double lngStart = 105.783337;
     private double latEnd = 21.006430;
     private double lngEnd = 105.843493;
+    private List<Point> routeCoordinateList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,47 +67,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         mOrigin = Point.fromLngLat(lngStart, latStart);
         mDestination = Point.fromLngLat(lngEnd, latEnd);
-        showRoute();
-    }
-
-    private void showRoute() {
-        LayoutInflater inflater = LayoutInflater.from(this);
-        View viewMarker = inflater.inflate(R.layout.view_marker, null);
-        ImageView ivMarker = viewMarker.findViewById(R.id.ivMarker);
-
-//        View viewMarkerEnd = inflater.inflate(R.layout.view_marker, null);
-//        ImageView ivMarkerEnd = viewMarkerStart.findViewById(R.id.ivMarker);
-//        ivMarkerEnd.setBackgroundResource(R.drawable.ic_marker_end);
-
-//        ivMarker.setBackgroundResource(R.drawable.ic_marker_start);
-//        MarkerView markerStart = new MarkerView(new LatLng(latStart, lngStart), viewMarker);
-//
-//        ivMarker.setBackgroundResource(R.drawable.ic_marker_end);
-//        MarkerView markerEnd = new MarkerView(new LatLng(latEnd, lngEnd), viewMarker);
-//
-//        mMarkerManager.addMarker(markerStart);
-//        mMarkerManager.addMarker(markerEnd);
-
-        NavigationRoute.builder(this)
-                .accessToken(getString(R.string.map_token))
-                .origin(mOrigin)
-                .destination(mDestination)
-                .build()
-                .getRoute(new Callback<DirectionsResponse>() {
-                    @Override
-                    public void onResponse(Call<DirectionsResponse> call, Response<DirectionsResponse> response) {
-                        DirectionsRoute route = response.body().routes().get(0);
-
-                        //chỉ show route
-                        NavigationMapRoute navigationMapRoute = new NavigationMapRoute(null, mvMap, mbmMap, R.style.NavigationMapRoute);
-                        navigationMapRoute.addRoute(route);
-                    }
-
-                    @Override
-                    public void onFailure(Call<DirectionsResponse> call, Throwable t) {
-
-                    }
-                });
     }
 
     private void initView() {
@@ -115,10 +78,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public void onMapReady(@NonNull MapboxMap mapboxMap) {
         mbmMap = mapboxMap;
 
+        mMarkerManager = new MarkerViewManager(mvMap, mbmMap);
         mapboxMap.setStyle(Style.MAPBOX_STREETS, new Style.OnStyleLoaded() {
             @Override
             public void onStyleLoaded(@NonNull Style style) {
-                mMarkerManager = new MarkerViewManager(mvMap, mbmMap);
+                showRoute();
             }
         });
     }
@@ -175,30 +139,75 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
     }
 
+    private void showRoute() {
+        try {
+            IconFactory iconFactory = IconFactory.getInstance(MapActivity.this);
+
+            Icon iconStart = iconFactory.fromResource(R.mipmap.ic_map_start);
+            mbmMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(latStart, lngStart))
+                    .title("ĐH Sư phạm Hà Nội"))
+                    .setIcon(iconStart);
+
+            Icon iconEnd = iconFactory.fromResource(R.mipmap.ic_map_end);
+            mbmMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(latEnd, lngEnd))
+                    .title("ĐH Bách khoa Hà Nội"))
+                    .setIcon(iconEnd);
+
+            NavigationRoute.builder(this)
+                    .accessToken(getString(R.string.map_token))
+                    .origin(mOrigin)
+                    .destination(mDestination)
+                    .build()
+                    .getRoute(new Callback<DirectionsResponse>() {
+                        @Override
+                        public void onResponse(Call<DirectionsResponse> call, Response<DirectionsResponse> response) {
+                            DirectionsRoute route = response.body().routes().get(0);
+
+                            //chỉ show route
+                            NavigationMapRoute navigationMapRoute = new NavigationMapRoute(null, mvMap, mbmMap, R.style.NavigationMapRoute);
+                            navigationMapRoute.addRoute(route);
+                        }
+
+                        @Override
+                        public void onFailure(Call<DirectionsResponse> call, Throwable t) {
+
+                        }
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private void showNavigation() {
-        NavigationRoute.builder(this)
-                .accessToken(getString(R.string.map_token))
-                .origin(mOrigin)
-                .destination(mDestination)
-                .build()
-                .getRoute(new Callback<DirectionsResponse>() {
-                    @Override
-                    public void onResponse(Call<DirectionsResponse> call, Response<DirectionsResponse> response) {
-                        DirectionsRoute route = response.body().routes().get(0);
+        try {
+            NavigationRoute.builder(this)
+                    .accessToken(getString(R.string.map_token))
+                    .origin(mOrigin)
+                    .destination(mDestination)
+                    .build()
+                    .getRoute(new Callback<DirectionsResponse>() {
+                        @Override
+                        public void onResponse(Call<DirectionsResponse> call, Response<DirectionsResponse> response) {
+                            DirectionsRoute route = response.body().routes().get(0);
 
-                        //show chạy hẳn cái navigation
-                        NavigationLauncherOptions options = NavigationLauncherOptions.builder()
-                                .directionsRoute(route)
-                                .shouldSimulateRoute(true)
-                                .build();
+                            //show chạy hẳn cái navigation
+                            NavigationLauncherOptions options = NavigationLauncherOptions.builder()
+                                    .directionsRoute(route)
+                                    .shouldSimulateRoute(true)
+                                    .build();
 
-                        NavigationLauncher.startNavigation(MapActivity.this, options);
-                    }
+                            NavigationLauncher.startNavigation(MapActivity.this, options);
+                        }
 
-                    @Override
-                    public void onFailure(Call<DirectionsResponse> call, Throwable t) {
+                        @Override
+                        public void onFailure(Call<DirectionsResponse> call, Throwable t) {
 
-                    }
-                });
+                        }
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

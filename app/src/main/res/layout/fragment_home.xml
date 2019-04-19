@@ -26,7 +26,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/margin_large"
-                    android:background="@drawable/background_border"
+                    android:background="@drawable/background_border_white"
                     android:padding="@dimen/padding_normal">
 
                     <LinearLayout
@@ -118,13 +118,14 @@
                     android:layout_marginTop="@dimen/margin_huge"
                     android:layout_marginEnd="@dimen/margin_large"
                     android:layout_marginBottom="@dimen/margin_large"
-                    android:background="@drawable/background_border">
+                    android:background="@drawable/background_border_white">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
                         <TextView
+                            android:id="@+id/tvMyTrip"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -138,6 +139,7 @@
 
                         <View
                             android:layout_width="@dimen/separate_width"
+                            android:layout_margin="@dimen/margin_normal"
                             android:layout_height="match_parent"
                             android:background="@color/colorBlackLight3" />
 

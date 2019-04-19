@@ -1,4 +1,4 @@
-package com.example.admin.ridesharemobileclient.ui.registertrip;
+package com.example.admin.ridesharemobileclient.ui.mytrip;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,15 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.admin.ridesharemobileclient.R;
+import com.example.admin.ridesharemobileclient.ui.registertrip.RegisterDriverAdapter;
 
-public class RegisterHitchhikerFragment extends Fragment {
+public class MyDriverFragment extends Fragment {
     private View view;
-    private RecyclerView rvRegisterHitchhiker;
+    private RecyclerView rvMyDriver;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_register_hitchhiker, container, false);
+        view = inflater.inflate(R.layout.fragment_my_driver, container, false);
 
         initView();
         init();
@@ -28,13 +29,13 @@ public class RegisterHitchhikerFragment extends Fragment {
     }
 
     private void init() {
-        RegisterHitchhikerAdapter adapter = new RegisterHitchhikerAdapter(getContext());
+        MyDriverAdapter adapter = new MyDriverAdapter(getContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        rvRegisterHitchhiker.setLayoutManager(layoutManager);
-        rvRegisterHitchhiker.setAdapter(adapter);
+        rvMyDriver.setLayoutManager(layoutManager);
+        rvMyDriver.setAdapter(adapter);
     }
 
     private void initView() {
-        rvRegisterHitchhiker = view.findViewById(R.id.rvRegisterHitchhiker);
+        rvMyDriver = view.findViewById(R.id.rvMyDriver);
     }
 }

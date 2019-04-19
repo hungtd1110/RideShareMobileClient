@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,6 +24,8 @@ import com.example.admin.ridesharemobileclient.data.IAPIHelper;
 import com.example.admin.ridesharemobileclient.entity.BaseRespone;
 import com.example.admin.ridesharemobileclient.entity.Driver;
 import com.example.admin.ridesharemobileclient.entity.Hitchhiker;
+import com.example.admin.ridesharemobileclient.ui.detailsearch.DetailSearchActivity;
+import com.example.admin.ridesharemobileclient.ui.mytrip.MyTripActivity;
 import com.example.admin.ridesharemobileclient.ui.registertrip.RegisterTripActivity;
 import com.google.gson.Gson;
 import com.mapbox.api.geocoding.v5.models.CarmenFeature;
@@ -47,7 +50,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private View mView;
     private RecyclerView rvDriver, rvHitchhiker;
     private LinearLayout llStartPosition, llEndPosition;
-    private TextView tvStartPosition, tvEndPosition, tvRegisterTrip;
+    private TextView tvStartPosition, tvEndPosition, tvRegisterTrip, tvMyTrip;
+    private ImageView ivSearch;
 
     private static final int REQUEST_SEARCH_START = 1;
     private static final int REQUEST_SEARCH_END = 2;
@@ -152,6 +156,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         llStartPosition.setOnClickListener(this);
         llEndPosition.setOnClickListener(this);
         tvRegisterTrip.setOnClickListener(this);
+        tvMyTrip.setOnClickListener(this);
+        ivSearch.setOnClickListener(this);
     }
 
     private void initView() {
@@ -162,6 +168,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         tvStartPosition = mView.findViewById(R.id.tvStartPosition);
         tvEndPosition = mView.findViewById(R.id.tvEndPosition);
         tvRegisterTrip = mView.findViewById(R.id.tvRegisterTrip);
+        tvMyTrip = mView.findViewById(R.id.tvMyTrip);
+        ivSearch = mView.findViewById(R.id.ivSearch);
     }
 
     @Override
@@ -173,10 +181,21 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             case R.id.llEndPosition:
                 showSearch(REQUEST_SEARCH_END);
                 break;
-            case R.id.tvRegisterTrip:
+            case R.id.tvRegisterTrip: {
                 Intent intent = new Intent(getContext(), RegisterTripActivity.class);
                 startActivity(intent);
                 break;
+            }
+            case R.id.tvMyTrip: {
+                Intent intent = new Intent(getContext(), MyTripActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.ivSearch: {
+                Intent intent = new Intent(getContext(), DetailSearchActivity.class);
+                startActivity(intent);
+                break;
+            }
         }
     }
 

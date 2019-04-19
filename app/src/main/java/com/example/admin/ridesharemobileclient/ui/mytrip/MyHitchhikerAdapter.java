@@ -1,0 +1,92 @@
+package com.example.admin.ridesharemobileclient.ui.mytrip;
+
+import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.example.admin.ridesharemobileclient.R;
+import com.example.admin.ridesharemobileclient.entity.Hitchhiker;
+import com.example.admin.ridesharemobileclient.ui.detailtripregister.DetailTripRegisterActivity;
+
+import java.util.ArrayList;
+
+public class MyHitchhikerAdapter extends RecyclerView.Adapter<MyHitchhikerAdapter.ViewHolder> {
+    private Context mContext;
+
+    private ArrayList<Hitchhiker> mListHitchhiker;
+    private boolean showMore;
+
+    MyHitchhikerAdapter(Context context) {
+        mContext = context;
+        showMore = false;
+    }
+
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(mContext);
+        View itemView = inflater.inflate(R.layout.item_register_trip, parent, false);
+        return new ViewHolder(itemView);
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.tvTitleNumberSeat.setText("Số chỗ cần");
+
+        holder.llInformation.setVisibility(View.GONE);
+        holder.llAction.setVisibility(View.GONE);
+    }
+
+    @Override
+    public int getItemCount() {
+        return mListHitchhiker != null ? mListHitchhiker.size() : 3;
+    }
+
+    void setData(ArrayList<Hitchhiker> listHitchhiker) {
+        mListHitchhiker = listHitchhiker;
+        notifyDataSetChanged();
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private TextView tvDetail, tvShowMore, tvTitleNumberSeat;
+        private LinearLayout llInformation, llAction;
+
+        ViewHolder(View itemView) {
+            super(itemView);
+
+            tvDetail = itemView.findViewById(R.id.tvDetail);
+            tvShowMore = itemView.findViewById(R.id.tvShowMore);
+            tvTitleNumberSeat = itemView.findViewById(R.id.tvTitleNumberSeat);
+            llInformation = itemView.findViewById(R.id.llInformation);
+            llAction = itemView.findViewById(R.id.llAction);
+
+            tvDetail.setOnClickListener(this);
+            tvShowMore.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.tvDetail:
+                    Intent intent = new Intent(mContext, DetailTripRegisterActivity.class);
+                    mContext.startActivity(intent);
+                    break;
+                case R.id.tvShowMore:
+                    if (showMore) {
+                        llInformation.setVisibility(View.GONE);
+                        llAction.setVisibility(View.GONE);
+                        showMore = false;
+                    } else {
+                        llInformation.setVisibility(View.VISIBLE);
+                        llAction.setVisibility(View.VISIBLE);
+                        showMore = true;
+                    }
+                    break;
+            }
+        }
+    }
+}

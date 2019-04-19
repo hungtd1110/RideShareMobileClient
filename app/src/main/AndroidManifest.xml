@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.registertrip.RegisterTripActivity"></activity>
+        <activity android:name=".ui.detailsearch.DetailSearchActivity"></activity>
+        <activity android:name=".ui.registertrip.RegisterTripActivity" />
         <activity android:name=".ui.mytrip.MyTripActivity" />
         <activity android:name=".ui.map.MapActivity" />
         <activity android:name=".ui.main.MainActivity" />
