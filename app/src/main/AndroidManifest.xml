@@ -13,10 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.detailsearch.DetailSearchActivity"></activity>
-        <activity android:name=".ui.registertrip.RegisterTripActivity" />
-        <activity android:name=".ui.mytrip.MyTripActivity" />
-        <activity android:name=".ui.map.MapActivity" />
+        <activity android:name=".ui.search.SearchActivity" />
+        <activity android:name=".ui.mapdetail.MapDetailActivity" />
+        <activity android:name=".ui.mapsearch.MapSearchActivity" />
         <activity android:name=".ui.main.MainActivity" />
         <activity
             android:name=".ui.login.LoginActivity"
@@ -30,15 +29,12 @@
         <activity
             android:name=".ui.register.RegisterActivity"
             android:theme="@style/LoginTheme" />
-        <activity android:name=".ui.detailtripregister.DetailTripRegisterActivity">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
+        <activity android:name=".ui.detailtripregister.DetailTripRegisterActivity" />
+        <activity android:name=".ui.addtrip.AddTripActivity" />
+        <activity android:name=".ui.detailmessage.DetailMessageActivity" />
+        <activity android:name=".ui.detailtripsubmit.DetailTripSubmitActivity" />
+        <activity android:name=".ui.userregister.UserRegisterActivity" />
+        <activity android:name=".ui.usertrip.UserTripActivity"></activity>
     </application>
 
 </manifest>

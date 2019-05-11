@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.example.admin.ridesharemobileclient.R;
 import com.example.admin.ridesharemobileclient.data.APIHelper;
 import com.example.admin.ridesharemobileclient.data.IAPIHelper;
-import com.example.admin.ridesharemobileclient.entity.BaseRespone;
+import com.example.admin.ridesharemobileclient.entity.respone.BaseRespone;
 import com.example.admin.ridesharemobileclient.entity.User;
 import com.google.gson.Gson;
 
@@ -92,8 +92,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 Log.d(TAG, "onResponse: " + baseRespone);
 
                 if (baseRespone != null) {
-                    Gson gson = new Gson();
-                    User user = gson.fromJson((String) baseRespone.getMetadata(), User.class);
+//                    Gson gson = new Gson();
+//                    User user = gson.fromJson((String) baseRespone.getMetadata(), User.class);
+
+                    User user = new User();
+                    user.setEmail(email);
+                    user.setUsername(username);
+                    user.setPassword(password);
 
                     Intent intent = new Intent();
                     intent.putExtra(getString(R.string.key_user), user);

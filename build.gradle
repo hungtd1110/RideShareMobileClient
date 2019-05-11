@@ -7,6 +7,7 @@ buildscript {
         jcenter()
         mavenCentral()
         maven { url 'https://mapbox.bintray.com/mapbox' }
+        maven { url "https://jitpack.io" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
@@ -23,6 +24,7 @@ allprojects {
         jcenter()
         mavenCentral()
         maven { url 'https://mapbox.bintray.com/mapbox' }
+        maven { url "https://jitpack.io" }
     }
 }
 
@@ -146,7 +148,7 @@ task convertDimens() {
         }
     }
 
-    new XmlNodePrinter(new PrintWriter(new FileWriter(xmlFile480))).print(xml480)
+//    new XmlNodePrinter(new PrintWriter(new FileWriter(xmlFile480))).print(xml480)
 //    new XmlNodePrinter(new PrintWriter(new FileWriter(xmlFile540))).print(xml540)
 //    new XmlNodePrinter(new PrintWriter(new FileWriter(xmlFile600))).print(xml600)
 //    new XmlNodePrinter(new PrintWriter(new FileWriter(xmlFile640))).print(xml640)

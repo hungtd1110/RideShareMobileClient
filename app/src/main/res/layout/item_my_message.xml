@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/margin_giant"
+    android:gravity="end"
+    android:orientation="vertical"
+    android:layout_marginEnd="@dimen/margin_normal"
+    android:paddingBottom="@dimen/padding_normal_large">
+
+    <TextView
+        android:id="@+id/tvTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="9:30 1/1/2019"
+        android:textColor="@color/colorGrayLight"
+        android:textSize="@dimen/font_normal" />
+
+    <TextView
+        android:id="@+id/tvMessage"
+        android:layout_marginTop="@dimen/margin_small"
+        android:padding="@dimen/padding_normal"
+        android:background="@drawable/background_border_green"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Xin chào mọi người"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/font_large" />
+
+</LinearLayout>

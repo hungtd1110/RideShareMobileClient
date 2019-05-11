@@ -4,7 +4,7 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <!--<item name="colorPrimary">@color/colorPrimary</item>-->
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
         <!--<item name="colorAccent">@color/colorAccent</item>-->
     </style>
 
@@ -22,27 +22,23 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="ItemNavigationTextView" parent="BaseTextView">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:background">@drawable/background_ripple_navigation</item>
-        <item name="android:gravity">center</item>
-        <item name="android:padding">@dimen/padding_small</item>
-        <item name="android:textColor">@color/colorGrayLight</item>
-    </style>
-
     <style name="ToolItemTripTextView" parent="BaseTextView">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_marginEnd">@dimen/margin_large</item>
-        <item name="android:layout_weight">1</item>
         <item name="android:background">@drawable/background_border_green</item>
         <item name="android:drawablePadding">@dimen/padding_small</item>
         <item name="android:gravity">center</item>
-        <item name="android:padding">@dimen/padding_small_normal</item>
+        <item name="android:paddingTop">@dimen/padding_normal</item>
+        <item name="android:paddingBottom">@dimen/padding_normal</item>
+        <item name="android:paddingStart">@dimen/padding_large</item>
+        <item name="android:paddingEnd">@dimen/padding_large</item>
         <item name="android:textColor">@color/colorWhite</item>
-        <item name="android:textSize">@dimen/font_normal</item>
+        <item name="android:textSize">@dimen/font_large</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+
+    <style name="TabLayoutStyle" parent="Base.Widget.Design.TabLayout">
+        <item name="android:textSize">@dimen/font_medium</item>
+        <item name="android:textAllCaps">true</item>
     </style>
 
 </resources>

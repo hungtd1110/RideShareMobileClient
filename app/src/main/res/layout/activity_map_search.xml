@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:mapbox="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.mapsearch.MapSearchActivity">
+
+    <com.mapbox.mapboxsdk.maps.MapView
+        android:id="@+id/mvMap"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        mapbox:mapbox_cameraTargetLat="21.028186"
+        mapbox:mapbox_cameraTargetLng="105.834561"
+        mapbox:mapbox_cameraZoom="12" />
+
+    <ImageView
+        android:id="@+id/ivBack"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:padding="@dimen/padding_normal"
+        android:layout_marginTop="@dimen/margin_small"
+        android:layout_width="@dimen/width_large_huge"
+        android:layout_height="@dimen/height_large_huge"
+        app:srcCompat="@drawable/ic_back_green" />
+
+</RelativeLayout>

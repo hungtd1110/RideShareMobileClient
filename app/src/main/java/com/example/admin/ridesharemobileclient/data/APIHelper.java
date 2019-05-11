@@ -5,8 +5,10 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.OkHttpClient;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.example.admin.ridesharemobileclient.config.Const.IP;
+
 public class APIHelper {
-    private static String BASE_URL = "http://192.168.0.211:8080/api/";
+    private static String BASE_URL = "http://" + IP + ":8080/api/";
     private static IAPIHelper mInstance;
 
     public static IAPIHelper getInstance() {

@@ -1,11 +1,250 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
 
-    <TextView
-        android:text="setting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-</LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="@color/colorBackground3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:orientation="vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/civImage"
+                android:layout_width="@dimen/width_large_huge3"
+                android:layout_height="@dimen/height_large_huge3"
+                android:layout_marginBottom="@dimen/margin_normal"
+                android:layout_marginStart="@dimen/margin_normal"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:clickable="false"
+                android:src="@color/colorGrayLight"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_normal3"
+                android:text="Đậu Đỏ"
+                android:textColor="@color/colorBlackLight"
+                android:textSize="@dimen/font_large_huge"
+                app:layout_constraintBottom_toTopOf="@+id/tvTitleInfor"
+                app:layout_constraintLeft_toRightOf="@+id/civImage"
+                app:layout_constraintTop_toTopOf="@+id/civImage"
+                app:layout_constraintVertical_chainStyle="packed" />
+
+            <TextView
+                android:id="@+id/tvTitleInfor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/tvName"
+                android:layout_below="@+id/tvName"
+                android:layout_marginStart="@dimen/margin_normal3"
+                android:text="@string/title_detail_infor"
+                android:textColor="@color/colorGray"
+                android:textSize="@dimen/font_large_huge"
+                app:layout_constraintBottom_toBottomOf="@+id/civImage"
+                app:layout_constraintLeft_toRightOf="@+id/civImage"
+                app:layout_constraintTop_toBottomOf="@+id/tvName" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/separate_height"
+                android:background="@color/colorBackground3"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/llNewFeed"
+            android:gravity="center_vertical"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:padding="@dimen/padding_normal"
+            android:background="@color/colorWhite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:padding="@dimen/padding_medium2"
+                android:background="@drawable/background_border_item_setting_1"
+                app:srcCompat="@drawable/ic_new_feed_white"
+                android:layout_width="@dimen/width_large"
+                android:layout_height="@dimen/height_large" />
+
+            <TextView
+                android:layout_marginStart="@dimen/margin_normal"
+                android:text="@string/new_feed"
+                android:textSize="@dimen/font_large_huge"
+                android:textColor="@color/colorBlackLight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llTripSubmit"
+            android:gravity="center_vertical"
+            android:layout_marginTop="@dimen/separate_height"
+            android:padding="@dimen/padding_normal"
+            android:background="@color/colorWhite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:padding="@dimen/padding_medium2"
+                android:background="@drawable/background_border_item_setting_2"
+                app:srcCompat="@drawable/ic_trip_submit_white"
+                android:layout_width="@dimen/width_large"
+                android:layout_height="@dimen/height_large" />
+
+            <TextView
+                android:layout_marginStart="@dimen/margin_normal"
+                android:text="@string/trip_submit"
+                android:textSize="@dimen/font_large_huge"
+                android:textColor="@color/colorBlackLight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llTripRegister"
+            android:gravity="center_vertical"
+            android:layout_marginTop="@dimen/separate_height"
+            android:padding="@dimen/padding_normal"
+            android:background="@color/colorWhite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:padding="@dimen/padding_medium2"
+                android:background="@drawable/background_border_item_setting_3"
+                app:srcCompat="@drawable/ic_trip_register_white"
+                android:layout_width="@dimen/width_large"
+                android:layout_height="@dimen/height_large" />
+
+            <TextView
+                android:layout_marginStart="@dimen/margin_normal"
+                android:text="@string/trip_register"
+                android:textSize="@dimen/font_large_huge"
+                android:textColor="@color/colorBlackLight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llMessage"
+            android:gravity="center_vertical"
+            android:layout_marginTop="@dimen/separate_height"
+            android:padding="@dimen/padding_normal"
+            android:background="@color/colorWhite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:padding="@dimen/padding_medium2"
+                android:background="@drawable/background_border_item_setting_4"
+                app:srcCompat="@drawable/ic_message_white"
+                android:layout_width="@dimen/width_large"
+                android:layout_height="@dimen/height_large" />
+
+            <TextView
+                android:layout_marginStart="@dimen/margin_normal"
+                android:text="@string/message2"
+                android:textSize="@dimen/font_large_huge"
+                android:textColor="@color/colorBlackLight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llNotification"
+            android:gravity="center_vertical"
+            android:layout_marginTop="@dimen/separate_height"
+            android:padding="@dimen/padding_normal"
+            android:background="@color/colorWhite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:padding="@dimen/padding_medium2"
+                android:background="@drawable/background_border_item_setting_5"
+                app:srcCompat="@drawable/ic_notification_white"
+                android:layout_width="@dimen/width_large"
+                android:layout_height="@dimen/height_large" />
+
+            <TextView
+                android:layout_marginStart="@dimen/margin_normal"
+                android:text="@string/notification"
+                android:textSize="@dimen/font_large_huge"
+                android:textColor="@color/colorBlackLight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llIntroduce"
+            android:gravity="center_vertical"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:padding="@dimen/padding_normal"
+            android:background="@color/colorWhite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:padding="@dimen/padding_normal"
+                app:srcCompat="@drawable/ic_introduce_black"
+                android:layout_width="@dimen/width_large"
+                android:layout_height="@dimen/height_large" />
+
+            <TextView
+                android:layout_marginStart="@dimen/margin_normal"
+                android:text="@string/introduce"
+                android:textSize="@dimen/font_large_huge"
+                android:textColor="@color/colorBlackLight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llLogout"
+            android:gravity="center_vertical"
+            android:layout_marginTop="@dimen/separate_height"
+            android:padding="@dimen/padding_normal"
+            android:background="@color/colorWhite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:padding="@dimen/padding_medium2"
+                app:srcCompat="@drawable/ic_logout_black"
+                android:layout_width="@dimen/width_large"
+                android:layout_height="@dimen/height_large" />
+
+            <TextView
+                android:layout_marginStart="@dimen/margin_normal"
+                android:text="@string/logout"
+                android:textSize="@dimen/font_large_huge"
+                android:textColor="@color/colorBlackLight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

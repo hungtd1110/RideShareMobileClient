@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorBackground3"
+    tools:context="com.example.admin.ridesharemobileclient.ui.usertrip.UserTripActivity"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rlToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_large_huge2"
+        android:background="@color/colorGreen"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="@dimen/width_large_huge2"
+            android:layout_height="@dimen/height_large_huge2"
+            android:background="?attr/selectableItemBackground"
+            android:padding="@dimen/padding_normal4"
+            app:srcCompat="@drawable/ic_back_white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/title_user_register"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/font_large_huge" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:text="Danh sách đã đăng ký"
+        android:textSize="@dimen/font_large_huge"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:paddingStart="@dimen/padding_normal3"
+        android:textColor="@color/colorGray"
+        android:background="@color/colorBackground3"
+        android:layout_height="@dimen/height_large_huge2" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvUserTrip"
+        android:background="@color/colorWhite"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

@@ -1,56 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.admin.ridesharemobileclient.ui.main.MainActivity">
 
-    <FrameLayout
-        android:id="@+id/frl_container"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/vSeparate" />
+        android:layout_height="@dimen/height_large_huge2"
+        android:background="@color/colorGreen"
+        android:gravity="center_vertical">
 
-    <View
-        android:id="@+id/vSeparate"
-        android:layout_above="@id/ll_navigation"
-        android:background="@color/colorBackground"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/separate_height" />
+        <ImageView
+            android:layout_width="@dimen/width_large_huge2"
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackground"
+            android:padding="@dimen/padding_normal4"
+            app:srcCompat="@drawable/ic_user_white" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingStart="@dimen/padding_normal"
+            android:text="Rideshare"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/font_large_huge" />
+
+        <ImageView
+            android:layout_width="@dimen/width_large_huge2"
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackground"
+            android:padding="@dimen/padding_normal4"
+            app:srcCompat="@drawable/ic_search_white" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_navigation"
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:layout_alignParentBottom="true"
-        android:background="@color/colorWhite"
-        android:gravity="center">
+        android:layout_height="@dimen/height_large_huge2"
+        android:background="@color/colorWhite">
 
-        <TextView
-            android:id="@+id/tv_home"
-            style="@style/ItemNavigationTextView"
-            android:drawableTop="@drawable/ic_menu_home_selected"
-            android:text="@string/menu_home"
-            android:textColor="@color/colorGreen" />
+        <ImageView
+            android:id="@+id/iv_new_feed"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground"
+            android:padding="@dimen/padding_normal4"
+            app:srcCompat="@drawable/ic_new_feed_green" />
 
-        <TextView
-            android:id="@+id/tv_message"
-            style="@style/ItemNavigationTextView"
-            android:drawableTop="@drawable/ic_menu_message"
-            android:text="@string/menu_message" />
+        <ImageView
+            android:id="@+id/iv_trip_submit"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground"
+            android:padding="@dimen/padding_normal4"
+            app:srcCompat="@drawable/ic_trip_submit_black" />
 
-        <TextView
-            android:id="@+id/tv_notification"
-            style="@style/ItemNavigationTextView"
-            android:drawableTop="@drawable/ic_menu_notification"
-            android:text="@string/menu_notification" />
+        <ImageView
+            android:id="@+id/iv_trip_register"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground"
+            android:padding="@dimen/padding_normal4"
+            app:srcCompat="@drawable/ic_trip_register_black" />
 
-        <TextView
-            android:id="@+id/tv_setting"
-            style="@style/ItemNavigationTextView"
-            android:drawableTop="@drawable/ic_menu_setting"
-            android:text="@string/menu_setting" />
+        <ImageView
+            android:id="@+id/iv_message"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground"
+            android:padding="@dimen/padding_normal4"
+            app:srcCompat="@drawable/ic_message_black" />
+
+        <ImageView
+            android:id="@+id/iv_notification"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground"
+            android:padding="@dimen/padding_normal4"
+            app:srcCompat="@drawable/ic_notification_black" />
+
+        <ImageView
+            android:id="@+id/iv_setting"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?attr/selectableItemBackground"
+            android:padding="@dimen/padding_normal4"
+            app:srcCompat="@drawable/ic_setting_black" />
 
     </LinearLayout>
 
-</RelativeLayout>
+    <View
+        android:id="@+id/vSeparate"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/separate_height"
+        android:layout_above="@id/ll_navigation"
+        android:background="@color/colorBackground3" />
+
+    <FrameLayout
+        android:id="@+id/frl_container_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/vSeparate"
+        android:background="@color/colorBackground3" />
+
+
+</LinearLayout>

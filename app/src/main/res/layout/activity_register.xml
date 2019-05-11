@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorWhite"
-    android:orientation="vertical"
     tools:context="com.example.admin.ridesharemobileclient.ui.register.RegisterActivity">
 
     <FrameLayout
+        android:id="@+id/flHeader"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/header_height_normal"
-        android:background="@drawable/ic_background_header">
+        android:layout_height="0dp"
+        android:background="@drawable/ic_background_header"
+        app:layout_constraintDimensionRatio="9:5"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:layout_width="@dimen/width_huge"
@@ -22,165 +27,183 @@
 
     </FrameLayout>
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_huge_giant"
-        android:layout_marginRight="@dimen/margin_huge_giant"
-        android:layout_marginTop="@dimen/margin_large_huge"
-        android:background="@drawable/background_border_login">
-
-        <EditText
-            android:id="@+id/etEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/ivEmail"
-            android:background="@android:color/transparent"
-            android:hint="@string/email"
-            android:inputType="textEmailAddress"
-            android:maxLines="1"
-            android:paddingBottom="@dimen/padding_normal"
-            android:paddingEnd="@dimen/padding_large"
-            android:paddingStart="@dimen/padding_small"
-            android:paddingTop="@dimen/padding_normal"
-            android:textSize="@dimen/font_normal" />
-
-        <ImageView
-            android:id="@+id/ivEmail"
-            android:layout_width="@dimen/width_normal"
-            android:layout_height="@dimen/height_normal"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/margin_normal_large"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_email"
-            tools:ignore="ContentDescription" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_huge_giant"
-        android:layout_marginRight="@dimen/margin_huge_giant"
-        android:layout_marginTop="@dimen/margin_normal"
-        android:background="@drawable/background_border_login">
-
-        <EditText
-            android:id="@+id/etUsername"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/ivUsername"
-            android:background="@android:color/transparent"
-            android:hint="@string/username"
-            android:inputType="textEmailAddress"
-            android:maxLines="1"
-            android:paddingBottom="@dimen/padding_normal"
-            android:paddingEnd="@dimen/padding_large"
-            android:paddingStart="@dimen/padding_small"
-            android:paddingTop="@dimen/padding_normal"
-            android:textSize="@dimen/font_normal" />
-
-        <ImageView
-            android:id="@+id/ivUsername"
-            android:layout_width="@dimen/width_normal"
-            android:layout_height="@dimen/height_normal"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/margin_normal_large"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_username"
-            tools:ignore="ContentDescription" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_huge_giant"
-        android:layout_marginRight="@dimen/margin_huge_giant"
-        android:layout_marginTop="@dimen/margin_normal"
-        android:background="@drawable/background_border_login">
-
-        <EditText
-            android:id="@+id/etPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/ivPassword"
-            android:background="@android:color/transparent"
-            android:hint="@string/password"
-            android:inputType="textPassword"
-            android:maxLines="1"
-            android:paddingBottom="@dimen/padding_normal"
-            android:paddingEnd="@dimen/padding_large"
-            android:paddingStart="@dimen/padding_small"
-            android:paddingTop="@dimen/padding_normal"
-            android:textSize="@dimen/font_normal" />
-
-        <ImageView
-            android:id="@+id/ivPassword"
-            android:layout_width="@dimen/width_normal"
-            android:layout_height="@dimen/height_normal"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/margin_normal_large"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_password"
-            tools:ignore="ContentDescription" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_huge_giant"
-        android:layout_marginRight="@dimen/margin_huge_giant"
-        android:layout_marginTop="@dimen/margin_normal"
-        android:background="@drawable/background_border_login">
-
-        <!-- INPUT -->
-        <EditText
-            android:id="@+id/etConfirm"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/ivConfirm"
-            android:background="@android:color/transparent"
-            android:hint="@string/confirm"
-            android:inputType="textPassword"
-            android:maxLines="1"
-            android:paddingBottom="@dimen/padding_normal"
-            android:paddingEnd="@dimen/padding_large"
-            android:paddingStart="@dimen/padding_small"
-            android:paddingTop="@dimen/padding_normal"
-            android:textSize="@dimen/font_normal" />
-
-        <!-- ICON -->
-        <ImageView
-            android:id="@+id/ivConfirm"
-            android:layout_width="@dimen/width_normal"
-            android:layout_height="@dimen/height_normal"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/margin_normal_large"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_password"
-            tools:ignore="ContentDescription" />
-
-    </RelativeLayout>
-
-    <Button
-        android:id="@+id/btnRegister"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="@dimen/margin_huge_giant"
-        android:layout_marginRight="@dimen/margin_huge_giant"
+    <LinearLayout
+        android:orientation="vertical"
+        app:layout_constraintVertical_bias="0"
         android:layout_marginTop="@dimen/margin_large"
-        android:background="@drawable/background_border_login_email"
-        android:gravity="center"
-        android:padding="@dimen/padding_normal"
-        android:text="@string/register"
-        android:textColor="@color/colorWhite"
-        android:textSize="@dimen/font_normal" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/flHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-</LinearLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_huge_giant"
+            android:layout_marginRight="@dimen/margin_huge_giant"
+            android:background="@drawable/background_border_login">
+
+            <EditText
+                android:id="@+id/etEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/ivEmail"
+                android:background="@android:color/transparent"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:layout_marginBottom="@dimen/margin_small"
+                android:layout_marginTop="@dimen/margin_small"
+                android:paddingBottom="@dimen/padding_normal"
+                android:paddingEnd="@dimen/padding_large"
+                android:paddingStart="@dimen/padding_small"
+                android:paddingTop="@dimen/padding_normal"
+                android:textSize="@dimen/font_large" />
+
+            <ImageView
+                android:id="@+id/ivEmail"
+                android:layout_width="@dimen/width_normal"
+                android:layout_height="@dimen/height_normal"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/margin_normal_large"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_email"
+                tools:ignore="ContentDescription" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_huge_giant"
+            android:layout_marginRight="@dimen/margin_huge_giant"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:background="@drawable/background_border_login">
+
+            <EditText
+                android:id="@+id/etUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/ivUsername"
+                android:background="@android:color/transparent"
+                android:hint="@string/username"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:layout_marginBottom="@dimen/margin_small"
+                android:layout_marginTop="@dimen/margin_small"
+                android:paddingBottom="@dimen/padding_normal"
+                android:paddingEnd="@dimen/padding_large"
+                android:paddingStart="@dimen/padding_small"
+                android:paddingTop="@dimen/padding_normal"
+                android:textSize="@dimen/font_large" />
+
+            <ImageView
+                android:id="@+id/ivUsername"
+                android:layout_width="@dimen/width_normal"
+                android:layout_height="@dimen/height_normal"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/margin_normal_large"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_username"
+                tools:ignore="ContentDescription" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_huge_giant"
+            android:layout_marginRight="@dimen/margin_huge_giant"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:background="@drawable/background_border_login">
+
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/ivPassword"
+                android:background="@android:color/transparent"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:layout_marginBottom="@dimen/margin_small"
+                android:layout_marginTop="@dimen/margin_small"
+                android:paddingBottom="@dimen/padding_normal"
+                android:paddingEnd="@dimen/padding_large"
+                android:paddingStart="@dimen/padding_small"
+                android:paddingTop="@dimen/padding_normal"
+                android:textSize="@dimen/font_large" />
+
+            <ImageView
+                android:id="@+id/ivPassword"
+                android:layout_width="@dimen/width_normal"
+                android:layout_height="@dimen/height_normal"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/margin_normal_large"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_password"
+                tools:ignore="ContentDescription" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_huge_giant"
+            android:layout_marginRight="@dimen/margin_huge_giant"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:background="@drawable/background_border_login">
+
+            <!-- INPUT -->
+            <EditText
+                android:id="@+id/etConfirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/ivConfirm"
+                android:background="@android:color/transparent"
+                android:hint="@string/confirm"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:layout_marginBottom="@dimen/margin_small"
+                android:layout_marginTop="@dimen/margin_small"
+                android:paddingBottom="@dimen/padding_normal"
+                android:paddingEnd="@dimen/padding_large"
+                android:paddingStart="@dimen/padding_small"
+                android:paddingTop="@dimen/padding_normal"
+                android:textSize="@dimen/font_large" />
+
+            <!-- ICON -->
+            <ImageView
+                android:id="@+id/ivConfirm"
+                android:layout_width="@dimen/width_normal"
+                android:layout_height="@dimen/height_normal"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/margin_normal_large"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_password"
+                tools:ignore="ContentDescription" />
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/margin_huge_giant"
+            android:layout_marginRight="@dimen/margin_huge_giant"
+            android:layout_marginTop="@dimen/margin_large"
+            android:background="@drawable/background_border_login_email"
+            android:gravity="center"
+            android:padding="@dimen/padding_normal"
+            android:text="@string/register"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/font_normal" />
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

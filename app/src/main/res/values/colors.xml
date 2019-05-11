@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FFFFFF</color>
-    <color name="colorPrimaryDark">#46b6a6</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#46b6a6</color>
+    <color name="colorPrimaryDark">#008677</color>
+    <color name="colorAccent">#7ce9d7</color>
 
     <color name="colorWhite">#ffffff</color>
     <color name="colorGreen">#46b6a6</color>
+    <color name="colorGreenDark">#008677</color>
     <!--<color name="colorGray">#aeaeae</color>-->
     <color name="colorBlack">#000000</color>
     <color name="colorBlackLight">#B3000000</color>
     <color name="colorBlackLight2">#80000000</color>
-    <color name="colorBlackLight3">#40000000</color>
+    <color name="colorBlackLight3">#33000000</color>
     <!--<color name="colorBlackLight">#455A64</color>-->
     <color name="colorGreenLight">#80CBC4</color>
     <!--<color name="colorBlue">#1566e0</color>-->
@@ -19,11 +20,18 @@
     <color name="colorWhiteLight">#66FFFFFF</color>
     <color name="colorBlueLight">#c0d6f7</color>
     <color name="colorBackground2">#FAFAFA</color>
-    <color name="colorBackground">#ECEFF1</color>
+    <color name="colorBackground3">#ECEFF1</color>
+    <color name="colorBackground">#B3FFFFFF</color>
     <color name="colorGrayLight">#59000000</color>
     <color name="colorGray">#66000000</color>
-    <color name="colorGrayTransparent">#EEEEEE</color>
+    <color name="colorGrayTransparent">#1A000000</color>
     <color name="colorWhiteLight2">#99FFFFFF</color>
     <color name="colorWhiteLight3">#CCFFFFFF</color>
     <color name="colorWhiteLight4">#E6FFFFFF</color>
+    <color name="indio400">#5c6bc0</color>
+    <color name="lime500">#bfde44</color>
+    <color name="bluea200">#4080ff</color>
+    <color name="tela300">#6bcebb</color>
+    <color name="deep_purple_300">#ba65ba</color>
+
 </resources>

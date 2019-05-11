@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground3"
+    android:orientation="vertical">
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tlTripSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_large_huge2"
+        android:background="@color/colorWhite"
+        app:tabIndicatorHeight="@dimen/separate_height"
+        app:tabSelectedTextColor="@color/colorGreenDark"
+        app:tabTextColor="@color/colorBlackLight" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vpTripSubmit"
+        android:layout_below="@+id/tlTripSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground3" />
+
+    <ImageView
+        android:id="@+id/ivAdd"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/margin_large"
+        android:background="@drawable/background_circle_green"
+        android:padding="@dimen/padding_large"
+        app:srcCompat="@drawable/ic_add_white"
+        android:layout_width="@dimen/width_huge"
+        android:layout_height="@dimen/height_huge" />
+
+</RelativeLayout>

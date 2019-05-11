@@ -2,23 +2,28 @@ package com.example.admin.ridesharemobileclient.ui.login;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.admin.ridesharemobileclient.R;
 import com.example.admin.ridesharemobileclient.config.App;
 import com.example.admin.ridesharemobileclient.data.APIHelper;
 import com.example.admin.ridesharemobileclient.data.IAPIHelper;
+import com.example.admin.ridesharemobileclient.entity.respone.BaseRespone;
+import com.example.admin.ridesharemobileclient.entity.respone.LoginRespone;
 import com.example.admin.ridesharemobileclient.entity.User;
 import com.example.admin.ridesharemobileclient.ui.main.MainActivity;
 import com.example.admin.ridesharemobileclient.ui.register.RegisterActivity;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -63,41 +68,54 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.tvRegister:
+            case R.id.tvRegister: {
                 Intent intent = new Intent(this, RegisterActivity.class);
                 startActivityForResult(intent, REQUEST_CODE);
                 break;
+            }
             case R.id.btnLoginEmail:
-//                handleLoginEmail();
-                Intent intent1 = new Intent(this, MainActivity.class);
-                startActivity(intent1);
+                handleLoginEmail();
+//                Intent intent = new Intent(this, MainActivity.class);
+//                startActivity(intent);
                 break;
         }
     }
 
     private void handleLoginEmail() {
-        User user = new User();
-        user.setEmail(etEmail.getText().toString());
-        user.setPassword(etPassword.getText().toString());
+        try {
+            User user = new User();
+            user.setEmail(etEmail.getText().toString());
+            user.setPassword(etPassword.getText().toString());
 
-        Call<String> call = mDataClient.loginEmail(user);
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
-                App.sToken = response.body();
-                Log.d(TAG, "onResponse: " + App.sToken);
+            Call<BaseRespone> call = mDataClient.loginEmail(user);
+            call.enqueue(new Callback<BaseRespone>() {
+                @Override
+                public void onResponse(Call<BaseRespone> call, Response<BaseRespone> response) {
+                    try {
+                        Type type = new TypeToken<LoginRespone>(){}.getType();
+                        LoginRespone loginRespone = new Gson().fromJson(response.body().getMetadata().toString(), type);
 
-                if (!TextUtils.isEmpty(App.sToken)) {
-                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
-                    startActivity(intent);
+                        App.sToken = loginRespone.getToken();
+                        App.sUser = loginRespone.getUserInformation();
+                        Log.d(TAG, "onResponse: " + App.sToken);
+
+                        if (!TextUtils.isEmpty(App.sToken)) {
+                            Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                            startActivity(intent);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
-                Log.d(TAG, "onFailure: " + t.getMessage());
-            }
-        });
+                @Override
+                public void onFailure(Call<BaseRespone> call, Throwable t) {
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

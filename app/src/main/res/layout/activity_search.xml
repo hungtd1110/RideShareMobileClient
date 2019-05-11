@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/dlSearch"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.admin.ridesharemobileclient.ui.search.SearchActivity"
+    tools:openDrawer="end">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground3">
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorGreen"
+                        android:orientation="vertical"
+                        android:paddingBottom="@dimen/padding_huge_giant"
+                        android:paddingTop="@dimen/padding_normal_large">
+
+                        <ImageView
+                            android:id="@+id/ivBack"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:layout_width="@dimen/width_large_huge"
+                            android:layout_height="@dimen/height_large_huge"
+                            android:layout_marginStart="@dimen/margin_normal3"
+                            android:padding="@dimen/padding_normal"
+                            app:srcCompat="@drawable/ic_back_white" />
+
+                        <ImageView
+                            android:id="@+id/ivFilter"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:layout_width="@dimen/width_large_huge"
+                            android:layout_height="@dimen/height_large_huge"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="@dimen/margin_normal_large"
+                            android:padding="@dimen/padding_normal2"
+                            app:srcCompat="@drawable/ic_filter" />
+
+                        <ImageView
+                            android:id="@+id/ivShowMap"
+                            android:background="?attr/selectableItemBackgroundBorderless"
+                            android:layout_width="@dimen/width_large_huge"
+                            android:layout_height="@dimen/height_large_huge"
+                            android:layout_toStartOf="@+id/ivFilter"
+                            android:padding="@dimen/padding_normal"
+                            app:srcCompat="@drawable/ic_show_map_white" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/ivBack"
+                            android:layout_marginBottom="@dimen/margin_normal_large"
+                            android:layout_marginStart="@dimen/margin_large"
+                            android:layout_marginTop="@dimen/margin_normal_large"
+                            android:text="@string/search_trip"
+                            android:textColor="@color/colorBackground2"
+                            android:textSize="@dimen/font_large_huge"
+                            android:textStyle="bold" />
+
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_giant_large"
+                        android:paddingTop="@dimen/padding_normal_large">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/margin_large"
+                            android:background="@drawable/background_border_white"
+                            android:padding="@dimen/padding_normal">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="@dimen/margin_normal"
+                                android:layout_toStartOf="@+id/ivSearch"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:id="@+id/llStartPosition"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical">
+
+                                    <ImageView
+                                        android:id="@+id/ivMarkerStart"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        app:srcCompat="@drawable/ic_marker_start" />
+
+                                    <TextView
+                                        android:id="@+id/tvStartPosition"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="@dimen/margin_normal"
+                                        android:maxLines="1"
+                                        android:text="@string/select_start_position"
+                                        android:textColor="@color/colorBlackLight2"
+                                        android:textSize="@dimen/font_normal" />
+
+                                </LinearLayout>
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/separate_height"
+                                    android:layout_marginStart="@dimen/margin_large"
+                                    android:layout_marginTop="@dimen/margin_normal"
+                                    android:background="@color/colorBlackLight3" />
+
+                                <LinearLayout
+                                    android:id="@+id/llEndPosition"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/margin_normal"
+                                    android:gravity="top">
+
+                                    <ImageView
+                                        android:id="@+id/ivMarkerEnd"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        app:srcCompat="@drawable/ic_marker_end" />
+
+                                    <TextView
+                                        android:id="@+id/tvEndPosition"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="@dimen/margin_normal"
+                                        android:maxLines="1"
+                                        android:text="@string/select_end_position"
+                                        android:textColor="@color/colorBlackLight2"
+                                        android:textSize="@dimen/font_normal" />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <ImageView
+                                android:id="@+id/ivSearch"
+                                android:layout_width="@dimen/width_large_huge"
+                                android:layout_height="@dimen/height_large_huge"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:padding="@dimen/padding_normal"
+                                app:srcCompat="@drawable/ic_search_green" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_normal"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:text="@string/list_trip"
+                        android:textColor="@color/colorBlackLight"
+                        android:textSize="@dimen/font_normal" />
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rvSearch"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:nestedScrollingEnabled="false"
+                        android:scrollbars="none"
+                        tools:listitem="@layout/item_trip"
+                        tools:targetApi="lollipop" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+        <!--<ImageView-->
+        <!--android:id="@+id/ivNavigation"-->
+        <!--android:layout_width="@dimen/width_large_huge"-->
+        <!--android:layout_height="@dimen/height_large_huge"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:layout_marginBottom="@dimen/margin_huge"-->
+        <!--android:layout_marginEnd="@dimen/margin_huge"-->
+        <!--android:background="@drawabackground_circle_greenreen"-->
+        <!--android:padding="@dimen/padding_normal"-->
+        <!--app:srcCompat="@drawable/ic_show_map_white" />-->
+
+    </RelativeLayout>
+
+    <android.support.design.widget.NavigationView
+        android:layout_width="@dimen/width_huge_giant"
+        android:layout_height="match_parent"
+        android:layout_gravity="end">
+
+        <include layout="@layout/view_content_navigation" />
+
+    </android.support.design.widget.NavigationView>
+
+</android.support.v4.widget.DrawerLayout>

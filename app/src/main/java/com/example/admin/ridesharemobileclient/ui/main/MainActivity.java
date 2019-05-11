@@ -5,17 +5,19 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.ImageView;
 
 import com.example.admin.ridesharemobileclient.R;
-import com.example.admin.ridesharemobileclient.ui.home.HomeFragment;
 import com.example.admin.ridesharemobileclient.ui.message.MessageFragment;
+import com.example.admin.ridesharemobileclient.ui.newfeed.NewFeedFragment;
 import com.example.admin.ridesharemobileclient.ui.notification.NotificationFragment;
 import com.example.admin.ridesharemobileclient.ui.setting.SettingFragment;
+import com.example.admin.ridesharemobileclient.ui.tripregister.TripRegisterFragment;
+import com.example.admin.ridesharemobileclient.ui.tripsubmit.TripSubmitFragment;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, SettingFragment.CallBack {
     private FragmentTransaction mTransaction;
-    private TextView tvHome, tvMessage, tvNotificaton, tvSetting;
+    private ImageView ivNewFeed, ivTripSubmit, ivTripRegister, ivMessage, ivNotificaton, ivSetting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void init() {
         try {
             mTransaction = getSupportFragmentManager().beginTransaction();
-            mTransaction.replace(R.id.frl_container, new HomeFragment(), getString(R.string.tag_home));
+            mTransaction.replace(R.id.frl_container_main, new NewFeedFragment(), getString(R.string.tag_new_feed));
             mTransaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
@@ -39,10 +41,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initEvent() {
         try {
-            tvHome.setOnClickListener(this);
-            tvMessage.setOnClickListener(this);
-            tvNotificaton.setOnClickListener(this);
-            tvSetting.setOnClickListener(this);
+            ivNewFeed.setOnClickListener(this);
+            ivTripSubmit.setOnClickListener(this);
+            ivTripRegister.setOnClickListener(this);
+            ivMessage.setOnClickListener(this);
+            ivNotificaton.setOnClickListener(this);
+            ivSetting.setOnClickListener(this);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -50,10 +54,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initView() {
         try {
-            tvHome = findViewById(R.id.tv_home);
-            tvMessage = findViewById(R.id.tv_message);
-            tvNotificaton = findViewById(R.id.tv_notification);
-            tvSetting = findViewById(R.id.tv_setting);
+            ivNewFeed = findViewById(R.id.iv_new_feed);
+            ivTripSubmit = findViewById(R.id.iv_trip_submit);
+            ivTripRegister = findViewById(R.id.iv_trip_register);
+            ivMessage = findViewById(R.id.iv_message);
+            ivNotificaton = findViewById(R.id.iv_notification);
+            ivSetting = findViewById(R.id.iv_setting);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -62,78 +68,131 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         try {
-            mTransaction = getSupportFragmentManager().beginTransaction();
-
             switch (view.getId()) {
-                case R.id.tv_home:
-                    mTransaction.replace(R.id.frl_container, new HomeFragment(), getString(R.string.tag_home));
-
-                    //set drawable
-                    tvHome.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_menu_home_selected, 0, 0);
-                    tvMessage.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_menu_message, 0, 0);
-                    tvNotificaton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_menu_notification, 0, 0);
-                    tvSetting.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_menu_setting, 0, 0);
-
-                    //set text color
-                    tvHome.setTextColor(getResources().getColor(R.color.colorGreen));
-                    tvMessage.setTextColor(getResources().getColor(R.color.colorGrayLight));
-                    tvNotificaton.setTextColor(getResources().getColor(R.color.colorGrayLight));
-                    tvSetting.setTextColor(getResources().getColor(R.color.colorGrayLight));
-
+                case R.id.iv_new_feed:
+                    handleNewFeed();
                     break;
-                case R.id.tv_message:
-                    mTransaction.replace(R.id.frl_container, new MessageFragment(), getString(R.string.tag_message));
-
-                    //set drawable
-                    tvHome.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_menu_home, 0, 0);
-                    tvMessage.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_menu_message_selected, 0, 0);
-                    tvNotificaton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_menu_notification, 0, 0);
-                    tvSetting.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_menu_setting, 0, 0);
-
-                    //set text color
-                    tvHome.setTextColor(getResources().getColor(R.color.colorGrayLight));
-                    tvMessage.setTextColor(getResources().getColor(R.color.colorGreen));
-                    tvNotificaton.setTextColor(getResources().getColor(R.color.colorGrayLight));
-                    tvSetting.setTextColor(getResources().getColor(R.color.colorGrayLight));
+                case R.id.iv_trip_submit:
+                    handleTripSubmit();
                     break;
-                case R.id.tv_notification:
-                    mTransaction.replace(R.id.frl_container, new NotificationFragment(), getString(R.string.tag_notification));
-
-                    //set drawable
-                    tvHome.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_menu_home, 0, 0);
-                    tvMessage.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_menu_message, 0, 0);
-                    tvNotificaton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_menu_notification_selected, 0, 0);
-                    tvSetting.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_menu_setting, 0, 0);
-
-                    //set text color
-                    tvHome.setTextColor(getResources().getColor(R.color.colorGrayLight));
-                    tvMessage.setTextColor(getResources().getColor(R.color.colorGrayLight));
-                    tvNotificaton.setTextColor(getResources().getColor(R.color.colorGreen));
-                    tvSetting.setTextColor(getResources().getColor(R.color.colorGrayLight));
-
+                case R.id.iv_trip_register:
+                    handleTripRegister();
                     break;
-                case R.id.tv_setting:
-                    mTransaction.replace(R.id.frl_container, new SettingFragment(), getString(R.string.tag_setting));
+                case R.id.iv_message:
+                    handleMessage();
+                    break;
+                case R.id.iv_notification:
+                    handleNotification();
+                    break;
+                case R.id.iv_setting:
+                    SettingFragment fragment = new SettingFragment();
+                    fragment.setCallBack(this);
 
-                    //set drawable
-                    tvHome.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_menu_home, 0, 0);
-                    tvMessage.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_menu_message, 0, 0);
-                    tvNotificaton.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_menu_notification, 0, 0);
-                    tvSetting.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_menu_setting_selected, 0, 0);
+                    mTransaction = getSupportFragmentManager().beginTransaction();
+                    mTransaction.replace(R.id.frl_container_main, fragment, getString(R.string.tag_setting));
+                    mTransaction.commit();
 
-                    //set text color
-                    tvHome.setTextColor(getResources().getColor(R.color.colorGrayLight));
-                    tvMessage.setTextColor(getResources().getColor(R.color.colorGrayLight));
-                    tvNotificaton.setTextColor(getResources().getColor(R.color.colorGrayLight));
-                    tvSetting.setTextColor(getResources().getColor(R.color.colorGreen));
-
+                    ivNewFeed.setImageResource(R.drawable.ic_new_feed_black);
+                    ivTripSubmit.setImageResource(R.drawable.ic_trip_submit_black);
+                    ivTripRegister.setImageResource(R.drawable.ic_trip_register_black);
+                    ivMessage.setImageResource(R.drawable.ic_message_black);
+                    ivNotificaton.setImageResource(R.drawable.ic_notification_black);
+                    ivSetting.setImageResource(R.drawable.ic_setting_green);
                     break;
 
             }
-
-            mTransaction.commit();
-        } catch (Resources.NotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void handleNotification() {
+        mTransaction = getSupportFragmentManager().beginTransaction();
+        mTransaction.replace(R.id.frl_container_main, new NotificationFragment(), getString(R.string.tag_notification));
+        mTransaction.commit();
+
+        ivNewFeed.setImageResource(R.drawable.ic_new_feed_black);
+        ivTripSubmit.setImageResource(R.drawable.ic_trip_submit_black);
+        ivTripRegister.setImageResource(R.drawable.ic_trip_register_black);
+        ivMessage.setImageResource(R.drawable.ic_message_black);
+        ivNotificaton.setImageResource(R.drawable.ic_notification_green);
+        ivSetting.setImageResource(R.drawable.ic_setting_black);
+    }
+
+    private void handleMessage() {
+        mTransaction = getSupportFragmentManager().beginTransaction();
+        mTransaction.replace(R.id.frl_container_main, new MessageFragment(), getString(R.string.tag_message));
+        mTransaction.commit();
+
+        ivNewFeed.setImageResource(R.drawable.ic_new_feed_black);
+        ivTripSubmit.setImageResource(R.drawable.ic_trip_submit_black);
+        ivTripRegister.setImageResource(R.drawable.ic_trip_register_black);
+        ivMessage.setImageResource(R.drawable.ic_message_green);
+        ivNotificaton.setImageResource(R.drawable.ic_notification_black);
+        ivSetting.setImageResource(R.drawable.ic_setting_black);
+    }
+
+    private void handleTripRegister() {
+        mTransaction = getSupportFragmentManager().beginTransaction();
+        mTransaction.replace(R.id.frl_container_main, new TripRegisterFragment(), getString(R.string.tag_trip_register));
+        mTransaction.commit();
+
+        ivNewFeed.setImageResource(R.drawable.ic_new_feed_black);
+        ivTripSubmit.setImageResource(R.drawable.ic_trip_submit_black);
+        ivTripRegister.setImageResource(R.drawable.ic_trip_register_green);
+        ivMessage.setImageResource(R.drawable.ic_message_black);
+        ivNotificaton.setImageResource(R.drawable.ic_notification_black);
+        ivSetting.setImageResource(R.drawable.ic_setting_black);
+    }
+
+    private void handleTripSubmit() {
+        mTransaction = getSupportFragmentManager().beginTransaction();
+        mTransaction.replace(R.id.frl_container_main, new TripSubmitFragment(), getString(R.string.tag_trip_submit));
+        mTransaction.commit();
+
+        ivNewFeed.setImageResource(R.drawable.ic_new_feed_black);
+        ivTripSubmit.setImageResource(R.drawable.ic_trip_submit_green);
+        ivTripRegister.setImageResource(R.drawable.ic_trip_register_black);
+        ivMessage.setImageResource(R.drawable.ic_message_black);
+        ivNotificaton.setImageResource(R.drawable.ic_notification_black);
+        ivSetting.setImageResource(R.drawable.ic_setting_black);
+    }
+
+    private void handleNewFeed() {
+        mTransaction = getSupportFragmentManager().beginTransaction();
+        mTransaction.replace(R.id.frl_container_main, new NewFeedFragment(), getString(R.string.tag_new_feed));
+        mTransaction.commit();
+
+        ivNewFeed.setImageResource(R.drawable.ic_new_feed_green);
+        ivTripSubmit.setImageResource(R.drawable.ic_trip_submit_black);
+        ivTripRegister.setImageResource(R.drawable.ic_trip_register_black);
+        ivMessage.setImageResource(R.drawable.ic_message_black);
+        ivNotificaton.setImageResource(R.drawable.ic_notification_black);
+        ivSetting.setImageResource(R.drawable.ic_setting_black);
+    }
+
+    @Override
+    public void onNewFeed() {
+        handleNewFeed();
+    }
+
+    @Override
+    public void onTripSubmit() {
+        handleTripSubmit();
+    }
+
+    @Override
+    public void onTripRegister() {
+        handleTripRegister();
+    }
+
+    @Override
+    public void onMessage() {
+        handleMessage();
+    }
+
+    @Override
+    public void onNotification() {
+        handleNotification();
     }
 }

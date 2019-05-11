@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.admin.ridesharemobileclient.ui.detailmessage.DetailMessageActivity">
+
+    <RelativeLayout
+        android:id="@+id/rlToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_large_huge2"
+        android:background="@color/colorGreen">
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:background="?attr/selectableItemBackground"
+            android:layout_width="@dimen/width_large_huge2"
+            android:layout_height="@dimen/height_large_huge2"
+            android:padding="@dimen/padding_normal4"
+            app:srcCompat="@drawable/ic_back_white" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Nhóm đồ án"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/font_large_huge" />
+
+    </RelativeLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/vSeparate"
+        android:background="@color/colorWhite"
+        android:layout_below="@+id/rlToolbar">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvDetailMessage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="@dimen/padding_normal_large" />
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <View
+        android:id="@+id/vSeparate"
+        android:background="@color/colorBackground2"
+        android:layout_above="@+id/llChat"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/separate_height" />
+
+    <LinearLayout
+        android:id="@+id/llChat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorWhite">
+
+        <EditText
+            android:id="@+id/etContentMessage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginBottom="@dimen/margin_normal"
+            android:layout_weight="1"
+            android:background="@drawable/background_border_message"
+            android:hint="@string/type_content"
+            android:minHeight="@dimen/height_large_huge2"
+            android:paddingBottom="@dimen/padding_normal"
+            android:paddingEnd="@dimen/padding_normal_large"
+            android:paddingStart="@dimen/padding_normal_large"
+            android:paddingTop="@dimen/padding_normal"
+            android:textSize="@dimen/font_large" />
+
+        <ImageView
+            android:id="@+id/ivSend"
+            android:layout_width="@dimen/width_large_huge2"
+            android:layout_height="@dimen/height_large_huge2"
+            android:layout_marginBottom="@dimen/margin_normal"
+            android:layout_gravity="bottom"
+            android:padding="@dimen/padding_normal2"
+            app:srcCompat="@drawable/ic_send_green" />
+    </LinearLayout>
+
+</RelativeLayout>

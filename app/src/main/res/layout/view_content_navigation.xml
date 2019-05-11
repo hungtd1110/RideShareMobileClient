@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:fillViewport="true"
+    android:padding="@dimen/padding_normal">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:text="@string/title_filter"
+            android:textColor="@color/colorBlackLight"
+            android:textSize="@dimen/font_huge"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/separate_width"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:background="@color/colorBlackLight3" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal_large"
+            android:text="@string/title_type"
+            android:textColor="@color/colorBlackLight"
+            android:textSize="@dimen/font_normal" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:background="@drawable/background_border_background"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_normal"
+                android:background="@drawable/background_border_white">
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/height_large"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/separate_width"
+            android:layout_marginTop="@dimen/margin_normal_large"
+            android:background="@color/colorBlackLight3" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal_large"
+            android:text="@string/title_time"
+            android:textColor="@color/colorBlackLight"
+            android:textSize="@dimen/font_normal" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:background="@drawable/background_border_background"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="@dimen/height_large"
+                android:layout_margin="@dimen/margin_normal"
+                android:layout_weight="1"
+                android:background="@drawable/background_border_white"
+                android:gravity="center"
+                android:hint="@string/from"
+                android:padding="@dimen/padding_small"
+                android:textColor="@color/colorGray"
+                android:textSize="@dimen/font_medium" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="----"
+                android:textColor="@color/colorGray"
+                android:textSize="@dimen/font_normal" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="@dimen/height_large"
+                android:layout_margin="@dimen/margin_normal"
+                android:layout_weight="1"
+                android:background="@drawable/background_border_white"
+                android:gravity="center"
+                android:hint="@string/to"
+                android:padding="@dimen/padding_small"
+                android:textColor="@color/colorGray"
+                android:textSize="@dimen/font_medium" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/separate_width"
+            android:layout_marginTop="@dimen/margin_large"
+            android:background="@color/colorBlackLight3" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal_large"
+            android:text="@string/title_price"
+            android:textColor="@color/colorBlackLight"
+            android:textSize="@dimen/font_normal" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:background="@drawable/background_border_background"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="@dimen/height_large"
+                android:layout_margin="@dimen/margin_normal"
+                android:layout_weight="1"
+                android:background="@drawable/background_border_white"
+                android:gravity="center"
+                android:hint="@string/minimum"
+                android:padding="@dimen/padding_small"
+                android:textColor="@color/colorGray"
+                android:textSize="@dimen/font_medium" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="----"
+                android:textColor="@color/colorBlackLight3"
+                android:textSize="@dimen/font_normal" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="@dimen/height_large"
+                android:layout_margin="@dimen/margin_normal"
+                android:layout_weight="1"
+                android:background="@drawable/background_border_white"
+                android:gravity="center"
+                android:hint="@string/maximum"
+                android:maxLines="1"
+                android:padding="@dimen/padding_small"
+                android:textColor="@color/colorGray"
+                android:textSize="@dimen/font_medium" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/separate_width"
+            android:layout_marginTop="@dimen/margin_large"
+            android:background="@color/colorBlackLight3" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal_large"
+            android:text="@string/title_other"
+            android:textColor="@color/colorBlackLight"
+            android:textSize="@dimen/font_normal" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_tiny"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:background="@drawable/background_border_background"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_centerVertical="true"
+                android:text="@string/show_near"
+                android:layout_margin="@dimen/margin_normal"
+                android:textSize="@dimen/font_medium"
+                android:textColor="@color/colorBlackLight2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <CheckBox
+                android:layout_marginTop="@dimen/margin_normal"
+                android:layout_marginBottom="@dimen/margin_normal"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>
