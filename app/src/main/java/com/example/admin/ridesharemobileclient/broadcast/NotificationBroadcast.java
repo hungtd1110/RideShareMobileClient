@@ -24,18 +24,27 @@ public class NotificationBroadcast extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        StompClient stompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, Chat.address);
-        stompClient.connect();
-        StompUtils.lifecycle(stompClient);
+       new Thread(new Runnable() {
+           @Override
+           public void run() {
+               try {
+                   StompClient stompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, Chat.address);
+                   stompClient.connect();
+                   StompUtils.lifecycle(stompClient);
 
-        stompClient.topic(Chat.notification.replace(Chat.placeholder, App.sUser.getUserId())).subscribe(stompMessage -> {
-            try {
-                JSONObject jsonObject = new JSONObject(stompMessage.getPayload());
-                showNotification(context, jsonObject);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+                   stompClient.topic(Chat.notification.replace(Chat.placeholder, App.sUser.getUserId())).subscribe(stompMessage -> {
+                       try {
+                           JSONObject jsonObject = new JSONObject(stompMessage.getPayload());
+                           showNotification(context, jsonObject);
+                       } catch (Exception e) {
+                           e.printStackTrace();
+                       }
+                   });
+               } catch (Exception e) {
+                   e.printStackTrace();
+               }
+           }
+       });
     }
 
     private void showNotification(Context context, JSONObject jsonObject) {

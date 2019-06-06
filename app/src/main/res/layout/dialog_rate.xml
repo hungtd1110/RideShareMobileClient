@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="@string/rate"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:textColor="@color/colorBlackLight"
+            android:textSize="@dimen/font_large_huge" />
+
+        <RatingBar
+            android:id="@+id/rbStar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:scaleX="0.6"
+            android:scaleY="0.6" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/etNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_normal_large"
+        android:layout_marginStart="@dimen/margin_normal"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:background="@drawable/background_border_message"
+        android:gravity="top"
+        android:hint="@string/note"
+        android:minHeight="@dimen/height_huge"
+        android:padding="@dimen/padding_normal"
+        android:textSize="@dimen/font_large_huge" />
+
+    <RelativeLayout
+        android:id="@+id/rlTool"
+        android:layout_marginTop="@dimen/margin_large"
+        android:layout_marginBottom="@dimen/margin_normal_large"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvRate"
+            android:textColor="@color/colorGreen"
+            android:textStyle="bold"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/margin_normal_large"
+            android:textSize="@dimen/font_large_huge"
+            android:text="@string/rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvCancel"
+            android:textColor="@color/colorGreen"
+            android:textStyle="bold"
+            android:layout_toLeftOf="@+id/tvRate"
+            android:layout_marginEnd="@dimen/margin_large"
+            android:textSize="@dimen/font_large_huge"
+            android:text="@string/cancel2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+</LinearLayout>

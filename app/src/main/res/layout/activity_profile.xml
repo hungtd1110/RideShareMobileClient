@@ -36,13 +36,13 @@
 
             <ImageView
                 android:visibility="gone"
-                android:id="@+id/ivChangeProfile"
+                android:id="@+id/ivSeeRate"
                 android:layout_alignParentEnd="true"
                 android:layout_width="@dimen/width_large_huge2"
                 android:layout_height="@dimen/height_large_huge2"
                 android:background="?attr/selectableItemBackground"
                 android:padding="@dimen/padding_normal4"
-                app:srcCompat="@drawable/ic_change_profile_white" />
+                app:srcCompat="@drawable/ic_see_rate" />
 
             <ImageView
                 android:id="@+id/ivMessage"
@@ -121,6 +121,7 @@
             app:layout_constraintTop_toBottomOf="@+id/llStar" />
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/llTool"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

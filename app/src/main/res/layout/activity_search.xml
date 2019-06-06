@@ -151,7 +151,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_normal"
                 android:layout_toStartOf="@+id/ivEditStartPosition"
-                android:text="@string/start_position"
+                android:text="@string/position"
                 android:textColor="@color/colorBlackLight"
                 android:textSize="@dimen/font_large_huge" />
 
@@ -163,7 +163,7 @@
                 android:layout_marginStart="@dimen/margin_normal"
                 android:layout_marginTop="@dimen/margin_small"
                 android:layout_toStartOf="@+id/ivEditStartPosition"
-                android:text="@string/select_start_position"
+                android:text="@string/select_position"
                 android:textColor="@color/colorGray"
                 android:textSize="@dimen/font_large_huge" />
 
@@ -181,12 +181,14 @@
         </RelativeLayout>
 
         <View
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="@dimen/separate_height"
             android:layout_marginTop="@dimen/margin_normal"
             android:background="@color/colorBackground3" />
 
         <RelativeLayout
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/margin_normal">

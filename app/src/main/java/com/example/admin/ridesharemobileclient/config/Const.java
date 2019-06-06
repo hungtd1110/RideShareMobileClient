@@ -5,7 +5,7 @@ package com.example.admin.ridesharemobileclient.config;
  */
 
 public class Const {
-    public static final String IP = "192.168.0.102";
+    public static final String IP = "192.168.1.8";
 
 
     public static final String KEY_TRIP = "key trip";

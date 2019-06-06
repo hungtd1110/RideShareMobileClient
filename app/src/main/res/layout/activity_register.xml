@@ -120,6 +120,45 @@
             android:background="@drawable/background_border_login">
 
             <EditText
+                android:id="@+id/etPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/ivPhone"
+                android:background="@android:color/transparent"
+                android:hint="@string/phone"
+                android:inputType="number"
+                android:maxLines="1"
+                android:layout_marginBottom="@dimen/margin_small"
+                android:layout_marginTop="@dimen/margin_small"
+                android:paddingBottom="@dimen/padding_normal"
+                android:paddingEnd="@dimen/padding_large"
+                android:paddingStart="@dimen/padding_small"
+                android:paddingTop="@dimen/padding_normal"
+                android:textSize="@dimen/font_large" />
+
+            <ImageView
+                android:id="@+id/ivPhone"
+                android:layout_width="@dimen/width_normal"
+                android:layout_height="@dimen/height_normal"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/margin_normal_large"
+                android:scaleType="fitXY"
+                android:padding="@dimen/padding_small"
+                android:src="@drawable/ic_phone_green"
+                tools:ignore="ContentDescription" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_huge_giant"
+            android:layout_marginRight="@dimen/margin_huge_giant"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:background="@drawable/background_border_login">
+
+            <EditText
                 android:id="@+id/etPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

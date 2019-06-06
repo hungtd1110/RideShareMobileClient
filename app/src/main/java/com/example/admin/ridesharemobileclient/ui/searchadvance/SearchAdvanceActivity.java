@@ -40,8 +40,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.example.admin.ridesharemobileclient.config.Const.KEY_END_LAT;
-import static com.example.admin.ridesharemobileclient.config.Const.KEY_END_LNG;
 import static com.example.admin.ridesharemobileclient.config.Const.KEY_START_LAT;
 import static com.example.admin.ridesharemobileclient.config.Const.KEY_START_LNG;
 import static com.example.admin.ridesharemobileclient.config.Const.KEY_TYPE;
@@ -62,7 +60,7 @@ public class SearchAdvanceActivity extends AppCompatActivity implements View.OnC
     private String startLat, endLat, startLng, endLng, type;
     private MultiTypeAdapter mAdapter;
     private Items mItems;
-    private SimpleDateFormat mDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat mDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     private static final String TAG = "SearchAdvanceActivity";
 
@@ -78,40 +76,49 @@ public class SearchAdvanceActivity extends AppCompatActivity implements View.OnC
     }
 
     private void getData() {
-        Bundle bundle = getIntent().getExtras();
-        type = bundle.getString(KEY_TYPE);
-        startLat = bundle.getString(KEY_START_LAT);
-        endLat = bundle.getString(KEY_END_LAT);
-        startLng = bundle.getString(KEY_START_LNG);
-        endLng = bundle.getString(KEY_END_LNG);
+
+        try {
+            Bundle bundle = getIntent().getExtras();
+            type = bundle.getString(KEY_TYPE);
+            startLat = bundle.getString(KEY_START_LAT);
+//        endLat = bundle.getString(KEY_END_LAT);
+            startLng = bundle.getString(KEY_START_LNG);
+//        endLng = bundle.getString(KEY_END_LNG);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void init() {
-        mIAPIHelper = APIHelper.getInstance();
-        mAdapter = new MultiTypeAdapter();
-        mItems = new Items();
+        try {
+            mIAPIHelper = APIHelper.getInstance();
+            mAdapter = new MultiTypeAdapter();
+            mItems = new Items();
 
-        Map<String, String> maps = new HashMap<>();
-        maps.put("page", PAGE);
-        maps.put("size", SIZE);
-        maps.put("startLongitude", startLng);
-        maps.put("startLatitude", startLat);
-        maps.put("radius", "0");
+            Map<String, String> maps = new HashMap<>();
+            maps.put("page", PAGE);
+            maps.put("size", SIZE);
+            maps.put("startLongitude", startLng);
+            maps.put("startLatitude", startLat);
+            maps.put("radius", "0");
 //        maps.put("endLatitude", endLng);
 //        maps.put("endLatitude", endLat);
 
-        mAdapter.register(Driver.class, new ItemDriverBinder(this));
-        mAdapter.register(Hitchhiker.class, new ItemHitchhikerBinder(this));
+            mAdapter.register(Driver.class, new ItemDriverBinder(this));
+            mAdapter.register(Hitchhiker.class, new ItemHitchhikerBinder(this));
 
-        mAdapter.setItems(mItems);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        rvTrip.setLayoutManager(layoutManager);
-        rvTrip.setAdapter(mAdapter);
+            mAdapter.setItems(mItems);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+            rvTrip.setLayoutManager(layoutManager);
+            rvTrip.setAdapter(mAdapter);
 
-        if (type.equals(TYPE_DRIVER)) {
-            showListDriver(maps);
-        } else if (type.equals(TYPE_HITCHHIKER)) {
-            showListHitchhiker(maps);
+            if (type.equals(TYPE_DRIVER)) {
+                showListDriver(maps);
+            } else if (type.equals(TYPE_HITCHHIKER)) {
+                showListHitchhiker(maps);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -173,75 +180,85 @@ public class SearchAdvanceActivity extends AppCompatActivity implements View.OnC
     }
 
     private void initView() {
-        rvTrip = findViewById(R.id.rvSearch);
-        ivBack = findViewById(R.id.ivBack);
-        ivFilter = findViewById(R.id.ivFilter);
-        dlSearch = findViewById(R.id.dlSearch);
-        tvCancel = findViewById(R.id.tvCancel);
-        tvApply = findViewById(R.id.tvApply);
-        tvTimeBot = findViewById(R.id.tvTimeBot);
-        tvTimeTop = findViewById(R.id.tvTimeTop);
-        etPriceBot = findViewById(R.id.etPriceBot);
-        etPriceTop = findViewById(R.id.etPriceTop);
-        cbNearMe = findViewById(R.id.cbNearMe);
+        try {
+            rvTrip = findViewById(R.id.rvSearch);
+            ivBack = findViewById(R.id.ivBack);
+            ivFilter = findViewById(R.id.ivFilter);
+            dlSearch = findViewById(R.id.dlSearch);
+            tvCancel = findViewById(R.id.tvCancel);
+            tvApply = findViewById(R.id.tvApply);
+            tvTimeBot = findViewById(R.id.tvTimeBot);
+            tvTimeTop = findViewById(R.id.tvTimeTop);
+            etPriceBot = findViewById(R.id.etPriceBot);
+            etPriceTop = findViewById(R.id.etPriceTop);
+            cbNearMe = findViewById(R.id.cbNearMe);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.ivBack:
-                finish();
-                break;
-            case R.id.ivFilter:
-                dlSearch.openDrawer(Gravity.END);
-                break;
-            case R.id.tvCancel:
-                dlSearch.closeDrawers();
-                break;
-            case R.id.tvTimeBot:
-                handleSelectTimeBot();
-                break;
-            case R.id.tvTimeTop:
-                handleSelectTimeTop();
-                break;
-            case R.id.tvApply:
-                Map<String, String> maps = new HashMap<>();
-                maps.put("page", PAGE);
-                maps.put("size", SIZE);
-                maps.put("startLongitude", startLng);
-                maps.put("startLatitude", startLat);
-                if (cbNearMe.isChecked()) {
-                    maps.put("radius", "10");
-                }
-                else {
-                    maps.put("radius", "0");
-                }
+        try {
+            switch (view.getId()) {
+                case R.id.ivBack:
+                    finish();
+                    break;
+                case R.id.ivFilter:
+                    dlSearch.openDrawer(Gravity.END);
+                    break;
+                case R.id.tvCancel:
+                    tvTimeBot.setText("");
+                    tvTimeTop.setText("");
+                    etPriceBot.setText("");
+                    etPriceTop.setText("");
+                    dlSearch.closeDrawers();
+                    break;
+                case R.id.tvTimeBot:
+                    handleSelectTimeBot();
+                    break;
+                case R.id.tvTimeTop:
+                    handleSelectTimeTop();
+                    break;
+                case R.id.tvApply:
+                    Map<String, String> maps = new HashMap<>();
+                    maps.put("page", PAGE);
+                    maps.put("size", SIZE);
+                    maps.put("startLongitude", startLng);
+                    maps.put("startLatitude", startLat);
+                    if (cbNearMe.isChecked()) {
+                        maps.put("radius", "10");
+                    }
+                    else {
+                        maps.put("radius", "0");
+                    }
 
-                if (!TextUtils.isEmpty(tvTimeBot.getText().toString())) {
-                    String time = tvTimeBot.getText().toString() + "T00:00:00";
-                    maps.put("timeBoundBottom", time);
-                }
+                    if (!TextUtils.isEmpty(tvTimeBot.getText().toString())) {
+                        maps.put("timeBoundBottom", tvTimeBot.getText().toString());
+                    }
 
-                if (!TextUtils.isEmpty(tvTimeTop.getText().toString())) {
-                    String time = tvTimeTop.getText().toString() + "T00:00:00";
-                    maps.put("timeBoundTop", time);
-                }
+                    if (!TextUtils.isEmpty(tvTimeTop.getText().toString())) {
+                        maps.put("timeBoundTop", tvTimeTop.getText().toString());
+                    }
 
-                if (!TextUtils.isEmpty(etPriceBot.getText().toString())) {
-                    maps.put("priceBoundBottom", etPriceBot.getText().toString());
-                }
+                    if (!TextUtils.isEmpty(etPriceBot.getText().toString())) {
+                        maps.put("priceBoundBottom", etPriceBot.getText().toString());
+                    }
 
-                if (!TextUtils.isEmpty(etPriceTop.getText().toString())) {
-                    maps.put("priceBoundTop", etPriceTop.getText().toString());
-                }
+                    if (!TextUtils.isEmpty(etPriceTop.getText().toString())) {
+                        maps.put("priceBoundTop", etPriceTop.getText().toString());
+                    }
 
-                if (type.equals(TYPE_DRIVER)) {
-                    showListDriver(maps);
-                } else if (type.equals(TYPE_HITCHHIKER)) {
-                    showListHitchhiker(maps);
-                }
+                    if (type.equals(TYPE_DRIVER)) {
+                        showListDriver(maps);
+                    } else if (type.equals(TYPE_HITCHHIKER)) {
+                        showListHitchhiker(maps);
+                    }
 
-                break;
+                    break;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

@@ -101,7 +101,7 @@
                 android:paddingEnd="@dimen/padding_large"
                 android:paddingStart="@dimen/padding_small"
                 android:paddingTop="@dimen/padding_normal"
-                android:text="user"
+                android:text="1"
                 android:textSize="@dimen/font_large" />
 
             <ImageView

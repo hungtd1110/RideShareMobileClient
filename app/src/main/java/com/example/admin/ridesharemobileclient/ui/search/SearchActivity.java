@@ -43,14 +43,18 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void initView() {
-        tvStartPosition = findViewById(R.id.tvStartPosition);
-        tvEndPosition = findViewById(R.id.tvEndPosition);
-        tvSearch = findViewById(R.id.tvSearch);
-        rbType0 = findViewById(R.id.rbType0);
-        rbType1 = findViewById(R.id.rbType1);
-        ivEditStartPosition = findViewById(R.id.ivEditStartPosition);
-        ivEditEndPosition = findViewById(R.id.ivEditEndPosition);
-        ivBack = findViewById(R.id.ivBack);
+        try {
+            tvStartPosition = findViewById(R.id.tvStartPosition);
+            tvEndPosition = findViewById(R.id.tvEndPosition);
+            tvSearch = findViewById(R.id.tvSearch);
+            rbType0 = findViewById(R.id.rbType0);
+            rbType1 = findViewById(R.id.rbType1);
+            ivEditStartPosition = findViewById(R.id.ivEditStartPosition);
+            ivEditEndPosition = findViewById(R.id.ivEditEndPosition);
+            ivBack = findViewById(R.id.ivBack);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void initEvent() {
@@ -65,30 +69,34 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.ivBack:
-                finish();
-                break;
-            case R.id.ivEditStartPosition:
-                showSearch(REQUEST_SEARCH_START);
-                break;
-            case R.id.ivEditEndPosition:
-                showSearch(REQUEST_SEARCH_END);
-                break;
-            case R.id.tvSearch:
-                if (rbType0.isChecked()) {
-                    type = TYPE_DRIVER;
-                } else if (rbType1.isChecked()) {
-                    type = TYPE_HITCHHIKER;
-                }
+        try {
+            switch (v.getId()) {
+                case R.id.ivBack:
+                    finish();
+                    break;
+                case R.id.ivEditStartPosition:
+                    showSearch(REQUEST_SEARCH_START);
+                    break;
+                case R.id.ivEditEndPosition:
+                    showSearch(REQUEST_SEARCH_END);
+                    break;
+                case R.id.tvSearch:
+                    if (rbType0.isChecked()) {
+                        type = TYPE_DRIVER;
+                    } else if (rbType1.isChecked()) {
+                        type = TYPE_HITCHHIKER;
+                    }
 
-                Intent intent = new Intent(this, SearchAdvanceActivity.class);
-                intent.putExtra(KEY_TYPE, type);
-                intent.putExtra(KEY_START_LAT, startLat);
-                intent.putExtra(KEY_END_LAT, endLat);
-                intent.putExtra(KEY_START_LNG, startLng);
-                intent.putExtra(KEY_END_LNG, endLng);
-                startActivity(intent);
+                    Intent intent = new Intent(this, SearchAdvanceActivity.class);
+                    intent.putExtra(KEY_TYPE, type);
+                    intent.putExtra(KEY_START_LAT, startLat);
+                    intent.putExtra(KEY_END_LAT, endLat);
+                    intent.putExtra(KEY_START_LNG, startLng);
+                    intent.putExtra(KEY_END_LNG, endLng);
+                    startActivity(intent);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

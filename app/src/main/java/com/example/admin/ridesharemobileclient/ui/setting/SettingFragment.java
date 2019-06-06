@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.example.admin.ridesharemobileclient.R;
 import com.example.admin.ridesharemobileclient.config.App;
 import com.example.admin.ridesharemobileclient.ui.profile.ProfileActivity;
+import com.example.admin.ridesharemobileclient.ui.triprate.TripRateActivity;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -28,7 +29,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
     private CircleImageView civImage;
     private ConstraintLayout cslInformation;
     private TextView tvName;
-    private LinearLayout llNewFeed, llTripSubmit, llTripRegister, llMessage, llNotification, llIntroduce, llLogout;
+    private LinearLayout llNewFeed, llTripSubmit, llTripRegister, llMessage, llNotification, llRate, llIntroduce, llLogout;
 
     @Override
     public void onClick(View v) {
@@ -48,6 +49,11 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
             case R.id.llNotification:
                 mCallBack.onNotification();
                 break;
+            case R.id.llRate: {
+                Intent intent = new Intent(getContext(), TripRateActivity.class);
+                startActivity(intent);
+                break;
+            }
             case R.id.llIntroduce:
                 break;
             case R.id.llLogout:
@@ -97,6 +103,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
             llTripRegister = mView.findViewById(R.id.llTripRegister);
             llMessage = mView.findViewById(R.id.llMessage);
             llNotification = mView.findViewById(R.id.llNotification);
+            llRate = mView.findViewById(R.id.llRate);
             llIntroduce = mView.findViewById(R.id.llIntroduce);
             llLogout = mView.findViewById(R.id.llLogout);
             cslInformation = mView.findViewById(R.id.cslInformation);
@@ -111,6 +118,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         llTripRegister.setOnClickListener(this);
         llMessage.setOnClickListener(this);
         llNotification.setOnClickListener(this);
+        llRate.setOnClickListener(this);
         llIntroduce.setOnClickListener(this);
         llLogout.setOnClickListener(this);
         cslInformation.setOnClickListener(this);

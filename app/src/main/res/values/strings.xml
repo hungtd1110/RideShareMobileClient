@@ -112,4 +112,7 @@
     <string name="cancel3">Hủy chuyến đi</string>
     <string name="apply">Áp dụng</string>
     <string name="title_notification">Thông báo</string>
+    <string name="title_rate_trip">Đánh giá chuyến đi</string>
+    <string name="select_position">Chọn điểm</string>
+    <string name="title_detail_rate">Chi tiết đánh giá</string>
 </resources>

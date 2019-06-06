@@ -27,8 +27,8 @@ import com.example.admin.ridesharemobileclient.entity.respone.DetailDriverRespon
 import com.example.admin.ridesharemobileclient.entity.respone.DetailHitchhikerRespone;
 import com.example.admin.ridesharemobileclient.entity.respone.RouteStepResponse;
 import com.example.admin.ridesharemobileclient.ui.detailmessage.DetailMessageActivity;
+import com.example.admin.ridesharemobileclient.ui.detailrate.DetailRateActivity;
 import com.example.admin.ridesharemobileclient.ui.mapdetail.MapDetailActivity;
-import com.example.admin.ridesharemobileclient.ui.profile.ProfileActivity;
 import com.example.admin.ridesharemobileclient.utils.PlaceUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -57,7 +57,6 @@ import static com.example.admin.ridesharemobileclient.config.Const.DATA_DRIVER;
 import static com.example.admin.ridesharemobileclient.config.Const.DATA_HITCHHIKER;
 import static com.example.admin.ridesharemobileclient.config.Const.KEY_ID;
 import static com.example.admin.ridesharemobileclient.config.Const.KEY_NAME;
-import static com.example.admin.ridesharemobileclient.config.Const.KEY_PROFILE;
 import static com.example.admin.ridesharemobileclient.config.Const.KEY_ROUTE_STEP;
 import static com.example.admin.ridesharemobileclient.config.Const.KEY_TYPE;
 import static com.example.admin.ridesharemobileclient.config.Const.PREFIX_IMAGE_ADDRESS;
@@ -524,11 +523,11 @@ public class DetailTripRegisterActivity extends AppCompatActivity implements Vie
                     break;
                 }
                 case R.id.cslInformation: {
-                    Intent intent = new Intent(this, ProfileActivity.class);
+                    Intent intent = new Intent(getBaseContext(), DetailRateActivity.class);
                     if (type.equals(DATA_DRIVER)) {
-                        intent.putExtra(KEY_PROFILE, mDetailDriverRespone.getDriverId());
+                        intent.putExtra(KEY_ID, mDetailDriverRespone.getUserId());
                     } else if (type.equals(DATA_HITCHHIKER)) {
-                        intent.putExtra(KEY_PROFILE, mDetailHitchhikerRespone.getHitchhikerId());
+                        intent.putExtra(KEY_ID, mDetailHitchhikerRespone.getUserId());
                     }
                     startActivity(intent);
                     break;

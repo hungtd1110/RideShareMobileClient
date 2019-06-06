@@ -5,6 +5,7 @@ import com.example.admin.ridesharemobileclient.entity.RouteStep;
 import com.example.admin.ridesharemobileclient.entity.User;
 import com.example.admin.ridesharemobileclient.entity.request.AcceptRequest;
 import com.example.admin.ridesharemobileclient.entity.request.DriverRequest;
+import com.example.admin.ridesharemobileclient.entity.request.RateRequest;
 import com.example.admin.ridesharemobileclient.entity.respone.BaseRespone;
 
 import java.util.List;
@@ -26,7 +27,10 @@ public interface IAPIHelper {
     @POST("user/register")
 //    Call<User> register(@Body User user);
     @FormUrlEncoded
-    Call<BaseRespone> register(@Field("email") String email, @Field("username") String username, @Field("password") String password);
+    Call<BaseRespone> register(@Field("email") String email,
+                               @Field("username") String username,
+                               @Field("phone") String phone,
+                               @Field("password") String password);
 
 
     //Đăng nhập
@@ -48,6 +52,9 @@ public interface IAPIHelper {
 
     @GET("trip-by-driver/my-trip-register")
     Call<BaseRespone> getListDriverRegister(@Header("authorization") String token, @QueryMap Map<String, String> maps);
+
+    @GET("trip-by-driver/my-trip-complete")
+    Call<BaseRespone> getListDriverRate(@Header("authorization") String token);
 
     @GET("trip-by-driver/{idDriver}")
     Call<BaseRespone> getDriver(@Header("authorization") String token, @Path("idDriver") String idDriver);
@@ -102,6 +109,9 @@ public interface IAPIHelper {
     @GET("trip-by-hitchhiker/my-trip-register")
     Call<BaseRespone> getListHitchhikerRegister(@Header("authorization") String token, @QueryMap Map<String, String> maps);
 
+    @GET("trip-by-hitchhiker/my-trip-complete")
+    Call<BaseRespone> getListHitchhikerRate(@Header("authorization") String token);
+
     @GET("trip-by-hitchhiker/{hitchhikerId}")
     Call<BaseRespone> getHitchhiker(@Header("authorization") String token, @Path("hitchhikerId") String idHitchhiker);
 
@@ -141,6 +151,12 @@ public interface IAPIHelper {
 
     @GET("user/detail")
     Call<BaseRespone> getDetailUser(@Header("authorization") String token);
+
+    @POST("user/rating")
+    Call<BaseRespone> rate(@Header("authorization") String token, @Body RateRequest rateRequest);
+
+    @POST("user/{userId}/rating")
+    Call<BaseRespone> detailRate(@Header("authorization") String token, @Path("userId") String userId);
 
 
     //Notification

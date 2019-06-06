@@ -31,25 +31,27 @@
             android:theme="@style/LoginTheme" />
         <activity android:name=".ui.detailtripregister.DetailTripRegisterActivity" />
         <activity
-            android:launchMode="singleTask"
-            android:name=".ui.addtrip.AddTripActivity" />
+            android:name=".ui.addtrip.AddTripActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".ui.detailmessage.DetailMessageActivity" />
         <activity android:name=".ui.detailtripsubmit.DetailTripSubmitActivity" />
         <activity android:name=".ui.userregister.UserRegisterActivity" />
         <activity android:name=".ui.usertrip.UserTripActivity" />
         <activity android:name=".ui.profile.ProfileActivity" />
         <activity android:name=".ui.search.SearchActivity" />
-        <activity android:name=".ui.routestep.RouteStepActivity"></activity>
+        <activity android:name=".ui.routestep.RouteStepActivity" />
 
         <service
-            android:stopWithTask="false"
-            android:name=".service.NotificationService" />
+            android:name=".service.NotificationService"
+            android:stopWithTask="false" />
 
-        <!--<receiver android:name=".broadcast.NotificationBroadcast" >-->
-            <!--<intent-filter>-->
-                <!--<action android:name="notification" />-->
-            <!--</intent-filter>-->
-        <!--</receiver>-->
+        <!-- <receiver android:name=".broadcast.NotificationBroadcast" > -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="notification" /> -->
+        <!-- </intent-filter> -->
+        <!-- </receiver> -->
+        <activity android:name=".ui.triprate.TripRateActivity" />
+        <activity android:name=".ui.detailrate.DetailRateActivity"></activity>
     </application>
 
 </manifest>

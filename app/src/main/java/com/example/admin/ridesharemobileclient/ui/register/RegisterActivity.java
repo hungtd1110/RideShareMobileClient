@@ -14,9 +14,8 @@ import android.widget.Toast;
 import com.example.admin.ridesharemobileclient.R;
 import com.example.admin.ridesharemobileclient.data.APIHelper;
 import com.example.admin.ridesharemobileclient.data.IAPIHelper;
-import com.example.admin.ridesharemobileclient.entity.respone.BaseRespone;
 import com.example.admin.ridesharemobileclient.entity.User;
-import com.google.gson.Gson;
+import com.example.admin.ridesharemobileclient.entity.respone.BaseRespone;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,7 +24,7 @@ import retrofit2.Response;
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
     private IAPIHelper mIAPIHelper;
 
-    private EditText etEmail, etUsername, etPassword, etConfirm;
+    private EditText etEmail, etUsername, etPassword, etConfirm, etPhone;
     private Button btnRegister;
 
     private static final String TAG = "RegisterActivity";
@@ -54,6 +53,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         etPassword = findViewById(R.id.etPassword);
         etConfirm = findViewById(R.id.etConfirm);
         btnRegister = findViewById(R.id.btnRegister);
+        etPhone = findViewById(R.id.etPhone);
     }
 
     @Override
@@ -64,6 +64,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
                 String confirm = etConfirm.getText().toString();
+                String phone = etPhone.getText().toString();
 
                 if (TextUtils.isEmpty(email)) {
                     Toast.makeText(this, getString(R.string.no_email), Toast.LENGTH_SHORT).show();
@@ -76,14 +77,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 } else if (!confirm.equals(password)) {
                     Toast.makeText(this, getString(R.string.errors_confirm), Toast.LENGTH_SHORT).show();
                 } else {
-                    handleRegister(email, username, password);
+                    handleRegister(email, username, phone, password);
                 }
                 break;
         }
     }
 
-    private void handleRegister(String email, String username, String password) {
-        Call<BaseRespone> call = mIAPIHelper.register(email, username, password);
+    private void handleRegister(String email, String username, String phone, String password) {
+        Call<BaseRespone> call = mIAPIHelper.register(email, username, phone, password);
 
         call.enqueue(new Callback<BaseRespone>() {
             @Override

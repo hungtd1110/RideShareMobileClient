@@ -1,5 +1,6 @@
 package com.example.admin.ridesharemobileclient.ui.profile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.example.admin.ridesharemobileclient.data.APIHelper;
 import com.example.admin.ridesharemobileclient.data.IAPIHelper;
 import com.example.admin.ridesharemobileclient.entity.respone.BaseRespone;
 import com.example.admin.ridesharemobileclient.entity.respone.DetailUserRespone;
+import com.example.admin.ridesharemobileclient.ui.detailrate.DetailRateActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
@@ -23,12 +25,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.example.admin.ridesharemobileclient.config.Const.KEY_ID;
 import static com.example.admin.ridesharemobileclient.config.Const.PREFIX_IMAGE_ADDRESS;
 
 public class ProfileActivity extends AppCompatActivity {
     private CircleImageView civImage;
     private TextView tvUsername, tvChangeProfile, tvChangePassword, tvMessage, tvEmail, tvPhone, tvStar;
-    private ImageView ivBack;
+    private ImageView ivBack, ivSeeRate;
 
     private IAPIHelper mIAPIHelper;
     private String idUser;
@@ -98,6 +101,15 @@ public class ProfileActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        ivSeeRate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), DetailRateActivity.class);
+                intent.putExtra(KEY_ID, App.sUser.getUserId());
+                startActivity(intent);
+            }
+        });
     }
 
     private void initView() {
@@ -109,5 +121,6 @@ public class ProfileActivity extends AppCompatActivity {
         tvPhone = findViewById(R.id.tvPhone);
         tvStar = findViewById(R.id.tvStar);
         ivBack = findViewById(R.id.ivBack);
+        ivSeeRate = findViewById(R.id.ivSeeRate);
     }
 }
