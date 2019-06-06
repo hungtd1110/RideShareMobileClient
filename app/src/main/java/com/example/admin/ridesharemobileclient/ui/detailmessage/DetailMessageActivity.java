@@ -8,29 +8,24 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.example.admin.ridesharemobileclient.R;
 import com.example.admin.ridesharemobileclient.config.App;
 import com.example.admin.ridesharemobileclient.config.Chat;
-import com.example.admin.ridesharemobileclient.config.Const;
 import com.example.admin.ridesharemobileclient.data.APIHelper;
 import com.example.admin.ridesharemobileclient.data.IAPIHelper;
-import com.example.admin.ridesharemobileclient.entity.respone.BaseRespone;
 import com.example.admin.ridesharemobileclient.entity.Message;
 import com.example.admin.ridesharemobileclient.entity.detailmessage.MyMessage;
 import com.example.admin.ridesharemobileclient.entity.detailmessage.OtherMessage;
+import com.example.admin.ridesharemobileclient.entity.respone.BaseRespone;
 import com.example.admin.ridesharemobileclient.ui.detailmessage.itembinder.MyMessageBinder;
 import com.example.admin.ridesharemobileclient.ui.detailmessage.itembinder.OtherMessageBinder;
 import com.example.admin.ridesharemobileclient.utils.StompUtils;
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONException;
 import org.json.JSONObject;
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
 
 import java.lang.reflect.Type;
 import java.util.Arrays;
@@ -50,6 +45,9 @@ import ua.naiksoftware.stomp.dto.StompHeader;
 import ua.naiksoftware.stomp.dto.StompMessage;
 
 import static com.example.admin.ridesharemobileclient.config.Const.KEY_ID;
+import static com.example.admin.ridesharemobileclient.config.Const.KEY_NAME;
+import static com.example.admin.ridesharemobileclient.config.Const.PAGE;
+import static com.example.admin.ridesharemobileclient.config.Const.SIZE;
 
 public class DetailMessageActivity extends AppCompatActivity {
     private IAPIHelper mIAPIHelper;
@@ -58,11 +56,12 @@ public class DetailMessageActivity extends AppCompatActivity {
     private ImageView ivSend;
     private EditText etContentMessage;
     private ImageView ivBack;
+    private TextView tvUsername;
 
     private Items mItems;
     private MultiTypeAdapter mAdapter;
     private StompClient stompClient;
-    private String userIdReceive;
+    private String userIdReceive, userName;
     private int page, size;
     private String pathImageOther;
 
@@ -81,6 +80,7 @@ public class DetailMessageActivity extends AppCompatActivity {
         try {
             Bundle bundle = getIntent().getExtras();
             userIdReceive = bundle.getString(KEY_ID);
+            userName = bundle.getString(KEY_NAME);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -91,12 +91,14 @@ public class DetailMessageActivity extends AppCompatActivity {
         page = 1;
         size = 10;
 
+        tvUsername.setText(userName);
+
         stompClient = Stomp.over(Stomp.ConnectionProvider.OKHTTP, Chat.address);
         stompClient.connect();
-        Toast.makeText(this, "Start connecting", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Start connecting", Toast.LENGTH_SHORT).show();
         StompUtils.lifecycle(stompClient);
 
-        stompClient.topic(Chat.recive.replace(Chat.placeholder, App.sUser.getUserId())).subscribe(stompMessage -> {
+        stompClient.topic(Chat.recive_message.replace(Chat.placeholder, App.sUser.getUserId())).subscribe(stompMessage -> {
             try {
                 JSONObject jsonObject = new JSONObject(stompMessage.getPayload());
                 runOnUiThread(new Runnable() {
@@ -130,8 +132,8 @@ public class DetailMessageActivity extends AppCompatActivity {
         rvDetailMessage.setAdapter(mAdapter);
 
         Map<String, String> maps = new HashMap<>();
-        maps.put("page", String.valueOf(this.page));
-        maps.put("size", String.valueOf(this.size));
+        maps.put("page", PAGE);
+        maps.put("size", SIZE);
         maps.put("idReceive", userIdReceive);
 
         Call<BaseRespone> call = mIAPIHelper.getDetailMessage(App.sToken, maps);
@@ -142,6 +144,7 @@ public class DetailMessageActivity extends AppCompatActivity {
                     Type type = new TypeToken<List<Message>>() {
                     }.getType();
                     List<Message> listMessage = new Gson().fromJson(response.body().getMetadata().toString(), type);
+
                     for (Message message : listMessage) {
                         if (String.valueOf(message.getUserIdSend()).equals(App.sUser.getUserId())) {
                             MyMessage myMessage = new MyMessage();
@@ -171,6 +174,41 @@ public class DetailMessageActivity extends AppCompatActivity {
 
             }
         });
+
+
+        //fake data
+//        List<Message> listMessage = new ArrayList<>();
+//        Message m1 = new Message();
+//        m1.setUserIdSend(2);
+//        m1.setContent("Xin chào");
+//        listMessage.add(m1);
+//        Message m2 = new Message();
+//        m2.setUserIdSend(1);
+//        m2.setContent("Chào bạn");
+//        listMessage.add(m2);
+//        Message m3 = new Message();
+//        m3.setUserIdSend(1);
+//        m3.setContent("Bạn nhắn tin cho tôi có chuyện gì vậy");
+//        listMessage.add(m3);
+//        for (Message message : listMessage) {
+//            if (String.valueOf(message.getUserIdSend()).equals(App.sUser.getUserId())) {
+//                MyMessage myMessage = new MyMessage();
+//                myMessage.setContent(message.getContent());
+//                mItems.add(myMessage);
+//            } else {
+//                if (TextUtils.isEmpty(pathImageOther)) {
+//                    pathImageOther = message.getImage();
+//                }
+//
+//                OtherMessage otherMessage = new OtherMessage();
+//                otherMessage.setContent(message.getContent());
+//                otherMessage.setImage(message.getImage());
+//                mItems.add(otherMessage);
+//            }
+//        }
+//        mAdapter.setItems(mItems);
+//        rvDetailMessage.smoothScrollToPosition(mItems.size() - 1);
+//        mAdapter.notifyDataSetChanged();
     }
 
     private void initEvent() {
@@ -189,6 +227,7 @@ public class DetailMessageActivity extends AppCompatActivity {
         ivSend = findViewById(R.id.ivSend);
         etContentMessage = findViewById(R.id.etContentMessage);
         ivBack = findViewById(R.id.ivBack);
+        tvUsername = findViewById(R.id.tvUsername);
     }
 
     class SendClick implements View.OnClickListener {
@@ -207,7 +246,7 @@ public class DetailMessageActivity extends AppCompatActivity {
                         StompCommand.SEND,
                         // Stomp Headers, Send Headers with STOMP
                         // the first header is necessary, and the other can be customized by ourselves
-                        Arrays.asList(new StompHeader(StompHeader.DESTINATION, Chat.send.replace(Chat.placeholder, userIdReceive)), authorizationHeader),
+                        Arrays.asList(new StompHeader(StompHeader.DESTINATION, Chat.send_message.replace(Chat.placeholder, userIdReceive)), authorizationHeader),
                         // Stomp payload
                         jsonObject.toString())
                 ).subscribe();

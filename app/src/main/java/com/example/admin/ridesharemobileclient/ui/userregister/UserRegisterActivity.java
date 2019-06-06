@@ -1,12 +1,14 @@
 package com.example.admin.ridesharemobileclient.ui.userregister;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.admin.ridesharemobileclient.R;
 import com.example.admin.ridesharemobileclient.config.App;
@@ -16,12 +18,14 @@ import com.example.admin.ridesharemobileclient.entity.HeaderRegister;
 import com.example.admin.ridesharemobileclient.entity.Separate;
 import com.example.admin.ridesharemobileclient.entity.request.AcceptRequest;
 import com.example.admin.ridesharemobileclient.entity.respone.BaseRespone;
-import com.example.admin.ridesharemobileclient.entity.respone.UserAccept;
-import com.example.admin.ridesharemobileclient.entity.respone.UserNotAccept;
-import com.example.admin.ridesharemobileclient.entity.respone.UserRespone;
+import com.example.admin.ridesharemobileclient.entity.respone.DriverUserAccept;
+import com.example.admin.ridesharemobileclient.entity.respone.DriverUserNotAccept;
+import com.example.admin.ridesharemobileclient.entity.respone.DriverUserRespone;
+import com.example.admin.ridesharemobileclient.entity.respone.HitchhikerUserAccept;
+import com.example.admin.ridesharemobileclient.entity.respone.HitchhikerUserNotAccept;
+import com.example.admin.ridesharemobileclient.entity.respone.HitchhikerUserRespone;
 import com.example.admin.ridesharemobileclient.ui.common.ItemSeparate;
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -35,7 +39,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.example.admin.ridesharemobileclient.config.Const.ACCEPT;
-import static com.example.admin.ridesharemobileclient.config.Const.CANCEL;
 import static com.example.admin.ridesharemobileclient.config.Const.DATA_DRIVER;
 import static com.example.admin.ridesharemobileclient.config.Const.DATA_HITCHHIKER;
 import static com.example.admin.ridesharemobileclient.config.Const.KEY_ID;
@@ -51,6 +54,7 @@ public class UserRegisterActivity extends AppCompatActivity {
     private MultiTypeAdapter mAdapter;
     private Items mItems;
     private String idDriver, idHitchhiker, type;
+    private ProgressDialog mProgressDialog;
 
     private static final String TAG = "UserRegisterActivity";
 
@@ -82,40 +86,49 @@ public class UserRegisterActivity extends AppCompatActivity {
 
     private void init() {
         mIAPIHelper = APIHelper.getInstance();
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage("Đang xử lý");
         mAdapter = new MultiTypeAdapter();
         mItems = new Items();
 
         mAdapter.register(HeaderRegister.class, new ItemHeaderBinder());
         mAdapter.register(Separate.class, new ItemSeparate());
 
-        mAdapter.register(UserAccept.class, new ItemUserAcceptBinder(new ItemUserAcceptBinder.CallBack() {
+        mAdapter.register(DriverUserAccept.class, new ItemDriverUserAcceptBinder(new ItemDriverUserAcceptBinder.CallBack() {
             @Override
-            public void onCancel(String idTrip, String idUserRegister) {
-                if (type.equals(DATA_DRIVER)) {
-                    handleDriverCancel(idTrip, idUserRegister);
-                } else if (type.equals(DATA_HITCHHIKER)) {
-                    handleHitchhikerCancel(idTrip, idUserRegister);
-                }
+            public void onCancel(String idUserRegister) {
+                handleDriverCancel(idUserRegister);
             }
         }));
 
-        mAdapter.register(UserNotAccept.class, new ItemUserNotAcceptBinder(new ItemUserNotAcceptBinder.CallBack() {
+        mAdapter.register(DriverUserNotAccept.class, new ItemDriverUserNotAcceptBinder(new ItemDriverUserNotAcceptBinder.CallBack() {
             @Override
-            public void onAccept(String idTrip, String idUserRegister) {
-                if (type.equals(DATA_DRIVER)) {
-                    handleDriverAccept(idTrip, idUserRegister);
-                } else if (type.equals(DATA_HITCHHIKER)) {
-                    handleHitchhikerAccept(idTrip, idUserRegister);
-                }
+            public void onAccept(String idUserRegister) {
+                handleDriverAccept(idUserRegister);
             }
 
             @Override
-            public void onCancel(String idTrip, String idUserRegister) {
-                if (type.equals(DATA_DRIVER)) {
-                    handleDriverCancel(idTrip, idUserRegister);
-                } else if (type.equals(DATA_HITCHHIKER)) {
-                    handleHitchhikerCancel(idTrip, idUserRegister);
-                }
+            public void onCancel(String idUserRegister) {
+                handleDriverCancel(idUserRegister);
+            }
+        }));
+
+        mAdapter.register(HitchhikerUserAccept.class, new ItemHitchhikerUserAcceptBinder(new ItemHitchhikerUserAcceptBinder.CallBack() {
+            @Override
+            public void onCancel(String idUserRegister) {
+                handleHitchhikerCancel(idUserRegister);
+            }
+        }));
+
+        mAdapter.register(HitchhikerUserNotAccept.class, new ItemHitchhikerUserNotAcceptBinder(new ItemHitchhikerUserNotAcceptBinder.CallBack() {
+            @Override
+            public void onAccept(String idUserRegister) {
+                handleHitchhikerAccept(idUserRegister);
+            }
+
+            @Override
+            public void onCancel(String idUserRegister) {
+                handleHitchhikerCancel(idUserRegister);
             }
         }));
 
@@ -130,19 +143,21 @@ public class UserRegisterActivity extends AppCompatActivity {
         }
     }
 
-    private void handleHitchhikerCancel(String idTrip, String idUserRegister) {
-    }
-
-    private void handleDriverCancel(String idTrip, String idUserRegister) {
+    private void handleHitchhikerCancel(String idUserRegister) {
         try {
-            List<AcceptRequest> listAccept = new ArrayList<>();
-            listAccept.add(new AcceptRequest(idUserRegister, CANCEL));
-            Call<BaseRespone> call = mIAPIHelper.driverAccept(App.sToken, idTrip, listAccept);
+            AcceptRequest acceptRequest = new AcceptRequest(idUserRegister, NOT_ACCEPT);
+            mProgressDialog.show();
+
+            Call<BaseRespone> call = mIAPIHelper.hitchhikerAccept(App.sToken, Long.parseLong(idHitchhiker), acceptRequest);
             call.enqueue(new Callback<BaseRespone>() {
                 @Override
                 public void onResponse(Call<BaseRespone> call, Response<BaseRespone> response) {
                     try {
-                        Log.d(TAG, "onResponse: " + response.body().getMetadata().toString());
+                        mItems.clear();
+                        initHitchhiker();
+
+                        Toast.makeText(getBaseContext(), "Đã xóa", Toast.LENGTH_SHORT).show();
+                        mProgressDialog.dismiss();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -158,19 +173,22 @@ public class UserRegisterActivity extends AppCompatActivity {
         }
     }
 
-    private void handleHitchhikerAccept(String idTrip, String idUserRegister) {
-    }
-
-    private void handleDriverAccept(String idTrip, String idUserRegister) {
+    private void handleDriverCancel(String idUserRegister) {
         try {
             List<AcceptRequest> listAccept = new ArrayList<>();
-            listAccept.add(new AcceptRequest(idUserRegister, ACCEPT));
-            Call<BaseRespone> call = mIAPIHelper.driverAccept(App.sToken, idTrip, listAccept);
+            listAccept.add(new AcceptRequest(idUserRegister, NOT_ACCEPT));
+            mProgressDialog.show();
+
+            Call<BaseRespone> call = mIAPIHelper.driverAccept(App.sToken, Long.parseLong(idDriver), listAccept);
             call.enqueue(new Callback<BaseRespone>() {
                 @Override
                 public void onResponse(Call<BaseRespone> call, Response<BaseRespone> response) {
                     try {
-                        Log.d(TAG, "onResponse: " + response.body().getMetadata().toString());
+                        mItems.clear();
+                        initDriver();
+
+                        Toast.makeText(getBaseContext(), "Đã xóa", Toast.LENGTH_SHORT).show();
+                        mProgressDialog.dismiss();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -181,12 +199,146 @@ public class UserRegisterActivity extends AppCompatActivity {
                     Log.d(TAG, "onFailure: " + t.getMessage());
                 }
             });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void handleHitchhikerAccept(String idUserRegister) {
+        try {
+            AcceptRequest acceptRequest = new AcceptRequest(idUserRegister, ACCEPT);
+            mProgressDialog.show();
+
+            //accept
+            Call<BaseRespone> callRegister = mIAPIHelper.hitchhikerAccept(App.sToken, Long.parseLong(idHitchhiker), acceptRequest);
+            callRegister.enqueue(new Callback<BaseRespone>() {
+                @Override
+                public void onResponse(Call<BaseRespone> call, Response<BaseRespone> response) {
+                    try {
+                        mItems.clear();
+                        initHitchhiker();
+                        Toast.makeText(getBaseContext(), "Đã chấp nhận", Toast.LENGTH_SHORT).show();
+                        mProgressDialog.dismiss();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<BaseRespone> call, Throwable t) {
+                    Log.d(TAG, "onFailure: " + t.getMessage());
+                }
+            });
+
+            //update route step
+//            Call<BaseRespone> callRouteStep = mIAPIHelper.getRouteStep(App.sToken, idDriver);
+//            callRouteStep.enqueue(new Callback<BaseRespone>() {
+//                @SuppressLint("LongLogTag")
+//                @Override
+//                public void onResponse(Call<BaseRespone> call, Response<BaseRespone> response) {
+//                    try {
+//                        Type type = new TypeToken<RouteStepResponse>() {
+//                        }.getType();
+//                        RouteStepResponse stepResponse = new Gson().fromJson(response.body().getMetadata().toString(), type);
+//
+//                        showRouteStep(stepResponse);
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<BaseRespone> call, Throwable t) {
+//
+//                }
+//            });
+//            MapboxOptimization optimizedClient = MapboxOptimization.builder()
+//                    .coordinates()
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void handleDriverAccept(String idUserRegister) {
+        try {
+            List<AcceptRequest> listAccept = new ArrayList<>();
+            listAccept.add(new AcceptRequest(idUserRegister, ACCEPT));
+            mProgressDialog.show();
+
+            //accept
+            Call<BaseRespone> callRegister = mIAPIHelper.driverAccept(App.sToken, Long.parseLong(idDriver), listAccept);
+            callRegister.enqueue(new Callback<BaseRespone>() {
+                @Override
+                public void onResponse(Call<BaseRespone> call, Response<BaseRespone> response) {
+                    try {
+                        mItems.clear();
+                        initDriver();
+                        Toast.makeText(getBaseContext(), "Đã chấp nhận", Toast.LENGTH_SHORT).show();
+                        mProgressDialog.dismiss();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<BaseRespone> call, Throwable t) {
+                    Log.d(TAG, "onFailure: " + t.getMessage());
+                }
+            });
+
+            //update route step
+//            Call<BaseRespone> callRouteStep = mIAPIHelper.getRouteStep(App.sToken, idDriver);
+//            callRouteStep.enqueue(new Callback<BaseRespone>() {
+//                @SuppressLint("LongLogTag")
+//                @Override
+//                public void onResponse(Call<BaseRespone> call, Response<BaseRespone> response) {
+//                    try {
+//                        Type type = new TypeToken<RouteStepResponse>() {
+//                        }.getType();
+//                        RouteStepResponse stepResponse = new Gson().fromJson(response.body().getMetadata().toString(), type);
+//
+//                        showRouteStep(stepResponse);
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<BaseRespone> call, Throwable t) {
+//
+//                }
+//            });
+//            MapboxOptimization optimizedClient = MapboxOptimization.builder()
+//                    .coordinates()
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     private void initHitchhiker() {
+        try {
+            Call<BaseRespone> call = mIAPIHelper.getUserRegisterHitchhiker(App.sToken, idHitchhiker);
+            call.enqueue(new Callback<BaseRespone>() {
+                @Override
+                public void onResponse(Call<BaseRespone> call, Response<BaseRespone> response) {
+                    try {
+                        Type type = new TypeToken< List<HitchhikerUserRespone>>(){}.getType();
+                        List<HitchhikerUserRespone> listUser = new Gson().fromJson(response.body().getMetadata().toString(), type);
+
+                        handleSortListHitchhiker(listUser);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<BaseRespone> call, Throwable t) {
+                    Log.d(TAG, "onFailure: " + t.getMessage());
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void initDriver() {
@@ -196,13 +348,11 @@ public class UserRegisterActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<BaseRespone> call, Response<BaseRespone> response) {
                     try {
-                        Log.d(TAG, "onResponse: " + response.body().getMetadata().toString());
+                        Type type = new TypeToken< List<DriverUserRespone>>(){}.getType();
+                        List<DriverUserRespone> listUser = new Gson().fromJson(response.body().getMetadata().toString(), type);
 
-                        Type type = new TypeToken< List<UserRespone>>(){}.getType();
-                        List<UserRespone> listUser = new Gson().fromJson(response.body().getMetadata().toString(), type);
-
-                        handleSortList(listUser);
-                    } catch (JsonSyntaxException e) {
+                        handleSortListDriver(listUser);
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
@@ -217,18 +367,18 @@ public class UserRegisterActivity extends AppCompatActivity {
         }
     }
 
-    private void handleSortList(List<UserRespone> listUser) {
+    private void handleSortListDriver(List<DriverUserRespone> listUser) {
         try {
-            List<UserAccept> listAccept = new ArrayList<>();
-            List<UserNotAccept> listNotAccept = new ArrayList<>();
+            List<DriverUserAccept> listAccept = new ArrayList<>();
+            List<DriverUserNotAccept> listNotAccept = new ArrayList<>();
 
-            for (UserRespone user : listUser) {
+            for (DriverUserRespone user : listUser) {
                 if (user.getStatus().equals(ACCEPT)) {
-                    UserAccept userAccept = new UserAccept(user);
+                    DriverUserAccept userAccept = new DriverUserAccept(user);
                     listAccept.add(userAccept);
                 }
                 else if (user.getStatus().equals(NOT_ACCEPT)) {
-                    UserNotAccept userNotAccept = new UserNotAccept(user);
+                    DriverUserNotAccept userNotAccept = new DriverUserNotAccept(user);
                     listNotAccept.add(userNotAccept);
                 }
             }
@@ -242,7 +392,6 @@ public class UserRegisterActivity extends AppCompatActivity {
                         mItems.add(new Separate());
                     }
                 }
-//                mItems.addAll(listAccept);
             }
 
             if (listNotAccept.size() > 0) {
@@ -254,7 +403,51 @@ public class UserRegisterActivity extends AppCompatActivity {
                         mItems.add(new Separate());
                     }
                 }
-//                mItems.addAll(listNotAccept);
+            }
+
+            mAdapter.setItems(mItems);
+            mAdapter.notifyDataSetChanged();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void handleSortListHitchhiker(List<HitchhikerUserRespone> listUser) {
+        try {
+            List<HitchhikerUserAccept> listAccept = new ArrayList<>();
+            List<HitchhikerUserNotAccept> listNotAccept = new ArrayList<>();
+
+            for (HitchhikerUserRespone user : listUser) {
+                if (user.getStatus().equals(ACCEPT)) {
+                    HitchhikerUserAccept userAccept = new HitchhikerUserAccept(user);
+                    listAccept.add(userAccept);
+                }
+                else if (user.getStatus().equals(NOT_ACCEPT)) {
+                    HitchhikerUserNotAccept userNotAccept = new HitchhikerUserNotAccept(user);
+                    listNotAccept.add(userNotAccept);
+                }
+            }
+
+            if (listAccept.size() > 0) {
+                mItems.add(new HeaderRegister("Danh sách đã đăng ký"));
+                for (int i = 0 ; i < listAccept.size() ; i++) {
+                    mItems.add(listAccept.get(i));
+
+                    if (i < listAccept.size() - 1) {
+                        mItems.add(new Separate());
+                    }
+                }
+            }
+
+            if (listNotAccept.size() > 0) {
+                mItems.add(new HeaderRegister("Danh sách chờ xác nhận"));
+                for (int i = 0 ; i < listNotAccept.size() ; i++) {
+                    mItems.add(listNotAccept.get(i));
+
+                    if (i < listNotAccept.size() - 1) {
+                        mItems.add(new Separate());
+                    }
+                }
             }
 
             mAdapter.setItems(mItems);

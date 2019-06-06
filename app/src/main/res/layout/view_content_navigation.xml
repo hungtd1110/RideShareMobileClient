@@ -30,42 +30,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_normal_large"
-            android:text="@string/title_type"
-            android:textColor="@color/colorBlackLight"
-            android:textSize="@dimen/font_normal" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_normal"
-            android:background="@drawable/background_border_background"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_normal"
-                android:background="@drawable/background_border_white">
-
-                <Spinner
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/height_large"/>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/separate_width"
-            android:layout_marginTop="@dimen/margin_normal_large"
-            android:background="@color/colorBlackLight3" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_normal_large"
             android:text="@string/title_time"
             android:textColor="@color/colorBlackLight"
             android:textSize="@dimen/font_normal" />
@@ -78,7 +42,8 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <EditText
+            <TextView
+                android:id="@+id/tvTimeBot"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/height_large"
                 android:layout_margin="@dimen/margin_normal"
@@ -98,7 +63,8 @@
                 android:textColor="@color/colorGray"
                 android:textSize="@dimen/font_normal" />
 
-            <EditText
+            <TextView
+                android:id="@+id/tvTimeTop"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/height_large"
                 android:layout_margin="@dimen/margin_normal"
@@ -135,10 +101,12 @@
             android:orientation="horizontal">
 
             <EditText
+                android:id="@+id/etPriceBot"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/height_large"
                 android:layout_margin="@dimen/margin_normal"
                 android:layout_weight="1"
+                android:inputType="number"
                 android:background="@drawable/background_border_white"
                 android:gravity="center"
                 android:hint="@string/minimum"
@@ -155,6 +123,7 @@
                 android:textSize="@dimen/font_normal" />
 
             <EditText
+                android:id="@+id/etPriceTop"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/height_large"
                 android:layout_margin="@dimen/margin_normal"
@@ -163,6 +132,7 @@
                 android:gravity="center"
                 android:hint="@string/maximum"
                 android:maxLines="1"
+                android:inputType="number"
                 android:padding="@dimen/padding_small"
                 android:textColor="@color/colorGray"
                 android:textSize="@dimen/font_medium" />
@@ -202,12 +172,52 @@
                 android:layout_height="wrap_content" />
 
             <CheckBox
+                android:id="@+id/cbNearMe"
                 android:layout_marginTop="@dimen/margin_normal"
                 android:layout_marginBottom="@dimen/margin_normal"
                 android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvCancel"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/height_large_huge2"
+                    android:layout_margin="@dimen/margin_normal"
+                    android:background="@drawable/background_border_width"
+                    android:gravity="center"
+                    android:text="@string/cancel2"
+                    android:textColor="@color/colorBlackLight"
+                    android:textSize="@dimen/font_large_huge"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvApply"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="@dimen/height_large_huge2"
+                    android:layout_margin="@dimen/margin_normal"
+                    android:background="@drawable/background_border_green"
+                    android:gravity="center"
+                    android:text="@string/apply"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/font_large_huge"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
         </RelativeLayout>
 

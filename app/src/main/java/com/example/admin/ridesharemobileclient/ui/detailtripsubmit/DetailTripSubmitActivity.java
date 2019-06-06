@@ -5,8 +5,6 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -15,6 +13,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -23,19 +22,31 @@ import com.example.admin.ridesharemobileclient.R;
 import com.example.admin.ridesharemobileclient.config.App;
 import com.example.admin.ridesharemobileclient.data.APIHelper;
 import com.example.admin.ridesharemobileclient.data.IAPIHelper;
+import com.example.admin.ridesharemobileclient.entity.RouteStep;
 import com.example.admin.ridesharemobileclient.entity.request.DriverRequest;
 import com.example.admin.ridesharemobileclient.entity.respone.BaseRespone;
-import com.example.admin.ridesharemobileclient.entity.respone.DetailTripRespone;
+import com.example.admin.ridesharemobileclient.entity.respone.DetailDriverRespone;
+import com.example.admin.ridesharemobileclient.entity.respone.DetailHitchhikerRespone;
+import com.example.admin.ridesharemobileclient.entity.respone.RouteStepResponse;
 import com.example.admin.ridesharemobileclient.ui.mapdetail.MapDetailActivity;
+import com.example.admin.ridesharemobileclient.ui.userregister.UserRegisterActivity;
 import com.example.admin.ridesharemobileclient.utils.PlaceUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.mapbox.api.directions.v5.DirectionsCriteria;
+import com.mapbox.api.optimization.v1.MapboxOptimization;
+import com.mapbox.api.optimization.v1.models.OptimizationResponse;
+import com.mapbox.api.optimization.v1.models.OptimizationWaypoint;
+import com.mapbox.geojson.Point;
 import com.squareup.picasso.Picasso;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Locale;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
@@ -45,25 +56,32 @@ import retrofit2.Response;
 import static com.example.admin.ridesharemobileclient.config.Const.DATA_DRIVER;
 import static com.example.admin.ridesharemobileclient.config.Const.DATA_HITCHHIKER;
 import static com.example.admin.ridesharemobileclient.config.Const.KEY_ID;
+import static com.example.admin.ridesharemobileclient.config.Const.KEY_ROUTE_STEP;
 import static com.example.admin.ridesharemobileclient.config.Const.KEY_TYPE;
 import static com.example.admin.ridesharemobileclient.config.Const.PREFIX_IMAGE_ADDRESS;
+import static com.example.admin.ridesharemobileclient.config.Const.UPDATE_DRIVER_SUBMIT;
+import static com.example.admin.ridesharemobileclient.config.Const.UPDATE_HITCHHIKER_SUBMIT;
 
 public class DetailTripSubmitActivity extends AppCompatActivity implements View.OnClickListener {
     private IAPIHelper mIAPIHelper;
 
-    private TextView tvType, tvStartPosition, tvEndPosition, tvDate, tvTime, tvVehicle, tvNumberSeat, tvPrice, tvNote, tvMap,
+    private TextView tvType, tvStartPosition, tvEndPosition, tvRouteStep, tvDate, tvTime, tvVehicle, tvNumberSeat, tvPrice, tvNote, tvMap,
             tvName, tvSave;
-    private ImageView ivBack, ivEditDate, ivEditTime, ivEditOther, ivHideEditOther;
+    private ImageView ivBack, ivEditDate, ivEditTime, ivEditOther, ivHideEditOther, ivMore;
     private CircleImageView civImage;
-    private LinearLayout llEditOther, llShowOther;
+    private LinearLayout llEditOther, llShowOther, llVehicle;
     private EditText etNumberSeat, etPrice, etNote;
+    private RelativeLayout rlRoute;
+    private View vRoute;
+
     private ProgressDialog mProgressDialog;
-
     private String time;
-    private DetailTripRespone mDetailTripRespone;
-
+    private DetailDriverRespone mDetailDriverRespone;
+    private DetailHitchhikerRespone mDetailHitchhikerRespone;
     private SimpleDateFormat mDateFormat, mTimeFormat;
     private String idDriver, idHitchhiker, type;
+    private MapboxOptimization mOptimizedClient;
+    private ArrayList<RouteStep> mListRouteStep = new ArrayList<>();
 
     private static final String TAG = "DetailTripSubmitActivity";
 
@@ -109,13 +127,10 @@ public class DetailTripSubmitActivity extends AppCompatActivity implements View.
     }
 
     private void getInfoHitchhiker() {
-    }
-
-    private void getInfoDriver() {
         try {
             mIAPIHelper = APIHelper.getInstance();
 
-            Call<BaseRespone> call = mIAPIHelper.getDriver(App.sToken, idDriver);
+            Call<BaseRespone> call = mIAPIHelper.getHitchhiker(App.sToken, idHitchhiker);
             call.enqueue(new Callback<BaseRespone>() {
                 @SuppressLint("LongLogTag")
                 @Override
@@ -123,11 +138,11 @@ public class DetailTripSubmitActivity extends AppCompatActivity implements View.
                     try {
                         Log.d(TAG, "onResponse: " + response.body().getMetadata().toString());
 
-                        Type type = new TypeToken<DetailTripRespone>() {
+                        Type type = new TypeToken<DetailHitchhikerRespone>() {
                         }.getType();
-                        mDetailTripRespone = new Gson().fromJson(response.body().getMetadata().toString(), type);
+                        mDetailHitchhikerRespone = new Gson().fromJson(response.body().getMetadata().toString(), type);
 
-                        showInforDriver();
+                        showInforHitchhiker();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -143,24 +158,168 @@ public class DetailTripSubmitActivity extends AppCompatActivity implements View.
         }
     }
 
-    private void showInforDriver() {
+    private void showInforHitchhiker() {
         try {
             Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis(Long.parseLong(mDetailTripRespone.getTime()));
+            calendar.setTimeInMillis(Long.parseLong(mDetailHitchhikerRespone.getTime()));
 
-            Picasso.get().load(PREFIX_IMAGE_ADDRESS + mDetailTripRespone.getAvatar()).
+            Picasso.get().load(PREFIX_IMAGE_ADDRESS + mDetailHitchhikerRespone.getAvatar()).
                     placeholder(R.drawable.ic_avatar_default).
                     error(R.drawable.ic_avatar_default).
                     into(civImage);
-            tvName.setText(mDetailTripRespone.getUsername());
+            tvName.setText(mDetailHitchhikerRespone.getUsername());
             tvType.setText(getString(R.string.type0));
-            PlaceUtils.setNamePosition(mDetailTripRespone.getStartLatitude(), mDetailTripRespone.getStartLongitude(), tvStartPosition);
-            PlaceUtils.setNamePosition(mDetailTripRespone.getEndLatitude(), mDetailTripRespone.getEndLongitude(), tvEndPosition);
+            PlaceUtils.setFullNamePosition(mDetailHitchhikerRespone.getStartLatitude(), mDetailHitchhikerRespone.getStartLongitude(), tvStartPosition);
+            PlaceUtils.setFullNamePosition(mDetailHitchhikerRespone.getEndLatitude(), mDetailHitchhikerRespone.getEndLongitude(), tvEndPosition);
+            tvDate.setText(mDateFormat.format(calendar.getTime()));
+            tvTime.setText(mTimeFormat.format(calendar.getTime()));
+
+            llVehicle.setVisibility(View.GONE);
+
+            tvNumberSeat.setText(mDetailHitchhikerRespone.getNumberSeat());
+            tvPrice.setText(mDetailHitchhikerRespone.getPrice());
+            tvNote.setText(mDetailHitchhikerRespone.getNote());
+
+            rlRoute.setVisibility(View.GONE);
+            vRoute.setVisibility(View.GONE);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void getInfoDriver() {
+        try {
+            mIAPIHelper = APIHelper.getInstance();
+
+            Call<BaseRespone> callDriver = mIAPIHelper.getDriver(App.sToken, idDriver);
+            callDriver.enqueue(new Callback<BaseRespone>() {
+                @SuppressLint("LongLogTag")
+                @Override
+                public void onResponse(Call<BaseRespone> call, Response<BaseRespone> response) {
+                    try {
+                        Type type = new TypeToken<DetailDriverRespone>() {
+                        }.getType();
+                        mDetailDriverRespone = new Gson().fromJson(response.body().getMetadata().toString(), type);
+
+                        showInforDriver();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<BaseRespone> call, Throwable t) {
+
+                }
+            });
+
+            Call<BaseRespone> callRouteStep = mIAPIHelper.getRouteStep(App.sToken, idDriver);
+            callRouteStep.enqueue(new Callback<BaseRespone>() {
+                @SuppressLint("LongLogTag")
+                @Override
+                public void onResponse(Call<BaseRespone> call, Response<BaseRespone> response) {
+                    try {
+                        Type type = new TypeToken<List<RouteStepResponse>>() {
+                        }.getType();
+                        List<RouteStepResponse> listRouteStepResponse = new Gson().fromJson(response.body().getMetadata().toString(), type);
+
+                        showRouteStep(listRouteStepResponse);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<BaseRespone> call, Throwable t) {
+
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showRouteStep(List<RouteStepResponse> listRouteStepResponse) {
+        if (listRouteStepResponse != null) {
+            mListRouteStep.clear();
+            Type type = new TypeToken<ArrayList<RouteStep>>() {
+            }.getType();
+
+            for (RouteStepResponse routeStepResponse : listRouteStepResponse) {
+                mListRouteStep.addAll(new Gson().fromJson(routeStepResponse.getSteps(), type));
+            }
+
+            sortRouteStep();
+        }
+    }
+
+    private void sortRouteStep() {
+        //thêm điểm đầu và điểm cuối
+        mListRouteStep.add(0, new RouteStep(mDetailDriverRespone.getStartLongitude(),
+                mDetailDriverRespone.getStartLatitude()));
+        mListRouteStep.add(new RouteStep(mDetailDriverRespone.getEndLongitude(),
+                mDetailDriverRespone.getEndLatitude()));
+
+        List<Point> coordinates = new ArrayList<>();
+        for (RouteStep routeStep : mListRouteStep) {
+            Point point = Point.fromLngLat(Double.parseDouble(routeStep.getLongitude()),
+                    Double.parseDouble(routeStep.getLatitude()));
+
+            coordinates.add(point);
+        }
+        mOptimizedClient = MapboxOptimization.builder()
+                .source("first")
+                .destination("last")
+                .coordinates(coordinates)
+                .profile(DirectionsCriteria.PROFILE_DRIVING)
+                .accessToken(getString(R.string.map_token))
+                .build();
+
+        mOptimizedClient.enqueueCall(new Callback<OptimizationResponse>() {
+            @Override
+            public void onResponse(Call<OptimizationResponse> call, Response<OptimizationResponse> response) {
+                List<OptimizationWaypoint> listOptimization = response.body().waypoints();
+                for (OptimizationWaypoint waypoint : listOptimization) {
+                    RouteStep routeStep = new RouteStep();
+                    routeStep.setLongitude(String.valueOf(waypoint.location().longitude()));
+                    routeStep.setLatitude(String.valueOf(waypoint.location().latitude()));
+
+                    mListRouteStep.set(waypoint.waypointIndex(), routeStep);
+                }
+
+                //xóa điểm đầu và điểm cuối
+                mListRouteStep.remove(mListRouteStep.size() - 1);
+                mListRouteStep.remove(0);
+
+                PlaceUtils.setListNamePosition(mListRouteStep, tvRouteStep, mProgressDialog);
+            }
+
+            @Override
+            public void onFailure(Call<OptimizationResponse> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void showInforDriver() {
+        try {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(Long.parseLong(mDetailDriverRespone.getTime()));
+
+            Picasso.get().load(PREFIX_IMAGE_ADDRESS + mDetailDriverRespone.getAvatar()).
+                    placeholder(R.drawable.ic_avatar_default).
+                    error(R.drawable.ic_avatar_default).
+                    into(civImage);
+            tvName.setText(mDetailDriverRespone.getUsername());
+            tvType.setText(getString(R.string.type0));
+            PlaceUtils.setFullNamePosition(mDetailDriverRespone.getStartLatitude(), mDetailDriverRespone.getStartLongitude(), tvStartPosition);
+            PlaceUtils.setFullNamePosition(mDetailDriverRespone.getEndLatitude(), mDetailDriverRespone.getEndLongitude(), tvEndPosition);
             tvDate.setText(mDateFormat.format(calendar.getTime()));
             tvTime.setText(mTimeFormat.format(calendar.getTime()));
 
             String vehicle = "";
-            switch (mDetailTripRespone.getTypeVehicle()) {
+            switch (mDetailDriverRespone.getTypeVehicle()) {
                 case "0":
                     vehicle = getString(R.string.vehicle0);
                     break;
@@ -173,9 +332,12 @@ public class DetailTripSubmitActivity extends AppCompatActivity implements View.
             }
             tvVehicle.setText(vehicle);
 
-            tvNumberSeat.setText(mDetailTripRespone.getNumberSeat());
-            tvPrice.setText(mDetailTripRespone.getPrice());
-            tvNote.setText(mDetailTripRespone.getNote());
+            tvNumberSeat.setText(mDetailDriverRespone.getNumberSeat());
+            tvPrice.setText(mDetailDriverRespone.getPrice());
+            tvNote.setText(mDetailDriverRespone.getNote());
+
+            rlRoute.setVisibility(View.VISIBLE);
+            vRoute.setVisibility(View.VISIBLE);
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
@@ -188,6 +350,7 @@ public class DetailTripSubmitActivity extends AppCompatActivity implements View.
         ivEditTime.setOnClickListener(this);
         ivEditOther.setOnClickListener(this);
         ivHideEditOther.setOnClickListener(this);
+        ivMore.setOnClickListener(this);
         tvSave.setOnClickListener(this);
     }
 
@@ -196,6 +359,7 @@ public class DetailTripSubmitActivity extends AppCompatActivity implements View.
             tvType = findViewById(R.id.tvType);
             tvStartPosition = findViewById(R.id.tvStartPosition);
             tvEndPosition = findViewById(R.id.tvEndPosition);
+            tvRouteStep = findViewById(R.id.tvRouteStep);
             tvDate = findViewById(R.id.tvDate);
             tvTime = findViewById(R.id.tvTime);
             tvVehicle = findViewById(R.id.tvVehicle);
@@ -211,11 +375,16 @@ public class DetailTripSubmitActivity extends AppCompatActivity implements View.
             ivEditTime = findViewById(R.id.ivEditTime);
             ivEditOther = findViewById(R.id.ivEditOther);
             ivHideEditOther = findViewById(R.id.ivHideEditOther);
+            ivMore = findViewById(R.id.ivMore);
             llEditOther = findViewById(R.id.llEditOther);
             llShowOther = findViewById(R.id.llShowOther);
+            llVehicle = findViewById(R.id.llVehicle);
             etNumberSeat = findViewById(R.id.etNumberSeat);
             etPrice = findViewById(R.id.etPrice);
             etNote = findViewById(R.id.etNote);
+            rlRoute = findViewById(R.id.rlRoute);
+            rlRoute = findViewById(R.id.rlRoute);
+            vRoute = findViewById(R.id.vRoute);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -227,6 +396,14 @@ public class DetailTripSubmitActivity extends AppCompatActivity implements View.
             switch (view.getId()) {
                 case R.id.tvMap:
                     Intent intent = new Intent(this, MapDetailActivity.class);
+
+                    //thêm điểm đầu và điểm cuối
+                    mListRouteStep.add(0, new RouteStep(mDetailDriverRespone.getStartLongitude(),
+                            mDetailDriverRespone.getStartLatitude()));
+                    mListRouteStep.add(new RouteStep(mDetailDriverRespone.getEndLongitude(),
+                            mDetailDriverRespone.getEndLatitude()));
+
+                    intent.putExtra(KEY_ROUTE_STEP, mListRouteStep);
                     startActivity(intent);
                     break;
                 case R.id.tvSave:
@@ -257,10 +434,83 @@ public class DetailTripSubmitActivity extends AppCompatActivity implements View.
                     llEditOther.setVisibility(View.GONE);
                     llShowOther.setVisibility(View.VISIBLE);
                     break;
+                case R.id.ivMore:
+                    ActionTripSubmitDialog dialog = new ActionTripSubmitDialog(new ActionTripSubmitDialog.CallBack() {
+                        @Override
+                        public void onListPeople() {
+                            Intent intent = new Intent(getBaseContext(), UserRegisterActivity.class);
+
+                            if (type.equals(DATA_DRIVER)) {
+                                intent.putExtra(KEY_TYPE, DATA_DRIVER);
+                                intent.putExtra(KEY_ID, idDriver);
+                            } else if (type.equals(DATA_HITCHHIKER)) {
+                                intent.putExtra(KEY_TYPE, DATA_HITCHHIKER);
+                                intent.putExtra(KEY_ID, idHitchhiker);
+                            }
+
+                            startActivity(intent);
+                        }
+
+                        @Override
+                        public void onDelete() {
+                            if (type.equals(DATA_DRIVER)) {
+                                handleDeleteDriver();
+                            } else if (type.equals(DATA_HITCHHIKER)) {
+                                handleDeleteHitchhiker();
+                            }
+                        }
+                    });
+
+                    dialog.show(getSupportFragmentManager(), null);
+                    break;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void handleDeleteHitchhiker() {
+        mProgressDialog.show();
+
+        Call<BaseRespone> call = mIAPIHelper.deleteHitchhiker(App.sToken, idHitchhiker);
+        call.enqueue(new Callback<BaseRespone>() {
+            @Override
+            public void onResponse(Call<BaseRespone> call, Response<BaseRespone> response) {
+                Toast.makeText(getBaseContext(), "Đã hủy chuyến đi", Toast.LENGTH_SHORT).show();
+                mProgressDialog.dismiss();
+
+                EventBus.getDefault().post(UPDATE_HITCHHIKER_SUBMIT);
+                finish();
+            }
+
+            @Override
+            public void onFailure(Call<BaseRespone> call, Throwable t) {
+                Toast.makeText(getBaseContext(), "Lỗi huỷ chuyến đi", Toast.LENGTH_SHORT).show();
+                mProgressDialog.dismiss();
+            }
+        });
+    }
+
+    private void handleDeleteDriver() {
+        mProgressDialog.show();
+
+        Call<BaseRespone> call = mIAPIHelper.deleteDriver(App.sToken, idDriver);
+        call.enqueue(new Callback<BaseRespone>() {
+            @Override
+            public void onResponse(Call<BaseRespone> call, Response<BaseRespone> response) {
+                Toast.makeText(getBaseContext(), "Đã hủy chuyến đi", Toast.LENGTH_SHORT).show();
+                mProgressDialog.dismiss();
+
+                EventBus.getDefault().post(UPDATE_DRIVER_SUBMIT);
+                finish();
+            }
+
+            @Override
+            public void onFailure(Call<BaseRespone> call, Throwable t) {
+                Toast.makeText(getBaseContext(), "Lỗi huỷ chuyến đi", Toast.LENGTH_SHORT).show();
+                mProgressDialog.dismiss();
+            }
+        });
     }
 
     private void handleSave() {
@@ -277,12 +527,13 @@ public class DetailTripSubmitActivity extends AppCompatActivity implements View.
     }
 
     private void handleUpdateHitchhiker() {
+
     }
 
     private void handleUpdateDriver() {
         try {
             DriverRequest driverRequest = new DriverRequest();
-            driverRequest.setTripId(mDetailTripRespone.getDriverId());
+            driverRequest.setDriverId(mDetailDriverRespone.getDriverId());
             driverRequest.setTime(time);
             driverRequest.setNumberSeat(tvNumberSeat.getText().toString());
             driverRequest.setPrice(tvPrice.getText().toString());
@@ -293,8 +544,6 @@ public class DetailTripSubmitActivity extends AppCompatActivity implements View.
                 @Override
                 public void onResponse(Call<BaseRespone> call, Response<BaseRespone> response) {
                     try {
-                        Log.d(TAG, "onResponse: " + response.body().getMetadata().toString());
-
                         Toast.makeText(DetailTripSubmitActivity.this, "Cập nhật thông tin thành công", Toast.LENGTH_SHORT).show();
                         mProgressDialog.dismiss();
                     } catch (Exception e) {
@@ -361,11 +610,19 @@ public class DetailTripSubmitActivity extends AppCompatActivity implements View.
                         e.printStackTrace();
                     }
                 }
-            }, hourOfDay, minute , true);
+            }, hourOfDay, minute, true);
 
             timePickerDialog.show();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mOptimizedClient != null) {
+            mOptimizedClient.cancelCall();
         }
     }
 }

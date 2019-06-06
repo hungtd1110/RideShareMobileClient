@@ -3,8 +3,6 @@ package com.example.admin.ridesharemobileclient.ui.tripsubmit;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,14 +13,14 @@ import android.widget.TextView;
 
 import com.example.admin.ridesharemobileclient.R;
 import com.example.admin.ridesharemobileclient.entity.Hitchhiker;
-import com.example.admin.ridesharemobileclient.ui.detailtripregister.DetailTripRegisterActivity;
+import com.example.admin.ridesharemobileclient.ui.detailtripsubmit.DetailTripSubmitActivity;
+import com.example.admin.ridesharemobileclient.ui.userregister.UserRegisterActivity;
 import com.example.admin.ridesharemobileclient.utils.PlaceUtils;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Locale;
 
 import static com.example.admin.ridesharemobileclient.config.Const.DATA_HITCHHIKER;
 import static com.example.admin.ridesharemobileclient.config.Const.KEY_ID;
@@ -37,7 +35,7 @@ public class HitchhikerSubmitAdapter extends RecyclerView.Adapter<HitchhikerSubm
     private SimpleDateFormat mDateFormat;
 
     public interface CallBack {
-        void onCancelHitchhiker();
+        void onCancelHitchhiker(String idHitchhiker);
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -76,8 +74,8 @@ public class HitchhikerSubmitAdapter extends RecyclerView.Adapter<HitchhikerSubm
             holder.llAction.setVisibility(View.GONE);
             holder.tvActionLeft.setText("Hủy");
             holder.tvActionRight.setText("Danh sách");
-            PlaceUtils.setNamePosition(hitchhiker.getStartLatitude(), hitchhiker.getStartLongitude(), holder.tvStartPosition);
-            PlaceUtils.setNamePosition(hitchhiker.getEndLatitude(), hitchhiker.getEndLongitude(), holder.tvEndPosition);
+            PlaceUtils.setFullNamePosition(hitchhiker.getStartLatitude(), hitchhiker.getStartLongitude(), holder.tvStartPosition);
+            PlaceUtils.setFullNamePosition(hitchhiker.getEndLatitude(), hitchhiker.getEndLongitude(), holder.tvEndPosition);
             holder.tvTime.setText(mDateFormat.format(calendar.getTime()));
             holder.tvNumberSeat.setText(hitchhiker.getNumberSeat());
             holder.tvPrice.setText(NumberFormat.getInstance().format(Long.parseLong(hitchhiker.getPrice())) + " VNĐ");
@@ -164,10 +162,13 @@ public class HitchhikerSubmitAdapter extends RecyclerView.Adapter<HitchhikerSubm
             try {
                 switch (view.getId()) {
                     case R.id.tvActionLeft:
-                        mCallBack.onCancelHitchhiker();
+                        mCallBack.onCancelHitchhiker(mListHitchhiker.get(getAdapterPosition()).getId());
                         break;
                     case R.id.tvActionRight: {
-                        // TODO: 5/5/2019 Hiển thị danh sách user đăng ký tới chuyến đi
+                        Intent intent = new Intent(mContext, UserRegisterActivity.class);
+                        intent.putExtra(KEY_TYPE, DATA_HITCHHIKER);
+                        intent.putExtra(KEY_ID, mListHitchhiker.get(getAdapterPosition()).getId());
+                        mContext.startActivity(intent);
                         break;
                     }
                     case R.id.tvShowMore:
@@ -180,7 +181,7 @@ public class HitchhikerSubmitAdapter extends RecyclerView.Adapter<HitchhikerSubm
                         }
                         break;
                     default:
-                        Intent intent = new Intent(mContext, DetailTripRegisterActivity.class);
+                        Intent intent = new Intent(mContext, DetailTripSubmitActivity.class);
                         intent.putExtra(KEY_TYPE, DATA_HITCHHIKER);
                         intent.putExtra(KEY_ID, mListHitchhiker.get(getAdapterPosition()).getId());
                         mContext.startActivity(intent);

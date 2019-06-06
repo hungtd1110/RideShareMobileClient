@@ -1,6 +1,7 @@
 package com.example.admin.ridesharemobileclient.ui.main;
 
-import android.content.res.Resources;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -8,16 +9,22 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.admin.ridesharemobileclient.R;
+import com.example.admin.ridesharemobileclient.broadcast.NotificationBroadcast;
+import com.example.admin.ridesharemobileclient.config.App;
 import com.example.admin.ridesharemobileclient.ui.message.MessageFragment;
 import com.example.admin.ridesharemobileclient.ui.newfeed.NewFeedFragment;
 import com.example.admin.ridesharemobileclient.ui.notification.NotificationFragment;
+import com.example.admin.ridesharemobileclient.ui.profile.ProfileActivity;
+import com.example.admin.ridesharemobileclient.ui.search.SearchActivity;
 import com.example.admin.ridesharemobileclient.ui.setting.SettingFragment;
 import com.example.admin.ridesharemobileclient.ui.tripregister.TripRegisterFragment;
 import com.example.admin.ridesharemobileclient.ui.tripsubmit.TripSubmitFragment;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, SettingFragment.CallBack {
     private FragmentTransaction mTransaction;
-    private ImageView ivNewFeed, ivTripSubmit, ivTripRegister, ivMessage, ivNotificaton, ivSetting;
+    private ImageView ivNewFeed, ivTripSubmit, ivTripRegister, ivMessage, ivNotificaton, ivSetting, ivSearch, ivProfile;
+
+//    public static StompClient stompClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +41,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mTransaction = getSupportFragmentManager().beginTransaction();
             mTransaction.replace(R.id.frl_container_main, new NewFeedFragment(), getString(R.string.tag_new_feed));
             mTransaction.commit();
+
+//            Intent intent = new Intent(this, NotificationService.class);
+//            startService(intent);
+
+            NotificationBroadcast broadcast = new NotificationBroadcast();
+            IntentFilter filter = new IntentFilter();
+            filter.addAction("notification");
+            getApplicationContext().registerReceiver(broadcast, filter);
+
+            Intent intentBroadcast = new Intent();
+            intentBroadcast.setAction("notification");
+            sendBroadcast(intentBroadcast);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -47,6 +67,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             ivMessage.setOnClickListener(this);
             ivNotificaton.setOnClickListener(this);
             ivSetting.setOnClickListener(this);
+            ivSearch.setOnClickListener(this);
+            ivProfile.setOnClickListener(this);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -60,6 +82,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             ivMessage = findViewById(R.id.iv_message);
             ivNotificaton = findViewById(R.id.iv_notification);
             ivSetting = findViewById(R.id.iv_setting);
+            ivSearch = findViewById(R.id.ivSearch);
+            ivProfile = findViewById(R.id.ivProfile);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -99,7 +123,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     ivNotificaton.setImageResource(R.drawable.ic_notification_black);
                     ivSetting.setImageResource(R.drawable.ic_setting_green);
                     break;
-
+                case R.id.ivSearch: {
+                    Intent intent = new Intent(this, SearchActivity.class);
+                    startActivity(intent);
+                    break;
+                }
+                case R.id.ivProfile: {
+                    Intent intent = new Intent(this, ProfileActivity.class);
+                    startActivity(intent);
+                    break;
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -194,5 +227,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onNotification() {
         handleNotification();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        App.sToken = "";
     }
 }

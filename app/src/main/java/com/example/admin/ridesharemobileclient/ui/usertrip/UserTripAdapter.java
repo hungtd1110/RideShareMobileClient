@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.admin.ridesharemobileclient.R;
-import com.example.admin.ridesharemobileclient.entity.respone.UserRespone;
+import com.example.admin.ridesharemobileclient.entity.respone.DriverUserRespone;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -21,7 +21,7 @@ import static com.example.admin.ridesharemobileclient.config.Const.PREFIX_IMAGE_
 public class UserTripAdapter extends RecyclerView.Adapter<UserTripAdapter.ViewHolder> {
     private Context mContext;
 
-    private List<UserRespone> mListUser;
+    private List<DriverUserRespone> mListUser;
 
     UserTripAdapter(Context context) {
         mContext = context;
@@ -61,7 +61,7 @@ public class UserTripAdapter extends RecyclerView.Adapter<UserTripAdapter.ViewHo
         return mListUser != null ? mListUser.size() : 0;
     }
 
-    public void setData(List<UserRespone> listUser) {
+    public void setData(List<DriverUserRespone> listUser) {
         try {
             mListUser = listUser;
             notifyDataSetChanged();
@@ -90,7 +90,7 @@ public class UserTripAdapter extends RecyclerView.Adapter<UserTripAdapter.ViewHo
 
         @Override
         public void onClick(View v) {
-            UserRespone userRespone = mListUser.get(getAdapterPosition());
+            DriverUserRespone userRespone = mListUser.get(getAdapterPosition());
             switch (v.getId()) {
                 case R.id.tvMessage:
                     //Nhắn tin

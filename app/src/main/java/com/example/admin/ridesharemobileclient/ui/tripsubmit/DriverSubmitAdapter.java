@@ -3,8 +3,6 @@ package com.example.admin.ridesharemobileclient.ui.tripsubmit;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,7 +21,6 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Locale;
 
 import static com.example.admin.ridesharemobileclient.config.Const.DATA_DRIVER;
 import static com.example.admin.ridesharemobileclient.config.Const.KEY_ID;
@@ -38,7 +35,7 @@ public class DriverSubmitAdapter extends RecyclerView.Adapter<DriverSubmitAdapte
     private SimpleDateFormat mDateFormat;
 
     public interface CallBack {
-        void onCancelDriver();
+        void onCancelDriver(String idDriver);
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -77,8 +74,8 @@ public class DriverSubmitAdapter extends RecyclerView.Adapter<DriverSubmitAdapte
             holder.llAction.setVisibility(View.GONE);
             holder.tvActionLeft.setText("Hủy");
             holder.tvActionRight.setText("Danh sách");
-            PlaceUtils.setNamePosition(driver.getStartLatitude(), driver.getStartLongitude(), holder.tvStartPosition);
-            PlaceUtils.setNamePosition(driver.getEndLatitude(), driver.getEndLongitude(), holder.tvEndPosition);
+            PlaceUtils.setFullNamePosition(driver.getStartLatitude(), driver.getStartLongitude(), holder.tvStartPosition);
+            PlaceUtils.setFullNamePosition(driver.getEndLatitude(), driver.getEndLongitude(), holder.tvEndPosition);
             holder.tvTime.setText(mDateFormat.format(calendar.getTime()));
             holder.tvNumberSeat.setText(driver.getNumberSeat());
             holder.tvPrice.setText(NumberFormat.getInstance().format(Long.parseLong(driver.getPrice())) + " VNĐ");
@@ -165,7 +162,7 @@ public class DriverSubmitAdapter extends RecyclerView.Adapter<DriverSubmitAdapte
             try {
                 switch (view.getId()) {
                     case R.id.tvActionLeft:
-                        mCallBack.onCancelDriver();
+                        mCallBack.onCancelDriver(mListDriver.get(getAdapterPosition()).getId());
                         break;
                     case R.id.tvActionRight: {
                         Intent intent = new Intent(mContext, UserRegisterActivity.class);

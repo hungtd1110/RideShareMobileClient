@@ -91,4 +91,25 @@
     <string name="accept">Chấp nhận</string>
     <string name="cancel">Xóa</string>
     <string name="detail">Chi tiết</string>
+    <string name="vehicle_none">Không yêu cầu</string>
+    <string name="rate">Đánh giá</string>
+    <string name="profile">Thông tin cá nhân</string>
+    <string name="chane_profile">Đổi thông tin</string>
+    <string name="chane_password">Đổi mật khẩu</string>
+    <string name="phone">Số điện thoại</string>
+    <string name="search">Tìm kiếm</string>
+    <string name="route_step">Địa điểm đi qua</string>
+    <string name="no_step">Không có</string>
+    <string name="list_route_step">Danh sách địa điểm đi qua</string>
+    <string name="pick_position">Địa điểm đón</string>
+    <string name="select_pick_position">Chọn điểm đón</string>
+    <string name="cancel2">Hủy</string>
+    <string name="see_rate">Xem đánh giá</string>
+    <string name="optization">Tối ưu lộ trình</string>
+    <string name="finish">Xong</string>
+    <string name="select_fuction">Chọn chức năng</string>
+    <string name="list_peopel">Danh sách người đi cùng</string>
+    <string name="cancel3">Hủy chuyến đi</string>
+    <string name="apply">Áp dụng</string>
+    <string name="title_notification">Thông báo</string>
 </resources>

@@ -12,12 +12,8 @@ import com.example.admin.ridesharemobileclient.R;
 import com.example.admin.ridesharemobileclient.config.App;
 import com.example.admin.ridesharemobileclient.data.APIHelper;
 import com.example.admin.ridesharemobileclient.data.IAPIHelper;
-import com.example.admin.ridesharemobileclient.entity.HeaderRegister;
-import com.example.admin.ridesharemobileclient.entity.Separate;
 import com.example.admin.ridesharemobileclient.entity.respone.BaseRespone;
-import com.example.admin.ridesharemobileclient.entity.respone.UserAccept;
-import com.example.admin.ridesharemobileclient.entity.respone.UserNotAccept;
-import com.example.admin.ridesharemobileclient.entity.respone.UserRespone;
+import com.example.admin.ridesharemobileclient.entity.respone.DriverUserRespone;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
@@ -35,7 +31,6 @@ import static com.example.admin.ridesharemobileclient.config.Const.DATA_DRIVER;
 import static com.example.admin.ridesharemobileclient.config.Const.DATA_HITCHHIKER;
 import static com.example.admin.ridesharemobileclient.config.Const.KEY_ID;
 import static com.example.admin.ridesharemobileclient.config.Const.KEY_TYPE;
-import static com.example.admin.ridesharemobileclient.config.Const.NOT_ACCEPT;
 
 public class UserTripActivity extends AppCompatActivity {
     private IAPIHelper mIAPIHelper;
@@ -100,9 +95,9 @@ public class UserTripActivity extends AppCompatActivity {
                     try {
                         Log.d(TAG, "onResponse: " + response.body().getMetadata().toString());
 
-                        Type type = new TypeToken<List<UserRespone>>() {
+                        Type type = new TypeToken<List<DriverUserRespone>>() {
                         }.getType();
-                        List<UserRespone> listUser = new Gson().fromJson(response.body().getMetadata().toString(), type);
+                        List<DriverUserRespone> listUser = new Gson().fromJson(response.body().getMetadata().toString(), type);
 
                         handleSortList(listUser);
                     } catch (JsonSyntaxException e) {
@@ -120,11 +115,11 @@ public class UserTripActivity extends AppCompatActivity {
         }
     }
 
-    private void handleSortList(List<UserRespone> listUser) {
+    private void handleSortList(List<DriverUserRespone> listUser) {
         try {
-            List<UserRespone> listAccept = new ArrayList<>();
+            List<DriverUserRespone> listAccept = new ArrayList<>();
 
-            for (UserRespone user : listUser) {
+            for (DriverUserRespone user : listUser) {
                 if (user.getStatus().equals(ACCEPT)) {
                     listAccept.add(user);
                 }

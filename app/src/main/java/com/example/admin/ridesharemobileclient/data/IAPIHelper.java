@@ -1,6 +1,7 @@
 package com.example.admin.ridesharemobileclient.data;
 
 import com.example.admin.ridesharemobileclient.entity.Hitchhiker;
+import com.example.admin.ridesharemobileclient.entity.RouteStep;
 import com.example.admin.ridesharemobileclient.entity.User;
 import com.example.admin.ridesharemobileclient.entity.request.AcceptRequest;
 import com.example.admin.ridesharemobileclient.entity.request.DriverRequest;
@@ -51,6 +52,12 @@ public interface IAPIHelper {
     @GET("trip-by-driver/{idDriver}")
     Call<BaseRespone> getDriver(@Header("authorization") String token, @Path("idDriver") String idDriver);
 
+    @GET("trip-by-driver/{idDriver}/route-step-accept")
+    Call<BaseRespone> getRouteStep(@Header("authorization") String token, @Path("idDriver") String idDriver);
+
+    @GET("trip-by-driver/status/{idDriver}")
+    Call<BaseRespone> checkRegisterDriver(@Header("authorization") String token, @Path("idDriver") String idDriver);
+
     @POST("trip-by-driver/new-trip")
     @FormUrlEncoded
     Call<BaseRespone> addDriver(@Header("authorization") String token,
@@ -67,15 +74,20 @@ public interface IAPIHelper {
     @POST("trip-by-driver/update-trip")
     Call<BaseRespone> updateDriver(@Header("authorization") String token, @Body DriverRequest driverRequest);
 
+    @GET("trip-by-driver/delete-trip/{driverId}")
+    Call<BaseRespone> deleteDriver(@Header("authorization") String token, @Path("driverId") String idDriver);
+
     @POST("trip-by-driver/register-with-driver/{driverId}")
-    Call<BaseRespone> registerDriver(@Header("authorization") String token, @Path("driverId") String idDriver);
+    Call<BaseRespone> registerDriver(@Header("authorization") String token,
+                                     @Path("driverId") String idDriver,
+                                     @Body RouteStep r);
 
     @GET("trip-by-driver/register-trip/{driverId}")
     Call<BaseRespone> getUserRegisterDriver(@Header("authorization") String token, @Path("driverId") String idDriver);
 
-    @POST("trip-by-driver/accept-hitchhiker/{userDriverId}")
+    @POST("trip-by-driver/accept-hitchhiker/{driverId}")
     Call<BaseRespone> driverAccept(@Header("authorization") String token,
-                                   @Path("userDriverId") String idDriver,
+                                   @Path("driverId") Long idDriver,
                                    @Body List<AcceptRequest> listAccept);
 
 
@@ -87,12 +99,31 @@ public interface IAPIHelper {
     @GET("trip-by-hitchhiker/my-trip")
     Call<BaseRespone> getListHitchhikerSubmit(@Header("authorization") String token, @QueryMap Map<String, String> maps);
 
+    @GET("trip-by-hitchhiker/my-trip-register")
+    Call<BaseRespone> getListHitchhikerRegister(@Header("authorization") String token, @QueryMap Map<String, String> maps);
+
+    @GET("trip-by-hitchhiker/{hitchhikerId}")
+    Call<BaseRespone> getHitchhiker(@Header("authorization") String token, @Path("hitchhikerId") String idHitchhiker);
+
+    @GET("trip-by-hitchhiker/status/{idHitchhiker}")
+    Call<BaseRespone> checkRegisterHitchhiker(@Header("authorization") String token, @Path("idHitchhiker") String idHitchhiker);
+
     @POST("trip-by-hitchhiker/new-trip")
     Call<BaseRespone> addHitchhiker(@Header("authorization") String token, @Body Hitchhiker hitchhiker);
+
+    @GET("trip-by-hitchhiker/delete-trip/{hitchhikerId}")
+    Call<BaseRespone> deleteHitchhiker(@Header("authorization") String token, @Path("hitchhikerId") String idHitchhiker);
 
     @POST("trip-by-hitchhiker/register-with-hitchhiker/{hitchhikerId}")
     Call<BaseRespone> registerHitchhiker(@Header("authorization") String token, @Path("hitchhikerId") String idHitchhiker);
 
+    @GET("trip-by-hitchhiker/register-trip/{hitchhikerId}")
+    Call<BaseRespone> getUserRegisterHitchhiker(@Header("authorization") String token, @Path("hitchhikerId") String idHitchhiker);
+
+    @POST("trip-by-hitchhiker/accept-driver/{hitchhikerId}")
+    Call<BaseRespone> hitchhikerAccept(@Header("authorization") String token,
+                                       @Path("hitchhikerId") Long idHitchhiker,
+                                       @Body AcceptRequest accept);
 
     //Message
 
@@ -105,4 +136,15 @@ public interface IAPIHelper {
     @GET("")
     Call<BaseRespone> getLastMessage(@Header("authorization") String token);
 
+
+    //User
+
+    @GET("user/detail")
+    Call<BaseRespone> getDetailUser(@Header("authorization") String token);
+
+
+    //Notification
+
+    @GET("notification")
+    Call<BaseRespone> getNotification(@Header("authorization") String token);
 }

@@ -12,7 +12,7 @@
         android:id="@+id/tvTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="9:30 1/1/2019"
+        android:text="9:30 25/5/2019"
         android:textColor="@color/colorGrayLight"
         android:textSize="@dimen/font_normal" />
 

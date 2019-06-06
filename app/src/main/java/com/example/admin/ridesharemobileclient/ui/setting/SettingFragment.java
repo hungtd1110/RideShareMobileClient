@@ -1,8 +1,10 @@
 package com.example.admin.ridesharemobileclient.ui.setting;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.admin.ridesharemobileclient.R;
 import com.example.admin.ridesharemobileclient.config.App;
+import com.example.admin.ridesharemobileclient.ui.profile.ProfileActivity;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -23,6 +26,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 
     private View mView;
     private CircleImageView civImage;
+    private ConstraintLayout cslInformation;
     private TextView tvName;
     private LinearLayout llNewFeed, llTripSubmit, llTripRegister, llMessage, llNotification, llIntroduce, llLogout;
 
@@ -48,6 +52,11 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.llLogout:
                 break;
+            case R.id.cslInformation: {
+                Intent intent = new Intent(getContext(), ProfileActivity.class);
+                startActivity(intent);
+                break;
+            }
         }
     }
 
@@ -90,6 +99,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
             llNotification = mView.findViewById(R.id.llNotification);
             llIntroduce = mView.findViewById(R.id.llIntroduce);
             llLogout = mView.findViewById(R.id.llLogout);
+            cslInformation = mView.findViewById(R.id.cslInformation);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -103,6 +113,7 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
         llNotification.setOnClickListener(this);
         llIntroduce.setOnClickListener(this);
         llLogout.setOnClickListener(this);
+        cslInformation.setOnClickListener(this);
     }
 
     private void init() {

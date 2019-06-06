@@ -19,7 +19,6 @@ import com.example.admin.ridesharemobileclient.data.IAPIHelper;
 import com.example.admin.ridesharemobileclient.entity.Hitchhiker;
 import com.example.admin.ridesharemobileclient.entity.respone.BaseRespone;
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,10 +31,10 @@ import retrofit2.Response;
 
 import static com.example.admin.ridesharemobileclient.config.Const.ACTION_ADD_DATA;
 import static com.example.admin.ridesharemobileclient.config.Const.ACTION_SET_DATA;
+import static com.example.admin.ridesharemobileclient.config.Const.PAGE;
+import static com.example.admin.ridesharemobileclient.config.Const.SIZE;
 
 public class HitchhikerRegisterFragment extends Fragment {
-    private static final String TAG = "HitchhikerRegisterFragment";
-
     private IAPIHelper mIAPIHelper;
 
     private View mView;
@@ -46,10 +45,13 @@ public class HitchhikerRegisterFragment extends Fragment {
     private int page, size, visibleThreshold;
     private boolean isLoading;
 
+    private static final String TAG = "HitchhikerRegisterFragment";
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_hitchhiker, container, false);
+
         initView();
         initEvent();
         init();
@@ -58,23 +60,23 @@ public class HitchhikerRegisterFragment extends Fragment {
     }
 
     private void initEvent() {
-        rvHitchhiker.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                int totalItemCount = layoutManager.getItemCount(); // Lấy tổng số lượng item đang có
-                int lastVisibleItem = layoutManager.findLastVisibleItemPosition(); // Lấy vị trí của item cuối cùng
-
-                if (totalItemCount < adapter.getItemCount()) {
-                    if (!isLoading && totalItemCount <= (lastVisibleItem + visibleThreshold)) // Nếu không phải trạng thái loading và tổng số lượng item bé hơn hoặc bằng vị trí item cuối + số lượng item tối đa hiển thị
-                    {
-                        isLoading = true;
-                        adapter.loadMore();
-                        page++;
-                        showListHitchhiker(ACTION_ADD_DATA);
-                    }
-                }
-            }
-        });
+//        rvHitchhiker.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+//                int totalItemCount = layoutManager.getItemCount(); // Lấy tổng số lượng item đang có
+//                int lastVisibleItem = layoutManager.findLastVisibleItemPosition(); // Lấy vị trí của item cuối cùng
+//
+//                if (totalItemCount < adapter.getItemCount()) {
+//                    if (!isLoading && totalItemCount <= (lastVisibleItem + visibleThreshold)) // Nếu không phải trạng thái loading và tổng số lượng item bé hơn hoặc bằng vị trí item cuối + số lượng item tối đa hiển thị
+//                    {
+//                        isLoading = true;
+//                        adapter.loadMore();
+//                        page++;
+//                        showListHitchhiker(ACTION_ADD_DATA);
+//                    }
+//                }
+//            }
+//        });
     }
 
     private void init() {
@@ -85,7 +87,13 @@ public class HitchhikerRegisterFragment extends Fragment {
             page = 1;
             size = 10;
 
-            adapter = new HitchhikerRegisterAdapter(getContext());
+            adapter = new HitchhikerRegisterAdapter(getContext(), new HitchhikerRegisterAdapter.CallBack() {
+                @Override
+                public void onCancelHitchhiker() {
+
+                }
+            });
+
             layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
             rvHitchhiker.setLayoutManager(layoutManager);
             rvHitchhiker.setAdapter(adapter);
@@ -97,22 +105,20 @@ public class HitchhikerRegisterFragment extends Fragment {
     }
 
     private void showListHitchhiker(String action) {
-        Map<String, String> maps = new HashMap<>();
-        maps.put("page", String.valueOf(this.page));
-        maps.put("size", String.valueOf(this.size));
+        try {
+            Map<String, String> maps = new HashMap<>();
+//            maps.put("page", String.valueOf(this.page));
+//            maps.put("size", String.valueOf(this.size));
+            maps.put("page", PAGE);
+            maps.put("size", SIZE);
 
-        Call<BaseRespone> call = mIAPIHelper.getListHitchhiker(App.sToken, maps);
-        call.enqueue(new Callback<BaseRespone>() {
-            @SuppressLint("LongLogTag")
-            @Override
-            public void onResponse(@NonNull Call<BaseRespone> call, @NonNull Response<BaseRespone> response) {
-                try {
-                    BaseRespone baseRespone = response.body();
-                    Log.d(TAG, "onResponse: " + baseRespone);
-
-                    if (baseRespone != null) {
+            Call<BaseRespone> call = mIAPIHelper.getListHitchhikerRegister(App.sToken, maps);
+            call.enqueue(new Callback<BaseRespone>() {
+                @Override
+                public void onResponse(@NonNull Call<BaseRespone> call, @NonNull Response<BaseRespone> response) {
+                    try {
 //                        Type type = new TypeToken<Hitchhiker[]>(){}.getType();
-                        Hitchhiker[] hitchhikers = new Gson().fromJson((String) baseRespone.getMetadata(), Hitchhiker[].class);
+                        Hitchhiker[] hitchhikers = new Gson().fromJson((String) response.body().getMetadata(), Hitchhiker[].class);
 
                         ArrayList<Hitchhiker> listHitchhiker = new ArrayList<>();
                         Collections.addAll(listHitchhiker, hitchhikers);
@@ -124,17 +130,20 @@ public class HitchhikerRegisterFragment extends Fragment {
                             adapter.addData(listHitchhiker);
                             isLoading = false;
                         }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
-            }
 
-            @Override
-            public void onFailure(@NonNull Call<BaseRespone> call, @NonNull Throwable t) {
-                Log.d(TAG, "onFailure: " + t.getMessage());
-            }
-        });
+                @SuppressLint("LongLogTag")
+                @Override
+                public void onFailure(@NonNull Call<BaseRespone> call, @NonNull Throwable t) {
+                    Log.d(TAG, "onFailure: " + t.getMessage());
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void initView() {

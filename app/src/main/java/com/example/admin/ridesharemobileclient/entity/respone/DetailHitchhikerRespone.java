@@ -4,19 +4,18 @@ package com.example.admin.ridesharemobileclient.entity.respone;
  * Created by admin on 5/3/2019.
  */
 
-public class DetailTripRespone {
+public class DetailHitchhikerRespone {
     private String userId;
     private String username;
     private String avatar;
     private String phone;
     private long star;
-    private String driverId;
+    private String hitchhikerId;
     private String startLongitude;
     private String startLatitude;
     private String endLongitude;
     private String endLatitude;
     private String time;
-    private String typeVehicle;
     private String numberSeat;
     private String images;
     private String price;
@@ -62,12 +61,12 @@ public class DetailTripRespone {
         this.star = star;
     }
 
-    public String getDriverId() {
-        return driverId;
+    public String getHitchhikerId() {
+        return hitchhikerId;
     }
 
-    public void setDriverId(String driverId) {
-        this.driverId = driverId;
+    public void setHitchhikerId(String hitchhikerId) {
+        this.hitchhikerId = hitchhikerId;
     }
 
     public String getStartLongitude() {
@@ -108,14 +107,6 @@ public class DetailTripRespone {
 
     public void setTime(String time) {
         this.time = time;
-    }
-
-    public String getTypeVehicle() {
-        return typeVehicle;
-    }
-
-    public void setTypeVehicle(String typeVehicle) {
-        this.typeVehicle = typeVehicle;
     }
 
     public String getNumberSeat() {

@@ -3,11 +3,8 @@ package com.example.admin.ridesharemobileclient.ui.newfeed;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,29 +12,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.admin.ridesharemobileclient.R;
-import com.example.admin.ridesharemobileclient.config.App;
-import com.example.admin.ridesharemobileclient.data.APIHelper;
-import com.example.admin.ridesharemobileclient.data.IAPIHelper;
 import com.example.admin.ridesharemobileclient.entity.Driver;
-import com.example.admin.ridesharemobileclient.entity.respone.BaseRespone;
-import com.example.admin.ridesharemobileclient.entity.respone.DetailTripRespone;
 import com.example.admin.ridesharemobileclient.ui.detailmessage.DetailMessageActivity;
 import com.example.admin.ridesharemobileclient.ui.detailtripregister.DetailTripRegisterActivity;
 import com.example.admin.ridesharemobileclient.ui.usertrip.UserTripActivity;
 import com.example.admin.ridesharemobileclient.utils.PlaceUtils;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Type;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Locale;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static com.example.admin.ridesharemobileclient.config.Const.DATA_DRIVER;
 import static com.example.admin.ridesharemobileclient.config.Const.KEY_ID;
@@ -80,14 +64,15 @@ public class DriverAdapter extends RecyclerView.Adapter<DriverAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         try {
             Driver driver = mListDriver.get(position);
-//            setInfoDriver(holder, driver);
 
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(Long.parseLong(driver.getTime()));
 
             holder.llAction.setVisibility(View.GONE);
-            PlaceUtils.setNamePosition(driver.getStartLatitude(), driver.getStartLongitude(), holder.tvStartPosition);
-            PlaceUtils.setNamePosition(driver.getEndLatitude(), driver.getEndLongitude(), holder.tvEndPosition);
+            holder.tvShowMore.setVisibility(View.GONE);
+
+            PlaceUtils.setFullNamePosition(driver.getStartLatitude(), driver.getStartLongitude(), holder.tvStartPosition);
+            PlaceUtils.setFullNamePosition(driver.getEndLatitude(), driver.getEndLongitude(), holder.tvEndPosition);
             holder.tvTime.setText(mDateFormat.format(calendar.getTime()));
             holder.tvNumberSeat.setText(driver.getNumberSeat());
             holder.tvPrice.setText(NumberFormat.getInstance().format(Long.parseLong(driver.getPrice())) + " VNĐ");
@@ -208,40 +193,6 @@ public class DriverAdapter extends RecyclerView.Adapter<DriverAdapter.ViewHolder
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
-    }
-
-    private void setInfoDriver(ViewHolder holder, Driver driver) {
-        try {
-            IAPIHelper mIAPIHelper = APIHelper.getInstance();
-
-            Call<BaseRespone> call = mIAPIHelper.getDriver(App.sToken, driver.getId());
-            call.enqueue(new Callback<BaseRespone>() {
-                @SuppressLint("LongLogTag")
-                @Override
-                public void onResponse(Call<BaseRespone> call, Response<BaseRespone> response) {
-                    try {
-                        Log.d(TAG, "onResponse: " + response.body().getMetadata().toString());
-
-                        Type type = new TypeToken<DetailTripRespone>() {
-                        }.getType();
-                        DetailTripRespone detailTripRespone = new Gson().fromJson(response.body().getMetadata().toString(), type);
-
-                        if (detailTripRespone.getUserId().equals(App.sUser.getUserId())) {
-                            holder.itemView.setVisibility(View.GONE);
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<BaseRespone> call, Throwable t) {
-
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }

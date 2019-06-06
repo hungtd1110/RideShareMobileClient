@@ -1,6 +1,6 @@
 package com.example.admin.ridesharemobileclient.entity.respone;
 
-public class UserRespone {
+public class HitchhikerUserRespone {
     private String userId;
 
     private String username;
@@ -13,7 +13,7 @@ public class UserRespone {
 
     private String createdAt;
 
-    private String userDriverId;
+    private String userHitchhikerId;
 
     private String status;
 
@@ -65,12 +65,12 @@ public class UserRespone {
         this.createdAt = createdAt;
     }
 
-    public String getUserDriverId() {
-        return userDriverId;
+    public String getUserHitchhikerId() {
+        return userHitchhikerId;
     }
 
-    public void setUserDriverId(String userDriverId) {
-        this.userDriverId = userDriverId;
+    public void setUserHitchhikerId(String userHitchhikerId) {
+        this.userHitchhikerId = userHitchhikerId;
     }
 
     public String getStatus() {

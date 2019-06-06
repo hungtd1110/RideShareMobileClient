@@ -1,30 +1,34 @@
 package com.example.admin.ridesharemobileclient.ui.search;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.example.admin.ridesharemobileclient.R;
-import com.example.admin.ridesharemobileclient.ui.mapsearch.MapSearchActivity;
+import com.example.admin.ridesharemobileclient.ui.searchadvance.SearchAdvanceActivity;
 import com.mapbox.api.geocoding.v5.models.CarmenFeature;
 import com.mapbox.geojson.Point;
 import com.mapbox.mapboxsdk.plugins.places.autocomplete.PlaceAutocomplete;
 import com.mapbox.mapboxsdk.plugins.places.autocomplete.model.PlaceOptions;
 
+import static com.example.admin.ridesharemobileclient.config.Const.KEY_END_LAT;
+import static com.example.admin.ridesharemobileclient.config.Const.KEY_END_LNG;
+import static com.example.admin.ridesharemobileclient.config.Const.KEY_START_LAT;
+import static com.example.admin.ridesharemobileclient.config.Const.KEY_START_LNG;
+import static com.example.admin.ridesharemobileclient.config.Const.KEY_TYPE;
+import static com.example.admin.ridesharemobileclient.config.Const.TYPE_DRIVER;
+import static com.example.admin.ridesharemobileclient.config.Const.TYPE_HITCHHIKER;
+
 public class SearchActivity extends AppCompatActivity implements View.OnClickListener {
-    private RecyclerView rvTrip;
-    private TextView tvStartPosition, tvEndPosition;
-    private LinearLayout llStartPosition, llEndPosition;
-    private ImageView ivBack, ivFilter, ivShowMap, ivSearch;
-    private DrawerLayout dlSearch;
+    private RadioButton rbType0, rbType1;
+    private TextView tvStartPosition, tvEndPosition, tvSearch;
+    private ImageView ivEditStartPosition, ivEditEndPosition, ivBack;
+    private String startLat, endLat, startLng, endLng, type;
 
     private static final int REQUEST_SEARCH_START = 1;
     private static final int REQUEST_SEARCH_END = 2;
@@ -33,80 +37,74 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-
         initView();
         initEvent();
         init();
     }
 
-    private void init() {
-        SearchAdapter adapter = new SearchAdapter(this);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        rvTrip.setLayoutManager(layoutManager);
-        rvTrip.setAdapter(adapter);
+    private void initView() {
+        tvStartPosition = findViewById(R.id.tvStartPosition);
+        tvEndPosition = findViewById(R.id.tvEndPosition);
+        tvSearch = findViewById(R.id.tvSearch);
+        rbType0 = findViewById(R.id.rbType0);
+        rbType1 = findViewById(R.id.rbType1);
+        ivEditStartPosition = findViewById(R.id.ivEditStartPosition);
+        ivEditEndPosition = findViewById(R.id.ivEditEndPosition);
+        ivBack = findViewById(R.id.ivBack);
     }
 
     private void initEvent() {
-        llStartPosition.setOnClickListener(this);
-        llEndPosition.setOnClickListener(this);
+        ivEditStartPosition.setOnClickListener(this);
+        ivEditEndPosition.setOnClickListener(this);
+        tvSearch.setOnClickListener(this);
         ivBack.setOnClickListener(this);
-        ivFilter.setOnClickListener(this);
-        ivFilter.setOnClickListener(this);
-        ivFilter.setOnClickListener(this);
-        ivShowMap.setOnClickListener(this);
-        ivSearch.setOnClickListener(this);
     }
 
-    private void initView() {
-        rvTrip = findViewById(R.id.rvSearch);
-        tvStartPosition = findViewById(R.id.tvStartPosition);
-        tvEndPosition = findViewById(R.id.tvEndPosition);
-        llStartPosition = findViewById(R.id.llStartPosition);
-        llEndPosition = findViewById(R.id.llEndPosition);
-        ivBack = findViewById(R.id.ivBack);
-        ivFilter = findViewById(R.id.ivFilter);
-        ivShowMap = findViewById(R.id.ivShowMap);
-        ivSearch = findViewById(R.id.ivSearch);
-        dlSearch = findViewById(R.id.dlSearch);
+    private void init() {
     }
 
     @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.llStartPosition:
-                showSearch(REQUEST_SEARCH_START);
-                break;
-            case R.id.llEndPosition:
-                showSearch(REQUEST_SEARCH_END);
-                break;
+    public void onClick(View v) {
+        switch (v.getId()) {
             case R.id.ivBack:
                 finish();
                 break;
-            case R.id.ivFilter:
-                dlSearch.openDrawer(Gravity.END);
+            case R.id.ivEditStartPosition:
+                showSearch(REQUEST_SEARCH_START);
                 break;
-            case R.id.ivShowMap:
-                Intent intent = new Intent(this, MapSearchActivity.class);
+            case R.id.ivEditEndPosition:
+                showSearch(REQUEST_SEARCH_END);
+                break;
+            case R.id.tvSearch:
+                if (rbType0.isChecked()) {
+                    type = TYPE_DRIVER;
+                } else if (rbType1.isChecked()) {
+                    type = TYPE_HITCHHIKER;
+                }
+
+                Intent intent = new Intent(this, SearchAdvanceActivity.class);
+                intent.putExtra(KEY_TYPE, type);
+                intent.putExtra(KEY_START_LAT, startLat);
+                intent.putExtra(KEY_END_LAT, endLat);
+                intent.putExtra(KEY_START_LNG, startLng);
+                intent.putExtra(KEY_END_LNG, endLng);
                 startActivity(intent);
-                break;
-            case R.id.ivSearch:
-                handleSearch();
-                break;
         }
     }
 
-    private void handleSearch() {
-    }
-
     private void showSearch(int requestSearch) {
-        Intent intent = new PlaceAutocomplete.IntentBuilder()
-                .accessToken(getString(R.string.map_token))
-                .placeOptions(PlaceOptions.builder()
-                        .backgroundColor(getResources().getColor(R.color.colorBackground3))
-                        .limit(10)
-                        .build(PlaceOptions.MODE_CARDS))
-                .build(this);
-        startActivityForResult(intent, requestSearch);
+        try {
+            Intent intent = new PlaceAutocomplete.IntentBuilder()
+                    .accessToken(getString(R.string.map_token))
+                    .placeOptions(PlaceOptions.builder()
+                            .backgroundColor(getResources().getColor(R.color.colorBackground3))
+                            .limit(10)
+                            .build(PlaceOptions.MODE_CARDS))
+                    .build(this);
+            startActivityForResult(intent, requestSearch);
+        } catch (Resources.NotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -114,14 +112,24 @@ public class SearchActivity extends AppCompatActivity implements View.OnClickLis
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (data != null) {
-                CarmenFeature carmenFeature = PlaceAutocomplete.getPlace(data);
-                double lat = ((Point) carmenFeature.geometry()).latitude();
-                double lng = ((Point) carmenFeature.geometry()).longitude();
+                try {
+                    CarmenFeature carmenFeature = PlaceAutocomplete.getPlace(data);
+                    double lat = ((Point) carmenFeature.geometry()).latitude();
+                    double lng = ((Point) carmenFeature.geometry()).longitude();
 
-                if (requestCode == REQUEST_SEARCH_START) {
-                    tvStartPosition.setText(carmenFeature.placeName());
-                } else if (requestCode == REQUEST_SEARCH_END) {
-                    tvEndPosition.setText(carmenFeature.placeName());
+                    if (requestCode == REQUEST_SEARCH_START) {
+                        tvStartPosition.setText(carmenFeature.placeName());
+
+                        startLat = String.valueOf(lat);
+                        startLng = String.valueOf(lng);
+                    } else if (requestCode == REQUEST_SEARCH_END) {
+                        tvEndPosition.setText(carmenFeature.placeName());
+
+                        endLat = String.valueOf(lat);
+                        endLng = String.valueOf(lng);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }

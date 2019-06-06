@@ -13,6 +13,7 @@
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
+            android:id="@+id/cslInformation"
             android:layout_height="wrap_content"
             android:background="@color/colorWhite"
             android:orientation="vertical">
@@ -25,7 +26,7 @@
                 android:layout_marginStart="@dimen/margin_normal"
                 android:layout_marginTop="@dimen/margin_normal"
                 android:clickable="false"
-                android:src="@color/colorGrayLight"
+                android:src="@drawable/ic_avatar_default"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -188,6 +189,32 @@
             <TextView
                 android:layout_marginStart="@dimen/margin_normal"
                 android:text="@string/notification"
+                android:textSize="@dimen/font_large_huge"
+                android:textColor="@color/colorBlackLight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llRate"
+            android:gravity="center_vertical"
+            android:layout_marginTop="@dimen/separate_height"
+            android:padding="@dimen/padding_normal"
+            android:background="@color/colorWhite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:padding="@dimen/padding_medium2"
+                android:background="@drawable/background_border_item_setting_6"
+                app:srcCompat="@drawable/ic_rate_white"
+                android:layout_width="@dimen/width_large"
+                android:layout_height="@dimen/height_large" />
+
+            <TextView
+                android:layout_marginStart="@dimen/margin_normal"
+                android:text="@string/rate"
                 android:textSize="@dimen/font_large_huge"
                 android:textColor="@color/colorBlackLight"
                 android:layout_width="wrap_content"

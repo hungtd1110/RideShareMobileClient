@@ -10,9 +10,15 @@ import android.widget.TextView;
 import com.example.admin.ridesharemobileclient.R;
 import com.example.admin.ridesharemobileclient.entity.detailmessage.MyMessage;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import me.drakeet.multitype.ItemViewBinder;
 
 public class MyMessageBinder extends ItemViewBinder<MyMessage, MyMessageBinder.ViewHolder> {
+    private SimpleDateFormat mTimeFormat = new SimpleDateFormat("hh:mm dd/MM/yyyy");
+    private SimpleDateFormat mServerFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
     @NonNull
     @Override
     protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
@@ -23,15 +29,23 @@ public class MyMessageBinder extends ItemViewBinder<MyMessage, MyMessageBinder.V
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull MyMessage item) {
         holder.tvMessage.setText(item.getContent());
+
+        try {
+            Date date = mServerFormat.parse(item.getCreatedAt());
+            holder.tvTime.setText(mTimeFormat.format(date));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView tvMessage;
+        private TextView tvMessage, tvTime;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             tvMessage = itemView.findViewById(R.id.tvMessage);
+            tvTime = itemView.findViewById(R.id.tvTime);
         }
     }
 }

@@ -22,10 +22,11 @@
             app:srcCompat="@drawable/ic_back_white" />
 
         <TextView
+            android:id="@+id/tvUsername"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="Nhóm đồ án"
+            android:text="Quân"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/font_large_huge" />
 

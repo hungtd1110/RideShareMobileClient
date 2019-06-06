@@ -13,10 +13,9 @@ import android.widget.TextView;
 
 import com.example.admin.ridesharemobileclient.R;
 import com.example.admin.ridesharemobileclient.entity.Driver;
+import com.example.admin.ridesharemobileclient.ui.detailmessage.DetailMessageActivity;
 import com.example.admin.ridesharemobileclient.ui.detailtripregister.DetailTripRegisterActivity;
-import com.example.admin.ridesharemobileclient.ui.userregister.UserRegisterActivity;
 import com.example.admin.ridesharemobileclient.ui.usertrip.UserTripActivity;
-import com.example.admin.ridesharemobileclient.ui.usertrip.UserTripAdapter;
 import com.example.admin.ridesharemobileclient.utils.PlaceUtils;
 
 import java.text.NumberFormat;
@@ -74,13 +73,16 @@ public class DriverRegisterAdapter extends RecyclerView.Adapter<DriverRegisterAd
             calendar.setTimeInMillis(Long.parseLong(driver.getTime()));
 
             holder.llAction.setVisibility(View.GONE);
-            holder.tvActionLeft.setText("Nhắn tin");
-            holder.tvActionRight.setText("Danh sách");
-            PlaceUtils.setNamePosition(driver.getStartLatitude(), driver.getStartLongitude(), holder.tvStartPosition);
-            PlaceUtils.setNamePosition(driver.getEndLatitude(), driver.getEndLongitude(), holder.tvEndPosition);
+            holder.tvShowMore.setVisibility(View.GONE);
+
+            PlaceUtils.setFullNamePosition(driver.getStartLatitude(), driver.getStartLongitude(), holder.tvStartPosition);
+            PlaceUtils.setFullNamePosition(driver.getEndLatitude(), driver.getEndLongitude(), holder.tvEndPosition);
             holder.tvTime.setText(mDateFormat.format(calendar.getTime()));
             holder.tvNumberSeat.setText(driver.getNumberSeat());
             holder.tvPrice.setText(NumberFormat.getInstance().format(Long.parseLong(driver.getPrice())) + " VNĐ");
+
+            holder.tvActionLeft.setText("Nhắn tin");
+            holder.tvActionRight.setText("Danh sách");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -163,9 +165,12 @@ public class DriverRegisterAdapter extends RecyclerView.Adapter<DriverRegisterAd
         public void onClick(View view) {
             try {
                 switch (view.getId()) {
-                    case R.id.tvActionLeft:
-                        mCallBack.onCancelDriver();
+                    case R.id.tvActionLeft: {
+                        Intent intent = new Intent(mContext, DetailMessageActivity.class);
+                        intent.putExtra(KEY_ID, mListDriver.get(getAdapterPosition()).getId());
+                        mContext.startActivity(intent);
                         break;
+                    }
                     case R.id.tvActionRight: {
                         Intent intent = new Intent(mContext, UserTripActivity.class);
                         intent.putExtra(KEY_TYPE, DATA_DRIVER);

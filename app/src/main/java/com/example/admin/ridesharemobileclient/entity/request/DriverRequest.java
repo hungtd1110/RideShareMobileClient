@@ -5,22 +5,27 @@ package com.example.admin.ridesharemobileclient.entity.request;
  */
 
 public class DriverRequest {
-    private String tripId;
-
+    private String driverId;
     private String time;
-
     private String numberSeat;
-
     private String price;
-
     private String note;
+    private String routeStep;
 
-    public String getTripId() {
-        return tripId;
+    public String getDriverId() {
+        return driverId;
     }
 
-    public void setTripId(String tripId) {
-        this.tripId = tripId;
+    public void setDriverId(String driverId) {
+        this.driverId = driverId;
+    }
+
+    public String getRouteStep() {
+        return routeStep;
+    }
+
+    public void setRouteStep(String routeStep) {
+        this.routeStep = routeStep;
     }
 
     public String getTime() {

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorWhite"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="@dimen/padding_normal"
+        android:layout_marginBottom="@dimen/margin_normal_large"
+        android:layout_marginTop="@dimen/margin_normal_large">
+
+        <TextView
+            android:id="@+id/tvTitlePickPosition"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_toStartOf="@+id/ivEditPickPosition"
+            android:text="@string/pick_position"
+            android:textColor="@color/colorBlackLight"
+            android:textSize="@dimen/font_large_huge" />
+
+        <TextView
+            android:id="@+id/tvPickPosition"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvTitlePickPosition"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_toStartOf="@+id/ivEditPickPosition"
+            android:text="@string/select_pick_position"
+            android:textColor="@color/colorGray"
+            android:textSize="@dimen/font_large_huge" />
+
+        <ImageView
+            android:id="@+id/ivEditPickPosition"
+            android:layout_width="@dimen/width_large_huge"
+            android:layout_height="@dimen/height_large_huge"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/margin_normal"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:padding="@dimen/padding_normal"
+            app:srcCompat="@drawable/ic_edit_black" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlTool"
+        android:layout_marginBottom="@dimen/margin_normal_large"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvRegister"
+            android:textColor="@color/colorGreen"
+            android:textStyle="bold"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/margin_normal_large"
+            android:textSize="@dimen/font_large_huge"
+            android:text="@string/register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvCancel"
+            android:textColor="@color/colorGreen"
+            android:textStyle="bold"
+            android:layout_toLeftOf="@+id/tvRegister"
+            android:layout_marginEnd="@dimen/margin_large"
+            android:textSize="@dimen/font_large_huge"
+            android:text="@string/cancel2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+</LinearLayout>

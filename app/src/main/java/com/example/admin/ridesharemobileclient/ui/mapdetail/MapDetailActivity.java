@@ -1,5 +1,6 @@
 package com.example.admin.ridesharemobileclient.ui.mapdetail;
 
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -10,6 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.admin.ridesharemobileclient.R;
+import com.example.admin.ridesharemobileclient.entity.RouteStep;
+import com.example.admin.ridesharemobileclient.utils.PlaceUtils;
+import com.mapbox.api.directions.v5.DirectionsCriteria;
 import com.mapbox.api.directions.v5.models.DirectionsResponse;
 import com.mapbox.api.directions.v5.models.DirectionsRoute;
 import com.mapbox.geojson.Point;
@@ -17,6 +21,7 @@ import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.annotations.Icon;
 import com.mapbox.mapboxsdk.annotations.IconFactory;
 import com.mapbox.mapboxsdk.annotations.MarkerOptions;
+import com.mapbox.mapboxsdk.annotations.PolylineOptions;
 import com.mapbox.mapboxsdk.geometry.LatLng;
 import com.mapbox.mapboxsdk.maps.MapView;
 import com.mapbox.mapboxsdk.maps.MapboxMap;
@@ -25,14 +30,17 @@ import com.mapbox.mapboxsdk.maps.Style;
 import com.mapbox.mapboxsdk.plugins.markerview.MarkerViewManager;
 import com.mapbox.services.android.navigation.ui.v5.NavigationLauncher;
 import com.mapbox.services.android.navigation.ui.v5.NavigationLauncherOptions;
-import com.mapbox.services.android.navigation.ui.v5.route.NavigationMapRoute;
 import com.mapbox.services.android.navigation.v5.navigation.NavigationRoute;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.example.admin.ridesharemobileclient.config.Const.KEY_ROUTE_STEP;
 
 public class MapDetailActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener {
     private MapView mvMap;
@@ -41,16 +49,8 @@ public class MapDetailActivity extends AppCompatActivity implements OnMapReadyCa
     private TextView startPosition, endPosition;
 
     private MarkerViewManager mMarkerManager;
-    private Point mOrigin, mDestination;
-    private Address startAddress, endAddress;
-
-    //fake data
-    private double latStart = 21.036445;
-    private double lngStart = 105.773045;
-    private double latEnd = 21.028619;
-    private double lngEnd = 105.786000;
-    private Point mPoint1 = Point.fromLngLat(105.784895, 21.026606);
-    private Point mPoint2 = Point.fromLngLat(105.778512, 21.030588);
+    private ArrayList<RouteStep> mListRouteStep = new ArrayList<>();
+    private List<Point> coordinates = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +60,13 @@ public class MapDetailActivity extends AppCompatActivity implements OnMapReadyCa
 
         initView();
         initEvent();
+        getData();
         init(savedInstanceState);
+    }
+
+    private void getData() {
+        Bundle bundle = getIntent().getExtras();
+        mListRouteStep = (ArrayList<RouteStep>) bundle.getSerializable(KEY_ROUTE_STEP);
     }
 
     private void initEvent() {
@@ -73,15 +79,12 @@ public class MapDetailActivity extends AppCompatActivity implements OnMapReadyCa
             mvMap.onCreate(savedInstanceState);
             mvMap.getMapAsync(this);
 
-            mOrigin = Point.fromLngLat(lngStart, latStart);
-            mDestination = Point.fromLngLat(lngEnd, latEnd);
-
-            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-            startAddress = geocoder.getFromLocation(latStart, lngStart, 1).get(0);
-            endAddress = geocoder.getFromLocation(latEnd, lngEnd, 1).get(0);
-
-            startPosition.setText(startAddress.getAddressLine(0));
-            endPosition.setText(endAddress.getAddressLine(0));
+            PlaceUtils.setFullNamePosition(mListRouteStep.get(0).getLatitude(),
+                    mListRouteStep.get(0).getLongitude(),
+                    startPosition);
+            PlaceUtils.setFullNamePosition(mListRouteStep.get(mListRouteStep.size() - 1).getLatitude(),
+                    mListRouteStep.get(mListRouteStep.size() - 1).getLongitude(),
+                    endPosition);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -166,53 +169,96 @@ public class MapDetailActivity extends AppCompatActivity implements OnMapReadyCa
     private void showRoute() {
         try {
             IconFactory iconFactory = IconFactory.getInstance(MapDetailActivity.this);
+            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
 
-            Icon iconStart = iconFactory.fromResource(R.mipmap.ic_map_start);
-            mbmMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(latStart, lngStart))
-                    .title(startAddress.getAddressLine(0)))
-                    .setIcon(iconStart);
+            LatLng[] waypoints = new LatLng[mListRouteStep.size()];
 
-            Icon iconEnd = iconFactory.fromResource(R.mipmap.ic_map_end);
-            mbmMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(latEnd, lngEnd))
-                    .title(endAddress.getAddressLine(0)))
-                    .setIcon(iconEnd);
+            for (int i = 0; i < mListRouteStep.size(); i++) {
+                RouteStep routeStep = mListRouteStep.get(i);
+                Icon icon;
 
-            Icon i1 = iconFactory.fromResource(R.mipmap.ic_map_end);
-            mbmMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(mPoint1.latitude(), mPoint1.longitude()))
-                    .title(endAddress.getAddressLine(0)))
-                    .setIcon(i1);
+                waypoints[i] = new LatLng(Double.parseDouble(routeStep.getLatitude()),
+                        Double.parseDouble(routeStep.getLongitude()));
 
-            Icon i2 = iconFactory.fromResource(R.mipmap.ic_map_end);
-            mbmMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(mPoint2.latitude(), mPoint2.longitude()))
-                    .title(endAddress.getAddressLine(0)))
-                    .setIcon(i2);
+                coordinates.add(Point.fromLngLat(Double.parseDouble(routeStep.getLatitude()),
+                        Double.parseDouble(routeStep.getLongitude())));
 
-            NavigationRoute.builder(this)
-                    .accessToken(getString(R.string.map_token))
-                    .addWaypoint(mPoint1)
-//                    .addWaypoint(mPoint2)
-                    .origin(mOrigin)
-                    .destination(mDestination)
-                    .build()
-                    .getRoute(new Callback<DirectionsResponse>() {
-                        @Override
-                        public void onResponse(Call<DirectionsResponse> call, Response<DirectionsResponse> response) {
-                            DirectionsRoute route = response.body().routes().get(0);
+                if (i == 0) {
+                    icon = iconFactory.fromResource(R.mipmap.ic_map_start);
+                } else if (i == mListRouteStep.size() - 1) {
+                    icon = iconFactory.fromResource(R.mipmap.ic_map_end);
+                } else {
+                    icon = iconFactory.fromResource(R.drawable.ic_position);
+                }
 
-                            //chỉ show route
-                            NavigationMapRoute navigationMapRoute = new NavigationMapRoute(null, mvMap, mbmMap, R.style.NavigationMapRoute);
-                            navigationMapRoute.addRoute(route);
-                        }
+                Address address = geocoder.getFromLocation(Double.parseDouble(routeStep.getLatitude()),
+                        Double.parseDouble(routeStep.getLongitude()), 1).get(0);
 
-                        @Override
-                        public void onFailure(Call<DirectionsResponse> call, Throwable t) {
+                mbmMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(Double.parseDouble(routeStep.getLatitude()),
+                                Double.parseDouble(routeStep.getLongitude())))
+                        .title(address.getAddressLine(0)))
+                        .setIcon(icon);
+            }
 
-                        }
-                    });
+//            Icon iconStart = iconFactory.fromResource(R.mipmap.ic_map_start);
+//            mbmMap.addMarker(new MarkerOptions()
+//                    .position(new LatLng(Double.parseDouble(mListRouteStep.get(0).getLatitude()),
+//                            Double.parseDouble(mListRouteStep.get(0).getLongitude())))
+//                    .title(startAddress.getAddressLine(0)))
+//                    .setIcon(iconStart);
+//
+//            Icon iconEnd = iconFactory.fromResource(R.mipmap.ic_map_end);
+//            mbmMap.addMarker(new MarkerOptions()
+//                    .position(new LatLng(latEnd, lngEnd))
+//                    .title(endAddress.getAddressLine(0)))
+//                    .setIcon(iconEnd);
+//
+//            Icon i1 = iconFactory.fromResource(R.mipmap.ic_map_end);
+//            mbmMap.addMarker(new MarkerOptions()
+//                    .position(new LatLng(mPoint1.latitude(), mPoint1.longitude()))
+//                    .title(endAddress.getAddressLine(0)))
+//                    .setIcon(i1);
+//
+//            Icon i2 = iconFactory.fromResource(R.mipmap.ic_map_end);
+//            mbmMap.addMarker(new MarkerOptions()
+//                    .position(new LatLng(mPoint2.latitude(), mPoint2.longitude()))
+//                    .title(endAddress.getAddressLine(0)))
+//                    .setIcon(i2);
+
+//            if (origin != null && destination != null) {
+//                NavigationRoute.Builder builder = NavigationRoute.builder(this)
+//                        .accessToken(getString(R.string.map_token))
+//                        .origin(origin)
+//                        .destination(destination);
+//
+//                for (Point waypoint : listWayPoint) {
+//                    builder.addWaypoint(waypoint);
+//                }
+//
+//                builder.build()
+//                        .getRoute(new Callback<DirectionsResponse>() {
+//                            @Override
+//                            public void onResponse(Call<DirectionsResponse> call, Response<DirectionsResponse> response) {
+//                                List<DirectionsRoute> listRoute = response.body().routes();
+//
+//                                //chỉ show route
+//                                for (DirectionsRoute route : listRoute) {
+//                                    NavigationMapRoute navigationMapRoute = new NavigationMapRoute(null, mvMap, mbmMap, R.style.NavigationMapRoute);
+//                                    navigationMapRoute.addRoute(route);
+//                                }
+//                            }
+//
+//                            @Override
+//                            public void onFailure(Call<DirectionsResponse> call, Throwable t) {
+//
+//                            }
+//                        });
+//            }
+            mbmMap.addPolyline(new PolylineOptions()
+                    .add(waypoints)
+                    .color(Color.parseColor("#4080ff"))
+                    .width(5));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -220,11 +266,19 @@ public class MapDetailActivity extends AppCompatActivity implements OnMapReadyCa
 
     private void showNavigation() {
         try {
-            NavigationRoute.builder(this)
+            NavigationRoute.Builder builder = NavigationRoute.builder(this)
                     .accessToken(getString(R.string.map_token))
-                    .origin(mOrigin)
-                    .destination(mDestination)
-                    .build()
+                    .profile(DirectionsCriteria.PROFILE_DRIVING)
+                    .origin(Point.fromLngLat(Double.parseDouble(mListRouteStep.get(0).getLongitude()),
+                            Double.parseDouble(mListRouteStep.get(0).getLatitude())))
+                    .destination(Point.fromLngLat(Double.parseDouble(mListRouteStep.get(mListRouteStep.size() - 1).getLongitude()),
+                            Double.parseDouble(mListRouteStep.get(mListRouteStep.size() - 1).getLatitude())));
+
+//            for (Point waypoint : coordinates) {
+//                builder.addWaypoint(waypoint);
+//            }
+
+            builder.build()
                     .getRoute(new Callback<DirectionsResponse>() {
                         @Override
                         public void onResponse(Call<DirectionsResponse> call, Response<DirectionsResponse> response) {
@@ -244,6 +298,34 @@ public class MapDetailActivity extends AppCompatActivity implements OnMapReadyCa
 
                         }
                     });
+
+//            MapboxMapMatching.builder()
+//                    .accessToken(Mapbox.getAccessToken())
+//                    .coordinates(coordinates)
+//                    .steps(true)
+//                    .voiceInstructions(true)
+//                    .bannerInstructions(true)
+//                    .profile(DirectionsCriteria.PROFILE_DRIVING)
+//                    .build()
+//                    .enqueueCall(new Callback<MapMatchingResponse>() {
+//
+//                        @Override
+//                        public void onResponse(Call<MapMatchingResponse> call, Response<MapMatchingResponse> response) {
+//                            if (response.isSuccessful()) {
+//                                DirectionsRoute route = response.body().matchings().get(0).toDirectionRoute();
+//                                NavigationLauncherOptions options = NavigationLauncherOptions.builder()
+//                                    .directionsRoute(route)
+//                                    .shouldSimulateRoute(true)
+//                                    .build();
+//                                NavigationLauncher.startNavigation(MapDetailActivity.this, options);
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<MapMatchingResponse> call, Throwable throwable) {
+//
+//                        }
+//                    });
         } catch (Exception e) {
             e.printStackTrace();
         }

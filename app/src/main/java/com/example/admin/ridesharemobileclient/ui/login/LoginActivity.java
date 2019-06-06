@@ -14,13 +14,12 @@ import com.example.admin.ridesharemobileclient.R;
 import com.example.admin.ridesharemobileclient.config.App;
 import com.example.admin.ridesharemobileclient.data.APIHelper;
 import com.example.admin.ridesharemobileclient.data.IAPIHelper;
+import com.example.admin.ridesharemobileclient.entity.User;
 import com.example.admin.ridesharemobileclient.entity.respone.BaseRespone;
 import com.example.admin.ridesharemobileclient.entity.respone.LoginRespone;
-import com.example.admin.ridesharemobileclient.entity.User;
 import com.example.admin.ridesharemobileclient.ui.main.MainActivity;
 import com.example.admin.ridesharemobileclient.ui.register.RegisterActivity;
 import com.google.gson.Gson;
-import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -110,7 +109,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 @Override
                 public void onFailure(Call<BaseRespone> call, Throwable t) {
-
+                    Log.d(TAG, "onFailure: " + t.getMessage());
                 }
             });
         } catch (Exception e) {

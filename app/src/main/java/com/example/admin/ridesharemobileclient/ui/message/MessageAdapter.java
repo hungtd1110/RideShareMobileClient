@@ -14,12 +14,12 @@ import com.example.admin.ridesharemobileclient.entity.respone.MessageRespone;
 import com.example.admin.ridesharemobileclient.ui.detailmessage.DetailMessageActivity;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.example.admin.ridesharemobileclient.config.Const.KEY_ID;
+import static com.example.admin.ridesharemobileclient.config.Const.KEY_NAME;
 import static com.example.admin.ridesharemobileclient.config.Const.PREFIX_IMAGE_ADDRESS;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
@@ -90,6 +90,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                     default:
                         Intent intent = new Intent(mContext, DetailMessageActivity.class);
                         intent.putExtra(KEY_ID, mListMessage.get(getAdapterPosition()).getUserId() + "");
+                        intent.putExtra(KEY_NAME, mListMessage.get(getAdapterPosition()).getUsername());
                         mContext.startActivity(intent);
                         break;
                 }

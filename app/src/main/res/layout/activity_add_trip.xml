@@ -235,6 +235,54 @@
 
                 </RelativeLayout>
 
+                <View
+                    android:id="@+id/vRoute"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/separate_height"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:background="@color/colorBackground3" />
+
+                <RelativeLayout
+                    android:id="@+id/rlRoute"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/margin_normal">
+
+                    <TextView
+                        android:id="@+id/tvTitleRouteStep"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_normal"
+                        android:layout_toStartOf="@+id/ivEditRouteStep"
+                        android:text="@string/route_step"
+                        android:textColor="@color/colorBlackLight"
+                        android:textSize="@dimen/font_large_huge" />
+
+                    <TextView
+                        android:id="@+id/tvRouteStep"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvTitleRouteStep"
+                        android:layout_marginStart="@dimen/margin_normal"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:layout_toStartOf="@+id/ivEditRouteStep"
+                        android:text="@string/no_step"
+                        android:textColor="@color/colorGray"
+                        android:textSize="@dimen/font_large_huge" />
+
+                    <ImageView
+                        android:id="@+id/ivEditRouteStep"
+                        android:layout_width="@dimen/width_large_huge"
+                        android:layout_height="@dimen/height_large_huge"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/margin_normal"
+                        android:layout_marginStart="@dimen/margin_normal"
+                        android:padding="@dimen/padding_normal"
+                        app:srcCompat="@drawable/ic_edit_black" />
+
+                </RelativeLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -363,6 +411,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llVehicle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_normal"

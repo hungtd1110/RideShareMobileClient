@@ -30,6 +30,8 @@ import retrofit2.Response;
 
 import static com.example.admin.ridesharemobileclient.config.Const.ACTION_ADD_DATA;
 import static com.example.admin.ridesharemobileclient.config.Const.ACTION_SET_DATA;
+import static com.example.admin.ridesharemobileclient.config.Const.PAGE;
+import static com.example.admin.ridesharemobileclient.config.Const.SIZE;
 
 public class DriverRegisterFragment extends Fragment {
     private IAPIHelper mIAPIHelper;
@@ -57,23 +59,23 @@ public class DriverRegisterFragment extends Fragment {
     }
 
     private void initEvent() {
-        rvDriver.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                int totalItemCount = layoutManager.getItemCount(); // Lấy tổng số lượng item đang có
-                int lastVisibleItem = layoutManager.findLastVisibleItemPosition(); // Lấy vị trí của item cuối cùng
-
-                if (totalItemCount < adapter.getItemCount()) {
-                    if (!isLoading && totalItemCount <= (lastVisibleItem + visibleThreshold)) // Nếu không phải trạng thái loading và tổng số lượng item bé hơn hoặc bằng vị trí item cuối + số lượng item tối đa hiển thị
-                    {
-                        isLoading = true;
-                        adapter.loadMore();
-                        page++;
-                        showListDriver(ACTION_ADD_DATA);
-                    }
-                }
-            }
-        });
+//        rvDriver.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+//                int totalItemCount = layoutManager.getItemCount(); // Lấy tổng số lượng item đang có
+//                int lastVisibleItem = layoutManager.findLastVisibleItemPosition(); // Lấy vị trí của item cuối cùng
+//
+//                if (totalItemCount < adapter.getItemCount()) {
+//                    if (!isLoading && totalItemCount <= (lastVisibleItem + visibleThreshold)) // Nếu không phải trạng thái loading và tổng số lượng item bé hơn hoặc bằng vị trí item cuối + số lượng item tối đa hiển thị
+//                    {
+//                        isLoading = true;
+//                        adapter.loadMore();
+//                        page++;
+//                        showListDriver(ACTION_ADD_DATA);
+//                    }
+//                }
+//            }
+//        });
     }
 
     private void init() {
@@ -104,8 +106,10 @@ public class DriverRegisterFragment extends Fragment {
     private void showListDriver(String action) {
         try {
             Map<String, String> maps = new HashMap<>();
-            maps.put("page", String.valueOf(this.page));
-            maps.put("size", String.valueOf(this.size));
+//            maps.put("page", String.valueOf(this.page));
+//            maps.put("size", String.valueOf(this.size));
+            maps.put("page", PAGE);
+            maps.put("size", SIZE);
 
             Call<BaseRespone> call = mIAPIHelper.getListDriverRegister(App.sToken, maps);
             call.enqueue(new Callback<BaseRespone>() {

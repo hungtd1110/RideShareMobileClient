@@ -11,9 +11,9 @@ public class Chat {
 
     public static final String address = "ws://" + IP + ":8080/carpool/websocket?authorization=" + App.sToken;
 
-    public static final String send = "/user/" + placeholder + "/";
+    public static final String send_message = "/user/" + placeholder + "/";
 
-    public static final String recive = "/socket/message/" + placeholder;
+    public static final String recive_message = "/socket/message/" + placeholder;
 
-    public static final String notification = "/notification-notification/";
+    public static final String notification = "/socket/notification/" + placeholder;
 }

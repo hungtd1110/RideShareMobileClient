@@ -140,6 +140,7 @@
             android:textSize="@dimen/font_normal" />
 
         <TextView
+            android:visibility="invisible"
             android:id="@+id/tvOr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -148,6 +149,7 @@
             android:textSize="@dimen/font_normal" />
 
         <LinearLayout
+            android:visibility="invisible"
             android:id="@+id/llLoginPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

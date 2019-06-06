@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.search.SearchActivity" />
+        <activity android:name=".ui.searchadvance.SearchAdvanceActivity" />
         <activity android:name=".ui.mapdetail.MapDetailActivity" />
         <activity android:name=".ui.mapsearch.MapSearchActivity" />
         <activity android:name=".ui.main.MainActivity" />
@@ -30,11 +30,26 @@
             android:name=".ui.register.RegisterActivity"
             android:theme="@style/LoginTheme" />
         <activity android:name=".ui.detailtripregister.DetailTripRegisterActivity" />
-        <activity android:name=".ui.addtrip.AddTripActivity" />
+        <activity
+            android:launchMode="singleTask"
+            android:name=".ui.addtrip.AddTripActivity" />
         <activity android:name=".ui.detailmessage.DetailMessageActivity" />
         <activity android:name=".ui.detailtripsubmit.DetailTripSubmitActivity" />
         <activity android:name=".ui.userregister.UserRegisterActivity" />
-        <activity android:name=".ui.usertrip.UserTripActivity"></activity>
+        <activity android:name=".ui.usertrip.UserTripActivity" />
+        <activity android:name=".ui.profile.ProfileActivity" />
+        <activity android:name=".ui.search.SearchActivity" />
+        <activity android:name=".ui.routestep.RouteStepActivity"></activity>
+
+        <service
+            android:stopWithTask="false"
+            android:name=".service.NotificationService" />
+
+        <!--<receiver android:name=".broadcast.NotificationBroadcast" >-->
+            <!--<intent-filter>-->
+                <!--<action android:name="notification" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
     </application>
 
 </manifest>

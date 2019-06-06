@@ -1,5 +1,6 @@
 package com.example.admin.ridesharemobileclient.ui.newfeed;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,8 +16,8 @@ import com.example.admin.ridesharemobileclient.R;
 import com.example.admin.ridesharemobileclient.config.App;
 import com.example.admin.ridesharemobileclient.data.APIHelper;
 import com.example.admin.ridesharemobileclient.data.IAPIHelper;
-import com.example.admin.ridesharemobileclient.entity.respone.BaseRespone;
 import com.example.admin.ridesharemobileclient.entity.Hitchhiker;
+import com.example.admin.ridesharemobileclient.entity.respone.BaseRespone;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -30,6 +31,8 @@ import retrofit2.Response;
 
 import static com.example.admin.ridesharemobileclient.config.Const.ACTION_ADD_DATA;
 import static com.example.admin.ridesharemobileclient.config.Const.ACTION_SET_DATA;
+import static com.example.admin.ridesharemobileclient.config.Const.PAGE;
+import static com.example.admin.ridesharemobileclient.config.Const.SIZE;
 
 public class HitchhikerFragment extends Fragment {
     private IAPIHelper mIAPIHelper;
@@ -41,6 +44,7 @@ public class HitchhikerFragment extends Fragment {
     private HitchhikerAdapter adapter;
     private int page, size, visibleThreshold;
     private boolean isLoading;
+    private ProgressDialog mProgressDialog;
 
     private static final String TAG = "HitchhikerFragment";
 
@@ -58,27 +62,27 @@ public class HitchhikerFragment extends Fragment {
 
     private void initEvent() {
         try {
-            rvHitchhiker.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                @Override
-                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                    try {
-                        int totalItemCount = layoutManager.getItemCount(); // Lấy tổng số lượng item đang có
-                        int lastVisibleItem = layoutManager.findLastVisibleItemPosition(); // Lấy vị trí của item cuối cùng
-
-                        if (totalItemCount < adapter.getItemCount()) {
-                            if (!isLoading && totalItemCount <= (lastVisibleItem + visibleThreshold)) // Nếu không phải trạng thái loading và tổng số lượng item bé hơn hoặc bằng vị trí item cuối + số lượng item tối đa hiển thị
-                            {
-                                isLoading = true;
-                                adapter.loadMore();
-                                page++;
-                                showListHitchhiker(ACTION_ADD_DATA);
-                            }
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
+//            rvHitchhiker.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//                @Override
+//                public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+//                    try {
+//                        int totalItemCount = layoutManager.getItemCount(); // Lấy tổng số lượng item đang có
+//                        int lastVisibleItem = layoutManager.findLastVisibleItemPosition(); // Lấy vị trí của item cuối cùng
+//
+//                        if (totalItemCount < adapter.getItemCount()) {
+//                            if (!isLoading && totalItemCount <= (lastVisibleItem + visibleThreshold)) // Nếu không phải trạng thái loading và tổng số lượng item bé hơn hoặc bằng vị trí item cuối + số lượng item tối đa hiển thị
+//                            {
+//                                isLoading = true;
+//                                adapter.loadMore();
+//                                page++;
+//                                showListHitchhiker(ACTION_ADD_DATA);
+//                            }
+//                        }
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            });
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -87,17 +91,14 @@ public class HitchhikerFragment extends Fragment {
     private void init() {
         try {
             mIAPIHelper = APIHelper.getInstance();
+            mProgressDialog = new ProgressDialog(getContext());
+            mProgressDialog.setMessage("Đang xử lý");
             visibleThreshold = 5;
             isLoading = false;
             page = 1;
             size = 10;
 
-            adapter = new HitchhikerAdapter(getContext(), new HitchhikerAdapter.CallBack() {
-                @Override
-                public void onRegisterHitchhiker(String idHitchhiker) {
-                    handleRegisterHitchhiker(idHitchhiker);
-                }
-            });
+            adapter = new HitchhikerAdapter(getContext());
             layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
             rvHitchhiker.setLayoutManager(layoutManager);
             rvHitchhiker.setAdapter(adapter);
@@ -108,41 +109,20 @@ public class HitchhikerFragment extends Fragment {
         }
     }
 
-    private void handleRegisterHitchhiker(String idHitchhiker) {
-        try {
-            Call<BaseRespone> call = mIAPIHelper.registerHitchhiker(App.sToken, idHitchhiker);
-            call.enqueue(new Callback<BaseRespone>() {
-                @Override
-                public void onResponse(Call<BaseRespone> call, Response<BaseRespone> response) {
-                    try {
-                        Log.d(TAG, "onResponse: " + response.body().getMetadata().toString());
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<BaseRespone> call, Throwable t) {
-                    Log.d(TAG, "onFailure: " + t.getMessage());
-                }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     private void showListHitchhiker(String action) {
         try {
             Map<String, String> maps = new HashMap<>();
-            maps.put("page", String.valueOf(this.page));
-            maps.put("size", String.valueOf(this.size));
+//            maps.put("page", String.valueOf(this.page));
+//            maps.put("size", String.valueOf(this.size));
+            maps.put("page", PAGE);
+            maps.put("size", SIZE);
 
+            mProgressDialog.show();
             Call<BaseRespone> call = mIAPIHelper.getListHitchhiker(App.sToken, maps);
             call.enqueue(new Callback<BaseRespone>() {
                 @Override
                 public void onResponse(@NonNull Call<BaseRespone> call, @NonNull Response<BaseRespone> response) {
                     try {
-//                        Type type = new TypeToken<Hitchhiker[]>(){}.getType();
                         Hitchhiker[] hitchhikers = new Gson().fromJson((String) response.body().getMetadata(), Hitchhiker[].class);
 
                         ArrayList<Hitchhiker> listHitchhiker = new ArrayList<>();
@@ -155,6 +135,8 @@ public class HitchhikerFragment extends Fragment {
                             adapter.addData(listHitchhiker);
                             isLoading = false;
                         }
+
+                        mProgressDialog.dismiss();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

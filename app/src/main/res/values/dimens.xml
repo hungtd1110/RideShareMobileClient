@@ -65,4 +65,7 @@
     <dimen name="height_large_huge3">56dp</dimen>
     <dimen name="height_medium">16dp</dimen>
     <dimen name="width_medium">16dp</dimen>
+    <dimen name="height_huge_giant">300dp</dimen>
+    <dimen name="height_huge2">90dp</dimen>
+    <dimen name="width_huge2">90dp</dimen>
 </resources>

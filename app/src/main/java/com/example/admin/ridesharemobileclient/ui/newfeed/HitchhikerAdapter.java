@@ -3,8 +3,6 @@ package com.example.admin.ridesharemobileclient.ui.newfeed;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,13 +15,13 @@ import com.example.admin.ridesharemobileclient.R;
 import com.example.admin.ridesharemobileclient.entity.Hitchhiker;
 import com.example.admin.ridesharemobileclient.ui.detailmessage.DetailMessageActivity;
 import com.example.admin.ridesharemobileclient.ui.detailtripregister.DetailTripRegisterActivity;
+import com.example.admin.ridesharemobileclient.ui.usertrip.UserTripActivity;
 import com.example.admin.ridesharemobileclient.utils.PlaceUtils;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Locale;
 
 import static com.example.admin.ridesharemobileclient.config.Const.DATA_HITCHHIKER;
 import static com.example.admin.ridesharemobileclient.config.Const.KEY_ID;
@@ -31,20 +29,16 @@ import static com.example.admin.ridesharemobileclient.config.Const.KEY_TYPE;
 
 public class HitchhikerAdapter extends RecyclerView.Adapter<HitchhikerAdapter.ViewHolder> {
     private Context mContext;
-    private CallBack mCallBack;
 
     private ArrayList<Hitchhiker> mListHitchhiker;
     private boolean showMore;
     private SimpleDateFormat mDateFormat;
 
-    public interface CallBack {
-        void onRegisterHitchhiker(String idHitchhiker);
-    }
+    private static final String TAG = "HitchhikerAdapter";
 
     @SuppressLint("SimpleDateFormat")
-    HitchhikerAdapter(Context context, CallBack callBack) {
+    HitchhikerAdapter(Context context) {
         mContext = context;
-        mCallBack = callBack;
 
         showMore = false;
         mDateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -75,11 +69,16 @@ public class HitchhikerAdapter extends RecyclerView.Adapter<HitchhikerAdapter.Vi
             calendar.setTimeInMillis(Long.parseLong(hitchhiker.getTime()));
 
             holder.llAction.setVisibility(View.GONE);
-            PlaceUtils.setNamePosition(hitchhiker.getStartLatitude(), hitchhiker.getStartLongitude(), holder.tvStartPosition);
-            PlaceUtils.setNamePosition(hitchhiker.getEndLatitude(), hitchhiker.getEndLongitude(), holder.tvEndPosition);
+            holder.tvShowMore.setVisibility(View.GONE);
+
+            PlaceUtils.setFullNamePosition(hitchhiker.getStartLatitude(), hitchhiker.getStartLongitude(), holder.tvStartPosition);
+            PlaceUtils.setFullNamePosition(hitchhiker.getEndLatitude(), hitchhiker.getEndLongitude(), holder.tvEndPosition);
             holder.tvTime.setText(mDateFormat.format(calendar.getTime()));
             holder.tvNumberSeat.setText(hitchhiker.getNumberSeat());
             holder.tvPrice.setText(NumberFormat.getInstance().format(Long.parseLong(hitchhiker.getPrice())) + " VNĐ");
+
+            holder.tvActionLeft.setText("Nhắn tin");
+            holder.tvActionRight.setText("Danh sách");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -162,11 +161,15 @@ public class HitchhikerAdapter extends RecyclerView.Adapter<HitchhikerAdapter.Vi
         public void onClick(View view) {
             try {
                 switch (view.getId()) {
-                    case R.id.tvActionLeft:
-                        mCallBack.onRegisterHitchhiker(mListHitchhiker.get(getAdapterPosition()).getId());
-                        break;
-                    case R.id.tvActionRight: {
+                    case R.id.tvActionLeft: {
                         Intent intent = new Intent(mContext, DetailMessageActivity.class);
+                        intent.putExtra(KEY_ID, mListHitchhiker.get(getAdapterPosition()).getId());
+                        mContext.startActivity(intent);
+                        break;
+                    }
+                    case R.id.tvActionRight: {
+                        Intent intent = new Intent(mContext, UserTripActivity.class);
+                        intent.putExtra(KEY_TYPE, DATA_HITCHHIKER);
                         intent.putExtra(KEY_ID, mListHitchhiker.get(getAdapterPosition()).getId());
                         mContext.startActivity(intent);
                         break;
